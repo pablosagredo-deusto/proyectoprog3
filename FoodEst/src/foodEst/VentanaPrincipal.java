@@ -10,7 +10,7 @@ import javax.swing.*;
 public class VentanaPrincipal extends JFrame {
 	
 	public VentanaPrincipal() {
-		JButton supermercado =  new Jgkgkj
+		JButton supermercado =  new JButton("Supermercados";)
 				
 	}
 }
