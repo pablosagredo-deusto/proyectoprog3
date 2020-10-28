@@ -1,3 +1,4 @@
+package prueba2;
 
 public class MainExample {
 	public static void main(String[] args) {
