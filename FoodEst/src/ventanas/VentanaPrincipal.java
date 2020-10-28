@@ -1,4 +1,4 @@
-package foodEst;
+package ventanas;
 
 import java.awt.*;
 import java.awt.event.*;
