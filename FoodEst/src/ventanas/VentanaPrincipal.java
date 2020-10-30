@@ -124,24 +124,20 @@ public class VentanaPrincipal extends JFrame {
 		
 		
 		
-		/*
-		buscador.addFocusListener(new FocusAdapter() {
-		    public void focusGained(FocusEvent e) {
-		        JTextField fuente = (JTextField)e.getComponent();
-		        fuente.setText("");
-		        fuente.removeFocusListener(this);
-		    }
-		});
-		getContentPane().requestFocusInWindow();
-		*/
+		buscador.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+            	buscador.setText("");
+            }
+        });
+		
 		supermercado.requestFocusInWindow();
-    
+		
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("FoodEst");
 		setSize(1150, 505);
 		setVisible(true);
-
+		
 				
 	}
 	
