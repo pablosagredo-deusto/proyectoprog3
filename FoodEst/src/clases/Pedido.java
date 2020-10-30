@@ -10,9 +10,10 @@ public class Pedido {
 	ArrayList<Articulo> articulos;
 	float preciototal;
 	String metodopago;
+	boolean cubiertos;
 
 	public Pedido(int id, String restaurante, String direccion, String estado, ArrayList<Articulo> articulos,
-			float preciototal, String metodopago) {
+			float preciototal, String metodopago,boolean cubiertos) {
 		super();
 		this.id = id;
 		this.restaurante = restaurante;
@@ -21,6 +22,7 @@ public class Pedido {
 		this.articulos = articulos;
 		this.preciototal = preciototal;
 		this.metodopago = metodopago;
+		this.cubiertos=cubiertos;
 	}
 	
 	public Pedido() {
@@ -32,6 +34,15 @@ public class Pedido {
 		this.articulos = new ArrayList<Articulo>();
 		this.preciototal = 0;
 		this.metodopago = "";
+		this.cubiertos=false;
+	}
+
+	public boolean isCubiertos() {
+		return cubiertos;
+	}
+
+	public void setCubiertos(boolean cubiertos) {
+		this.cubiertos = cubiertos;
 	}
 
 	public int getId() {
