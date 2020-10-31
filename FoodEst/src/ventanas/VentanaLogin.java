@@ -5,7 +5,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.font.TextAttribute;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,8 +30,8 @@ public class VentanaLogin extends JFrame {
 	JLabel titulo;
 	JButton user;
 	JButton restaurante;
-	
-	
+	Scanner sc;
+	ArrayList<String> usuarios = new ArrayList<>();
 	
 	public VentanaLogin() {
 		
@@ -55,12 +59,12 @@ public class VentanaLogin extends JFrame {
 		//Labels
 		
 		llave = new JLabel();
-		llave.setIcon(new ImageIcon("key.png"));
+		llave.setIcon(new ImageIcon("src/imagenes/key.png"));
 		llave.setBounds(110, 170, 120, 60);
 		pnlCentral.add(llave);
 		
 		mail = new JLabel();
-		mail.setIcon(new ImageIcon("mail.png"));
+		mail.setIcon(new ImageIcon("src/imagenes/mail.png"));
 		mail.setBounds(130, 270, 120, 60);
 		pnlCentral.add(mail);
 		
@@ -81,7 +85,7 @@ public class VentanaLogin extends JFrame {
 		registrar = new JLabel();
 		registrar.setText("¿No tienes cuenta? Registrate");
 		registrar.setForeground(Color.blue);
-		registrar.setBounds(175, 540, 200, 60);
+		registrar.setBounds(175, 540, 250, 60);
 		registrar.setFont(new Font("Arial", Font.PLAIN, 15)); 
 		pnlCentral.add(registrar);
 		
@@ -101,8 +105,8 @@ public class VentanaLogin extends JFrame {
 		user.setFont(new Font("Arial", Font.PLAIN, 22));
 		user.setBounds(75, 430, 190, 90);
 		pnlCentral.add(user);
-		
-		setVisible(true);
+	        
+	    setVisible(true);
 	}
 	
 	public static void main(String[] args) {

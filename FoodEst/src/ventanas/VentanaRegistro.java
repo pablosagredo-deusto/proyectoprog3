@@ -30,7 +30,7 @@ public class VentanaRegistro extends JFrame{
 		setTitle("Registro");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
-		setSize(1150, 505);
+		setSize(550, 700);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		pnlCentral = new JPanel();
@@ -73,17 +73,17 @@ public class VentanaRegistro extends JFrame{
 		//Labels
 		
 		llave = new JLabel();
-		llave.setIcon(new ImageIcon("key.png"));
+		llave.setIcon(new ImageIcon("src/imagenes/key.png"));
 		llave.setBounds(110, 270, 120, 60);
 		pnlCentral.add(llave);
 				
 		mail = new JLabel();
-		mail.setIcon(new ImageIcon("mail.png"));
+		mail.setIcon(new ImageIcon("src/imagenes/mail.png"));
 		mail.setBounds(130, 370, 120, 60);
 		pnlCentral.add(mail);	
 		
 		userIcon = new JLabel();
-		userIcon.setIcon(new ImageIcon("user.png"));
+		userIcon.setIcon(new ImageIcon("src/imagenes/user.png"));
 		userIcon.setBounds(130, 170, 120, 70);
 		pnlCentral.add(userIcon);	
 		
