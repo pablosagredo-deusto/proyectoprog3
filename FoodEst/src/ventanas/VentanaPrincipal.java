@@ -31,7 +31,7 @@ public class VentanaPrincipal extends JFrame {
 		panelArribaMedio.setLayout(new GridLayout(2,1));
 		JPanel panelLogo = new JPanel();
 		JLabel labelLogo = new JLabel();
-		labelLogo.setIcon(new ImageIcon("src/Imagenes/logo.png"));
+		labelLogo.setIcon(new ImageIcon("src/imagenes/logo.png"));
 		panelLogo.add(labelLogo);
 
 		panelArribaMedio.add(panelLogo);
