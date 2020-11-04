@@ -26,6 +26,12 @@ public class Articulo {
 		this.ingredientes = new ArrayList<Ingrediente>();
 		this.vegano = false;
 	}
+
+	@Override
+	public String toString() {
+		return nombre +" "+ precio + " €";
+	}
+	
 	
 	
 

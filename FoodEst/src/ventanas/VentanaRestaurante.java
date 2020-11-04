@@ -1,16 +1,27 @@
 package ventanas;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+import clases.Articulo;
+import clases.Pedido;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -32,7 +43,6 @@ public class VentanaRestaurante extends JFrame {
 		panelGeneral.setResizeWeight(0.66); // Esto es el porcentaje de la parte de la izquierda ---> ajustar
 		panelGeneral.setEnabled(false);
 		panelGeneral.setDividerSize(0);
-		
 
 		// Panel izquierda
 
@@ -49,7 +59,7 @@ public class VentanaRestaurante extends JFrame {
 		panelNombre.setEnabled(false);
 		panelNombre.setDividerSize(0);
 		JLabel titulo = new JLabel("KFC");
-		
+
 		Font font = new Font("Cooper Black", Font.BOLD, 40);
 		titulo.setFont(font);
 
@@ -61,15 +71,15 @@ public class VentanaRestaurante extends JFrame {
 
 		// nombre panelNombreAbajo
 		JPanel panelNombreAbajo = new JPanel();
-		panelNombreAbajo.setLayout(new GridLayout(0,5));
-		
-		JButton entrantes =new JButton("ENTRANTES");
-		JButton principales=new JButton("PRINCIPALES");
-		JButton segundos=new JButton("SEGUNDOS");
-		JButton postres=new JButton("POSTRES");
-		JButton buscar=new JButton();
-		ImageIcon fot = new ImageIcon("src/Imagenes/lupa.png");
-		buscar.setSize(40,40);
+		panelNombreAbajo.setLayout(new GridLayout(0, 5));
+
+		JButton entrantes = new JButton("ENTRANTES");
+		JButton principales = new JButton("PRINCIPALES");
+		JButton segundos = new JButton("SEGUNDOS");
+		JButton postres = new JButton("POSTRES");
+		JButton buscar = new JButton();
+		ImageIcon fot = new ImageIcon("src/Imagenes/key .png");
+		buscar.setSize(40, 40);
 		Icon icono = new ImageIcon(
 				fot.getImage().getScaledInstance(buscar.getWidth(), buscar.getHeight(), Image.SCALE_DEFAULT));
 		buscar.setIcon(icono);
@@ -77,55 +87,48 @@ public class VentanaRestaurante extends JFrame {
 		buscar.setOpaque(false);
 		buscar.setContentAreaFilled(false);
 		buscar.setBorderPainted(false);
-		
-		panelNombreAbajo.add(entrantes,0,0);
-		panelNombreAbajo.add(principales,0,1);
-		panelNombreAbajo.add(segundos,0,2);
-		panelNombreAbajo.add(postres,0,3);
-		panelNombreAbajo.add(buscar,0,4);
-		
-		
-		
+
+		panelNombreAbajo.add(entrantes, 0, 0);
+		panelNombreAbajo.add(principales, 0, 1);
+		panelNombreAbajo.add(segundos, 0, 2);
+		panelNombreAbajo.add(postres, 0, 3);
+		panelNombreAbajo.add(buscar, 0, 4);
+
 		panelNombre.add(panelNombreArriba);
 		panelNombre.add(panelNombreAbajo);
 
 		panelNombreArriba.add(titulo, BorderLayout.WEST);
-		
-		//añadir jmenubar
-		
 
 		panelIzquierda.add(panelNombre);
 
 		// Panel izquierdaAbajo
 		JPanel panelIzquierdaAbajo = new JPanel();
-		panelIzquierdaAbajo.setLayout(new GridLayout(2, 4,30,30)); // meter separacion entre espacios
-		
-		
-		//PANEL1
-		JPanel area1=new JPanel();
-		JLabel text1=new JLabel("HAMBURGUESA");
-		JButton b1=new JButton("AÑADIR");
-		JTextArea text2=new JTextArea("INGREDIENTES:");
+		panelIzquierdaAbajo.setLayout(new GridLayout(2, 4, 30, 30)); // meter separacion entre espacios
+
+		// PANEL1
+		JPanel area1 = new JPanel();
+		area1.setLayout(new BorderLayout());
+		JLabel text1 = new JLabel("HAMBURGUESA");
+		JButton b1 = new JButton("AÑADIR");
+		JTextArea text2 = new JTextArea("INGREDIENTES:\n -Pan\n -Lechuga \n -Carne");
 		text2.setEditable(false);
-		
-		
-		//PANEL1-foto1
-		
-		area1.add(b1);
-		area1.add(text1);
-		area1.add(text2);
-		
-		JPanel area2=new JPanel();
-		JPanel area3=new JPanel();
-		JPanel area4=new JPanel();
-		JPanel area5=new JPanel();
-		JPanel area6=new JPanel();
-		JPanel area7=new JPanel();
-		
-		
+
+		// PANEL1-foto1
+
+		area1.add(b1, BorderLayout.SOUTH);
+		area1.add(text1, BorderLayout.NORTH);
+		area1.add(text2, BorderLayout.CENTER);
+
+		JPanel area2 = new JPanel();
+		JPanel area3 = new JPanel();
+		JPanel area4 = new JPanel();
+		JPanel area5 = new JPanel();
+		JPanel area6 = new JPanel();
+		JPanel area7 = new JPanel();
+
 		JScrollPane scroll = new JScrollPane(panelIzquierdaAbajo, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		
+
 		area1.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 		area2.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 		area3.setBorder(BorderFactory.createLineBorder(Color.black, 5));
@@ -134,8 +137,6 @@ public class VentanaRestaurante extends JFrame {
 		area6.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 		area7.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 
-		
-		
 		panelIzquierdaAbajo.add(area1);
 		panelIzquierdaAbajo.add(area2);
 		panelIzquierdaAbajo.add(area3);
@@ -143,12 +144,8 @@ public class VentanaRestaurante extends JFrame {
 		panelIzquierdaAbajo.add(area5);
 		panelIzquierdaAbajo.add(area6);
 		panelIzquierdaAbajo.add(area7);
-		
-		
 
-		
 		panelIzquierda.add(scroll);
-		//scroll.add(area);
 
 		panelIzquierdaAbajo.setBackground(Color.red);
 
@@ -156,6 +153,85 @@ public class VentanaRestaurante extends JFrame {
 
 		// Panel derecha
 		JPanel panelDerecha = new JPanel();
+		panelDerecha.setLayout(new GridLayout(6, 2));
+		DefaultListModel modeloPedido = new DefaultListModel();
+		ArrayList<Articulo> articulos = new ArrayList<Articulo>();
+
+		articulos.add(new Articulo("Ensalada ", 23, "", null, false));
+		JList listaArticulos = new JList();
+		JLabel nombrePedido = new JLabel("PEDIDO ACTUAL:");
+		JButton eliminar = new JButton("ELIMINAR");
+		JButton pagar = new JButton("PAGAR");
+
+		if (!articulos.isEmpty()) {
+			for (Articulo articulo : articulos) {
+				modeloPedido.addElement(articulo.toString());
+
+			}
+
+		}
+
+		listaArticulos.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				System.out.println("BORRAR");
+				JList list = (JList) evt.getSource();
+				if (evt.getClickCount() == 2) {
+
+					Articulo articulo = (Articulo) listaArticulos.getSelectedValue();
+
+				}
+
+			}
+
+		});
+		b1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Articulo a = new Articulo();
+				articulos.add(a = new Articulo(text1.getText(), 12, "", null, false));
+				modeloPedido.addElement(a.toString());
+
+			}
+		});
+
+		eliminar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (listaArticulos.getSelectedValue() == null) {
+					JOptionPane.showMessageDialog(null, "Selecciona un producto para eliminar");
+
+				} else {
+					Articulo articulo = (Articulo) listaArticulos.getSelectedValue();
+					int i=(int) listaArticulos.getSelectedValue();
+					articulos.remove(i);
+					modeloPedido.removeElement(articulo);
+
+
+				}
+
+			}
+		});
+
+		pagar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaPago();
+				setVisible(false);
+
+			}
+		});
+
+		listaArticulos.setModel(modeloPedido);
+		panelDerecha.add(listaArticulos, 1, 0);
+		panelDerecha.add(eliminar, 2, 1);
+		panelDerecha.add(pagar, 2, 2);
+
+		panelDerecha.add(nombrePedido, 3, 0);
+
 		panelGeneral.add(panelDerecha);
 		add(panelGeneral);
 

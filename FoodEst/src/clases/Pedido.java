@@ -101,4 +101,12 @@ public class Pedido {
 		this.metodopago = metodopago;
 	}
 
+	@Override
+	public String toString() {
+		return "Pedido" + id + ", restaurante=" + restaurante + ", direccion=" + direccion + ", estado=" + estado
+				+ ", articulos=" + articulos + ", preciototal=" + preciototal + ", metodopago=" + metodopago
+				+ ", cubiertos=" + cubiertos + "";
+	}
+	
+
 }
