@@ -16,9 +16,9 @@ public class VentanaPrincipal extends JFrame {
 		
 		JButton supermercado =  new JButton("Supermercados");
 		JButton enviosExpres =  new JButton("Envios expres");
-		JButton tiendas =  new JButton("Tiendas");
+		JButton kfc =  new JButton("KFC");
 		JButton comida =  new JButton("Comida");
-		JButton donacion =  new JButton("Donación");
+		JButton donacion =  new JButton("Pizza-Hut");
 		JTextField buscador = new JTextField("¿Qué estas buscando?");
 		JButton buscar =  new JButton("Buscar");
 		
@@ -101,7 +101,7 @@ public class VentanaPrincipal extends JFrame {
 		panelBotones.add(new JPanel());
 		panelBotones.add(enviosExpres);
 		panelBotones.add(new JPanel());
-		panelBotones.add(tiendas);
+		panelBotones.add(kfc);
 		panelBotones.add(new JPanel());
 		panelBotones.add(comida);
 		panelBotones.add(new JPanel());
@@ -138,6 +138,15 @@ public class VentanaPrincipal extends JFrame {
 		setSize(1150, 505);
 		setVisible(true);
 		
+		
+		kfc.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaRestaurante(kfc.getText());
+				setVisible(false);
+			}
+		});
 				
 	}
 	

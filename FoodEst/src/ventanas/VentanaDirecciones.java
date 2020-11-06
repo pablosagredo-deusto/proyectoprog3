@@ -7,6 +7,8 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import clases.Direccion;
+
 
 public class VentanaDirecciones extends JFrame{
 
@@ -57,13 +59,15 @@ public class VentanaDirecciones extends JFrame{
 		labelLogoUbicacion.setIcon(new ImageIcon("src/imagenes/ubicacion.png"));
 		JButton añadir = new JButton("AÑADIR");
 		JTextField direccion = new JTextField("C/Municipio/Calle/Piso/Puerta");
-		JTextField nombreDireccion = new JTextField("Nombre de direccion");
+		JTextField nombreDireccion = new JTextField("Nombre de dirección");
+		JTextField codigoPostal = new JTextField("Código postal");
 		JLabel labelLogo = new JLabel();
 		labelLogo.setIcon(new ImageIcon("src/Imagenes/ubicacion.png"));
 		
 		
 		panelAñadir.add(labelLogo);
 		panelAñadir.add(nombreDireccion);
+		panelAñadir.add(codigoPostal);
 		panelAñadir.add(direccion);
 		panelAñadir.add(añadir);
 		
@@ -78,16 +82,7 @@ public class VentanaDirecciones extends JFrame{
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		//PANEL ABAJO
 		
 		
@@ -102,10 +97,13 @@ public class VentanaDirecciones extends JFrame{
 		JScrollPane scrollPanelDirecciones = new JScrollPane(panelDirecciones);
 		panelAbajo.add(panelDirecciones);
 		
-		
+		JList listaDirecciones = new JList();
+		DefaultListModel modeloListaDirecciones = new DefaultListModel();
+		listaDirecciones.setModel(modeloListaDirecciones);
+		panelDirecciones.add(listaDirecciones);
 		
 		JPanel panelAbajoBotones = new JPanel();
-		JButton botonBorrarUbicacion =  new JButton("Borrar ubicacion");
+		JButton botonBorrarUbicacion =  new JButton("Borrar direccion");
 		JButton botonBorrarTodasUbicaciones =  new JButton("Borrar todas");
 		panelAbajoBotones.add(botonBorrarUbicacion);
 		panelAbajoBotones.add(botonBorrarTodasUbicaciones);
@@ -128,7 +126,7 @@ public class VentanaDirecciones extends JFrame{
 		
 		
 		
-		
+		//LISTENERS
 		
 		nombreDireccion.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -140,8 +138,24 @@ public class VentanaDirecciones extends JFrame{
             	direccion.setText("");
             }
         });
+		codigoPostal.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+            	codigoPostal.setText("");
+            }
+        });
 		
-		
+		añadir.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Direccion nueva = new Direccion();
+				nueva.setDireccion(direccion.getText());
+				nueva.setCodigoPostal(Integer.parseInt(codigoPostal.getText()));
+				nueva.setNombre(nombreDireccion.getText());
+				modeloListaDirecciones.addElement(nueva);
+				
+			}
+		});
 		
 		
 		

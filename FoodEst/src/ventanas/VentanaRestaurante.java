@@ -21,7 +21,7 @@ import javax.swing.SwingUtilities;
 
 public class VentanaRestaurante extends JFrame {
 
-	public VentanaRestaurante() {
+	public VentanaRestaurante(String tituloRestaurante) {
 		super("restaurante");
 		setSize(1150, 505);
 		setVisible(true);
@@ -48,7 +48,7 @@ public class VentanaRestaurante extends JFrame {
 		panelNombre.setResizeWeight(0.15);
 		panelNombre.setEnabled(false);
 		panelNombre.setDividerSize(0);
-		JLabel titulo = new JLabel("KFC");
+		JLabel titulo = new JLabel(tituloRestaurante);
 		
 		Font font = new Font("Cooper Black", Font.BOLD, 40);
 		titulo.setFont(font);
@@ -160,7 +160,7 @@ public class VentanaRestaurante extends JFrame {
 		add(panelGeneral);
 
 	}
-
+/*
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -171,5 +171,5 @@ public class VentanaRestaurante extends JFrame {
 		});
 
 	}
-
+*/
 }
