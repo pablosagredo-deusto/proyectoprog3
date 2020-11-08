@@ -1,22 +1,26 @@
 package clases;
 
 public class Ingrediente {
-	String nombre;
-	String id;
-	String tipo;
+	protected String nombre;
+	protected int id;
 
-	public Ingrediente(String nombre, String id, String tipo) {
+	protected int calorias;
+
+	public Ingrediente(String nombre, int id, int calorias) {
 		super();
 		this.nombre = nombre;
 		this.id = id;
-		this.tipo = tipo;
+
+		this.calorias = calorias;
 	}
 
 	public Ingrediente() {
 		super();
 		this.nombre = "";
 		this.id = "";
-		this.tipo = "";
+
+		this.calorias = 0;
+		
 	}
 
 	public String getNombre() {
@@ -27,21 +31,29 @@ public class Ingrediente {
 		this.nombre = nombre;
 	}
 
-	public String getId() {
+	public int getCalorias() {
+		return calorias;
+	}
+
+	public void setCalorias(int calorias) {
+		this.calorias = calorias;
+	}
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getTipo() {
-		return tipo;
-	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+
+	@Override
+	public String toString() {
+		return "Ingrediente [nombre=" + nombre + ", id=" + id + ", tipo="  + ", calorias=" + calorias + "]";
 	}
+	
 	
 
 }

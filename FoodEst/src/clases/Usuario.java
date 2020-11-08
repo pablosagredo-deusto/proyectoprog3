@@ -3,17 +3,20 @@ package clases;
 import java.util.ArrayList;
 
 public class Usuario {
-	String nombre;
-	String apellido;
-	int id;
-	ArrayList<Pedido> pedidos;
+	protected String nombre;
+	protected String apellido;
+	protected int id; 
+	protected ArrayList<Restaurante> restaurantesGuardados;
+	protected ArrayList<Pedido> pedidos;
 
-	public Usuario(String nombre, String apellido, int id, ArrayList<Pedido> pedidos) {
+	public Usuario(String nombre, String apellido, int id, ArrayList<Pedido> pedidos,
+			ArrayList<Restaurante> restaurantesGuardados) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.id = id;
 		this.pedidos = pedidos;
+		this.restaurantesGuardados = restaurantesGuardados;
 	}
 
 	public Usuario() {
@@ -22,6 +25,7 @@ public class Usuario {
 		this.apellido = "";
 		this.id = 0;
 		this.pedidos = new ArrayList<Pedido>();
+		this.restaurantesGuardados = new ArrayList<Restaurante>();
 	}
 
 	public String getNombre() {
@@ -44,6 +48,14 @@ public class Usuario {
 		return id;
 	}
 
+	public ArrayList<Restaurante> getRestaurantesGuardados() {
+		return restaurantesGuardados;
+	}
+
+	public void setRestaurantesGuardados(ArrayList<Restaurante> restaurantesGuardados) {
+		this.restaurantesGuardados = restaurantesGuardados;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -55,6 +67,7 @@ public class Usuario {
 	public void setPedidos(ArrayList<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+	
 	
 
 }

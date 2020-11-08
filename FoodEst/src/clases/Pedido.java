@@ -4,16 +4,16 @@ import java.util.ArrayList;
 
 public class Pedido {
 	int id;
-	String restaurante;
-	String direccion;
-	String estado;
+	Restaurante restaurante;
+	Direccion direccion;
+	EstadoPedido estado;
 	ArrayList<Articulo> articulos;
 	float preciototal;
-	String metodopago;
+	String metodoPago;
 	boolean cubiertos;
 
-	public Pedido(int id, String restaurante, String direccion, String estado, ArrayList<Articulo> articulos,
-			float preciototal, String metodopago,boolean cubiertos) {
+	public Pedido(int id, Restaurante restaurante, Direccion direccion, EstadoPedido estado, ArrayList<Articulo> articulos,
+			float preciototal, String metodoPago,boolean cubiertos) {
 		super();
 		this.id = id;
 		this.restaurante = restaurante;
@@ -21,19 +21,19 @@ public class Pedido {
 		this.estado = estado;
 		this.articulos = articulos;
 		this.preciototal = preciototal;
-		this.metodopago = metodopago;
+		this.metodoPago = metodoPago;
 		this.cubiertos=cubiertos;
 	}
 	
 	public Pedido() {
 		super();
 		this.id = 0;
-		this.restaurante = "";
-		this.direccion = "";
-		this.estado = "";
+		this.restaurante = new Restaurante();
+		this.direccion = new Direccion();
+		this.estado = EstadoPedido.OTRO;
 		this.articulos = new ArrayList<Articulo>();
 		this.preciototal = 0;
-		this.metodopago = "";
+		this.metodoPago = "";
 		this.cubiertos=false;
 	}
 
@@ -53,27 +53,27 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public String getRestaurante() {
+	public Restaurante getRestaurante() {
 		return restaurante;
 	}
 
-	public void setRestaurante(String restaurante) {
+	public void setRestaurante(Restaurante restaurante) {
 		this.restaurante = restaurante;
 	}
 
-	public String getDireccion() {
+	public Direccion getDireccion() {
 		return direccion;
 	}
 
-	public void setDireccion(String direccion) {
+	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
 
-	public String getEstado() {
+	public EstadoPedido getEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(EstadoPedido estado) {
 		this.estado = estado;
 	}
 
@@ -94,11 +94,19 @@ public class Pedido {
 	}
 
 	public String getMetodopago() {
-		return metodopago;
+		return metodoPago;
 	}
 
 	public void setMetodopago(String metodopago) {
-		this.metodopago = metodopago;
+		this.metodoPago = metodopago;
 	}
+
+	@Override
+	public String toString() {
+		return "Pedido" + id + ", restaurante=" + restaurante + ", direccion=" + direccion + ", estado=" + estado
+				+ ", articulos=" + articulos + ", preciototal=" + preciototal + ", metodopago=" + metodoPago
+				+ ", cubiertos=" + cubiertos + "";
+	}
+	
 
 }

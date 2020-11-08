@@ -58,7 +58,7 @@ public class VentanaDirecciones extends JFrame{
 		JLabel labelLogoUbicacion = new JLabel();
 		labelLogoUbicacion.setIcon(new ImageIcon("src/imagenes/ubicacion.png"));
 		JButton añadir = new JButton("AÑADIR");
-		JTextField direccion = new JTextField("C/Municipio/Calle/Piso/Puerta");
+		JTextField direccion = new JTextField("C/Municipio/Calle/Portal/Piso-Puerta");
 		JTextField nombreDireccion = new JTextField("Nombre de dirección");
 		JTextField codigoPostal = new JTextField("Código postal");
 		JLabel labelLogo = new JLabel();
