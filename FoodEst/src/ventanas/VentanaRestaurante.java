@@ -77,8 +77,15 @@ public class VentanaRestaurante extends JFrame {
 		JButton principales = new JButton("PRINCIPALES");
 		JButton segundos = new JButton("SEGUNDOS");
 		JButton postres = new JButton("POSTRES");
+
 		JButton buscar = new JButton();
-		ImageIcon fot = new ImageIcon("src/Imagenes/key .png");
+		ImageIcon fot = new ImageIcon("src/Imagenes/key.png");
+		ArrayList<Articulo> articulos = new ArrayList<Articulo>();
+		articulos.add(new Articulo());
+		articulos.add(new Articulo());
+		articulos.add(new Articulo());
+		Pedido pedidoActual = new Pedido(000, "", "", "", articulos, 0, "", false);
+
 		buscar.setSize(40, 40);
 		Icon icono = new ImageIcon(
 				fot.getImage().getScaledInstance(buscar.getWidth(), buscar.getHeight(), Image.SCALE_DEFAULT));
@@ -98,7 +105,6 @@ public class VentanaRestaurante extends JFrame {
 		panelNombre.add(panelNombreAbajo);
 
 		panelNombreArriba.add(titulo, BorderLayout.WEST);
-
 		panelIzquierda.add(panelNombre);
 
 		// Panel izquierdaAbajo
@@ -106,20 +112,39 @@ public class VentanaRestaurante extends JFrame {
 		panelIzquierdaAbajo.setLayout(new GridLayout(2, 4, 30, 30)); // meter separacion entre espacios
 
 		// PANEL1
-		JPanel area1 = new JPanel();
-		area1.setLayout(new BorderLayout());
-		JLabel text1 = new JLabel("HAMBURGUESA");
+		ArrayList<JPanel>panelesArticulos=new ArrayList<JPanel>();
 		JButton b1 = new JButton("AÑADIR");
+		JLabel text1 = new JLabel("HAMBURGUESA");
 		JTextArea text2 = new JTextArea("INGREDIENTES:\n -Pan\n -Lechuga \n -Carne");
+		text2.setEditable(false);
+		JButton b2 = new JButton("AÑADIR");
+		JLabel text3 = new JLabel("HAMBURGUESA");
+		JTextArea text4 = new JTextArea("INGREDIENTES:\n -Pan\n -Lechuga \n -Carne");
 		text2.setEditable(false);
 
 		// PANEL1-foto1
+		for (Articulo a : articulos) {
+			JPanel articulo=new JPanel();
+			JButton añadir = new JButton("AÑADIR");
+			JLabel nombre = new JLabel("HAMBURGUESA");
+			JTextArea texto = new JTextArea("INGREDIENTES:\n -Pan\n -Lechuga \n -Carne");
+			texto.setEditable(false);
+			panelesArticulos.add(articulo);
+			
+			
 
+		}
+		JPanel area1 = new JPanel();
+		area1.setLayout(new BorderLayout());
 		area1.add(b1, BorderLayout.SOUTH);
 		area1.add(text1, BorderLayout.NORTH);
 		area1.add(text2, BorderLayout.CENTER);
 
 		JPanel area2 = new JPanel();
+		area2.setLayout(new BorderLayout());
+		area2.add(b2, BorderLayout.SOUTH);
+		area2.add(text3, BorderLayout.NORTH);
+		area2.add(text4, BorderLayout.CENTER);
 		JPanel area3 = new JPanel();
 		JPanel area4 = new JPanel();
 		JPanel area5 = new JPanel();
@@ -155,9 +180,7 @@ public class VentanaRestaurante extends JFrame {
 		JPanel panelDerecha = new JPanel();
 		panelDerecha.setLayout(new GridLayout(6, 2));
 		DefaultListModel modeloPedido = new DefaultListModel();
-		ArrayList<Articulo> articulos = new ArrayList<Articulo>();
 
-		articulos.add(new Articulo("Ensalada ", 23, "", null, false));
 		JList listaArticulos = new JList();
 		JLabel nombrePedido = new JLabel("PEDIDO ACTUAL:");
 		JButton eliminar = new JButton("ELIMINAR");
@@ -173,7 +196,6 @@ public class VentanaRestaurante extends JFrame {
 
 		listaArticulos.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
-				System.out.println("BORRAR");
 				JList list = (JList) evt.getSource();
 				if (evt.getClickCount() == 2) {
 
@@ -185,11 +207,12 @@ public class VentanaRestaurante extends JFrame {
 
 		});
 		b1.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Articulo a = new Articulo();
-				articulos.add(a = new Articulo(text1.getText(), 12, "", null, false));
+				// crear objeto Articulo con datos base datos
+
+				Articulo a = new Articulo(text1.getText(), 12, "", null, false);
+				articulos.add(a);
 				modeloPedido.addElement(a.toString());
 
 			}
@@ -200,26 +223,30 @@ public class VentanaRestaurante extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (listaArticulos.getSelectedValue() == null) {
-					JOptionPane.showMessageDialog(null, "Selecciona un producto para eliminar");
-
-				} else {
-					Articulo articulo = (Articulo) listaArticulos.getSelectedValue();
-					int i=(int) listaArticulos.getSelectedValue();
-					articulos.remove(i);
-					modeloPedido.removeElement(articulo);
-
-
-				}
+				eliminarArticulo(listaArticulos, modeloPedido);
 
 			}
 		});
+		
+		
+		buscar.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				new VentanaBuscador();
+				
+
+			}
+		});
+		int precio = 12;
 		pagar.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new VentanaPago();
+				pedidoActual.setRestaurante(titulo.getText());
+				pedidoActual.setPreciototal(precio);
+				new VentanaPago(pedidoActual);
 				setVisible(false);
 
 			}
@@ -235,6 +262,38 @@ public class VentanaRestaurante extends JFrame {
 		panelGeneral.add(panelDerecha);
 		add(panelGeneral);
 
+	}
+
+	void actualizarPrecio(ArrayList<Articulo> articulos,ArrayList<JPanel> panelesArticulos) {
+		float precioFinal=0;
+		for (Articulo a : articulos) {
+			
+			precioFinal=precioFinal+a.getPrecio();
+			
+
+		}
+
+	}
+
+	void refrescarLista(ArrayList<Articulo> articulos, DefaultListModel modeloPedido) {
+		if (!articulos.isEmpty()) {
+			for (Articulo articulo : articulos) {
+				modeloPedido.addElement(articulo.toString());
+
+			}
+
+		}
+	}
+
+	void eliminarArticulo(JList listaArticulos, DefaultListModel modeloPedido) {
+		if (listaArticulos.getSelectedValue() == null) {
+			JOptionPane.showMessageDialog(null, "Selecciona un producto para eliminar");
+
+		} else {
+
+			modeloPedido.removeElement(listaArticulos.getSelectedValue());
+
+		}
 	}
 
 	public static void main(String[] args) {
