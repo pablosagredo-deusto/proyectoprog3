@@ -213,6 +213,7 @@ public class VentanaRestaurante extends JFrame {
 
 				Articulo a = new Articulo(text1.getText(), 12, "", null, false);
 				articulos.add(a);
+				System.out.println("add");
 				modeloPedido.addElement(a.toString());
 
 			}
