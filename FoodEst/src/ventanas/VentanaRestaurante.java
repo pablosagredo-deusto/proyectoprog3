@@ -7,28 +7,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import clases.Articulo;
-import clases.Pedido;
+import clases.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 public class VentanaRestaurante extends JFrame {
 
@@ -59,6 +40,7 @@ public class VentanaRestaurante extends JFrame {
 		panelNombre.setEnabled(false);
 		panelNombre.setDividerSize(0);
 		JLabel titulo = new JLabel("KFC");
+		JButton atras = new JButton(new ImageIcon("src/imagenes/logoAtras2.png"));
 
 		Font font = new Font("Cooper Black", Font.BOLD, 40);
 		titulo.setFont(font);
@@ -97,7 +79,8 @@ public class VentanaRestaurante extends JFrame {
 		panelNombre.add(panelNombreArriba);
 		panelNombre.add(panelNombreAbajo);
 
-		panelNombreArriba.add(titulo, BorderLayout.WEST);
+		panelNombreArriba.add(titulo, BorderLayout.CENTER);
+		panelNombreArriba.add(atras, BorderLayout.WEST);
 
 		panelIzquierda.add(panelNombre);
 
@@ -157,7 +140,7 @@ public class VentanaRestaurante extends JFrame {
 		DefaultListModel modeloPedido = new DefaultListModel();
 		ArrayList<Articulo> articulos = new ArrayList<Articulo>();
 
-		articulos.add(new Articulo("Ensalada ", 23, "", null, false));
+		articulos.add(new Articulo("Ensalada ", 23.0, "", null, false, TipoProducto.OTRO));
 		JList listaArticulos = new JList();
 		JLabel nombrePedido = new JLabel("PEDIDO ACTUAL:");
 		JButton eliminar = new JButton("ELIMINAR");
@@ -222,6 +205,15 @@ public class VentanaRestaurante extends JFrame {
 				new VentanaPago();
 				setVisible(false);
 
+			}
+		});
+		
+		atras.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
 			}
 		});
 
