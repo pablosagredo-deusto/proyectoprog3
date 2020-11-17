@@ -7,19 +7,19 @@ public class Pedido {
 	Restaurante restaurante;
 	Direccion direccion;
 	EstadoPedido estado;
-	ArrayList<Articulo> articulos;
+	ArrayList<Producto> productos;
 	float preciototal;
 	String metodoPago;
 	boolean cubiertos;
 
-	public Pedido(int id, Restaurante restaurante, Direccion direccion, EstadoPedido estado, ArrayList<Articulo> articulos,
+	public Pedido(int id, Restaurante restaurante, Direccion direccion, EstadoPedido estado, ArrayList<Producto> productos,
 			float preciototal, String metodoPago,boolean cubiertos) {
 		super();
 		this.id = id;
 		this.restaurante = restaurante;
 		this.direccion = direccion;
 		this.estado = estado;
-		this.articulos = articulos;
+		this.productos = productos;
 		this.preciototal = preciototal;
 		this.metodoPago = metodoPago;
 		this.cubiertos=cubiertos;
@@ -31,7 +31,7 @@ public class Pedido {
 		this.restaurante = new Restaurante();
 		this.direccion = new Direccion();
 		this.estado = EstadoPedido.OTRO;
-		this.articulos = new ArrayList<Articulo>();
+		this.productos = new ArrayList<Producto>();
 		this.preciototal = 0;
 		this.metodoPago = "";
 		this.cubiertos=false;
@@ -77,12 +77,12 @@ public class Pedido {
 		this.estado = estado;
 	}
 
-	public ArrayList<Articulo> getArticulos() {
-		return articulos;
+	public ArrayList<Producto> getArticulos() {
+		return productos;
 	}
 
-	public void setArticulos(ArrayList<Articulo> articulos) {
-		this.articulos = articulos;
+	public void setArticulos(ArrayList<Producto> productos) {
+		this.productos = productos;
 	}
 
 	public float getPreciototal() {
@@ -104,7 +104,7 @@ public class Pedido {
 	@Override
 	public String toString() {
 		return "Pedido" + id + ", restaurante=" + restaurante + ", direccion=" + direccion + ", estado=" + estado
-				+ ", articulos=" + articulos + ", preciototal=" + preciototal + ", metodopago=" + metodoPago
+				+ ", articulos=" + productos + ", preciototal=" + preciototal + ", metodopago=" + metodoPago
 				+ ", cubiertos=" + cubiertos + "";
 	}
 	

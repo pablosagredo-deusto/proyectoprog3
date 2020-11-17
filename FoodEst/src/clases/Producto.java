@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Articulo {
+public class Producto {
 	protected String nombre;
 	protected double precio;
 	protected String caracteristica;
@@ -16,7 +16,7 @@ public class Articulo {
 	
 	
 	
-	public Articulo(String nombre, double precio, String caracteristica, List<Ingrediente> ingredientes,
+	public Producto(String nombre, double precio, String caracteristica, List<Ingrediente> ingredientes,
 			boolean vegano, TipoProducto tipo) {
 		super();
 		this.nombre = nombre;
@@ -27,7 +27,7 @@ public class Articulo {
 		this.tipo = tipo;
 	}
 	
-	public Articulo() {
+	public Producto() {
 		super();
 		this.nombre = "";
 		this.precio = 0;

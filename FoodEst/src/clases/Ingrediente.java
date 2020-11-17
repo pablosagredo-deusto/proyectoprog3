@@ -17,7 +17,7 @@ public class Ingrediente {
 	public Ingrediente() {
 		super();
 		this.nombre = "";
-		this.id = "";
+		this.id = 0;
 
 		this.calorias = 0;
 		

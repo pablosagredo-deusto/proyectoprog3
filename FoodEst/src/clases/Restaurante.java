@@ -9,18 +9,18 @@ public class Restaurante {
 	protected String categoria;
 	protected int id;
 	protected Direccion direccion;
-	protected List<Articulo> articulos;
+	protected List<Producto> productos;
 	protected boolean enviogratis;
 	
 	
-	public Restaurante(String nombre, String categoria, int id, Direccion direccion, List<Articulo> articulos,
+	public Restaurante(String nombre, String categoria, int id, Direccion direccion, List<Producto> productos,
 			boolean enviogratis) {
 		super();
 		this.nombre = nombre;
 		this.categoria = categoria;
 		this.id = id;
 		this.direccion = direccion;
-		this.articulos = articulos;
+		this.productos = productos;
 		this.enviogratis = enviogratis;
 	}
 	
@@ -30,7 +30,7 @@ public class Restaurante {
 		this.categoria = "";
 		this.id = 0;
 		this.direccion = new Direccion();
-		this.articulos = new ArrayList<Articulo>();
+		this.productos = new ArrayList<Producto>();
 		this.enviogratis = false;
 	}
 
@@ -66,12 +66,12 @@ public class Restaurante {
 		this.direccion = direccion;
 	}
 
-	public List<Articulo> getArticulos() {
-		return articulos;
+	public List<Producto> getArticulos() {
+		return productos;
 	}
 
-	public void setArticulos(ArrayList<Articulo> articulos) {
-		this.articulos = articulos;
+	public void setArticulos(ArrayList<Producto> productos) {
+		this.productos = productos;
 	}
 
 	public boolean isEnviogratis() {
@@ -85,7 +85,7 @@ public class Restaurante {
 	@Override
 	public String toString() {
 		return "Restaurante [nombre=" + nombre + ", categoria=" + categoria + ", id=" + id + ", direccion=" + direccion
-				+ ", articulos=" + articulos + ", enviogratis=" + enviogratis + "]";
+				+ ", articulos=" + productos + ", enviogratis=" + enviogratis + "]";
 	}
 	
 	

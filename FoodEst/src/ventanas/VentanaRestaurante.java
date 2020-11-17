@@ -13,7 +13,7 @@ import javax.swing.*;
 
 public class VentanaRestaurante extends JFrame {
 
-	public VentanaRestaurante() {
+	public VentanaRestaurante(JFrame ventanaAnterior) {
 		super("restaurante");
 		setSize(1150, 505);
 		setVisible(true);
@@ -212,6 +212,8 @@ public class VentanaRestaurante extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				ventanaAnterior.setVisible(true);
+				dispose();
 				
 				
 			}
@@ -228,7 +230,7 @@ public class VentanaRestaurante extends JFrame {
 		add(panelGeneral);
 
 	}
-
+/*
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -239,5 +241,5 @@ public class VentanaRestaurante extends JFrame {
 		});
 
 	}
-
+*/
 }
