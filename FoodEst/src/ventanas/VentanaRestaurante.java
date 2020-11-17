@@ -119,7 +119,7 @@ public class VentanaRestaurante extends JFrame {
 		JTextArea text2 = new JTextArea("INGREDIENTES:\n -Pan\n -Lechuga \n -Carne");
 		text2.setEditable(false);
 		JButton b2 = new JButton("AÑADIR");
-		JLabel text3 = new JLabel("HAMBURGUESA");
+		JLabel text3 = new JLabel("Perrito");
 		JTextArea text4 = new JTextArea("INGREDIENTES:\n -Pan\n -Lechuga \n -Carne");
 		text2.setEditable(false);
 
@@ -132,8 +132,6 @@ public class VentanaRestaurante extends JFrame {
 			texto.setEditable(false);
 			panelesArticulos.add(articulo);
 			
-			
-
 		}
 		JPanel area1 = new JPanel();
 		area1.setLayout(new BorderLayout());
