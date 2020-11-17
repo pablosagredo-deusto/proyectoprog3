@@ -80,7 +80,8 @@ public class VentanaRestaurante extends JFrame {
 
 		JButton buscar = new JButton();
 		ImageIcon fot = new ImageIcon("src/Imagenes/key.png");
-		ArrayList<Articulo> articulos = new ArrayList<Articulo>();
+		ArrayList<Articulo> articulos = new ArrayList<Articulo>();//articulos añadidos a pedidos
+		ArrayList<Articulo> items= new ArrayList<Articulo>();
 		articulos.add(new Articulo());
 		articulos.add(new Articulo());
 		articulos.add(new Articulo());
@@ -229,7 +230,7 @@ public class VentanaRestaurante extends JFrame {
 			}
 		});
 		
-		
+		//JFrame jj=new JFrame(this);
 		buscar.addActionListener(new ActionListener() {
 
 			@Override
@@ -240,6 +241,19 @@ public class VentanaRestaurante extends JFrame {
 
 			}
 		});
+		
+		entrantes.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				area1.setVisible(false);
+				
+
+			}
+		});
+		
+		
+		
 		int precio = 12;
 		pagar.addActionListener(new ActionListener() {
 
