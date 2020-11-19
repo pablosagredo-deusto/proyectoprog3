@@ -7,32 +7,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import clases.Articulo;
-import clases.Pedido;
+import clases.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 public class VentanaRestaurante extends JFrame {
 
-	public VentanaRestaurante() {
+	public VentanaRestaurante(JFrame ventanaAnterior) {
 		super("restaurante");
 		setSize(1150, 505);
 		setVisible(true);
@@ -59,6 +40,7 @@ public class VentanaRestaurante extends JFrame {
 		panelNombre.setEnabled(false);
 		panelNombre.setDividerSize(0);
 		JLabel titulo = new JLabel("KFC");
+		JButton atras = new JButton(new ImageIcon("src/imagenes/logoAtras2.png"));
 
 		Font font = new Font("Cooper Black", Font.BOLD, 40);
 		titulo.setFont(font);
@@ -80,12 +62,10 @@ public class VentanaRestaurante extends JFrame {
 
 		JButton buscar = new JButton();
 		ImageIcon fot = new ImageIcon("src/Imagenes/key.png");
-		ArrayList<Articulo> articulos = new ArrayList<Articulo>();//articulos añadidos a pedidos
-		ArrayList<Articulo> items= new ArrayList<Articulo>();
-		articulos.add(new Articulo());
-		articulos.add(new Articulo());
-		articulos.add(new Articulo());
-		Pedido pedidoActual = new Pedido(000, "", "", "", articulos, 0, "", false);
+		ArrayList<Producto> articulos = new ArrayList<Producto>();//articulos añadidos a pedidos
+		ArrayList<Producto> items= new ArrayList<Producto>();
+		articulos.add(new Producto());
+		Pedido pedidoActual = new Pedido(000,null,null,null,articulos,0,"",false);
 
 		buscar.setSize(40, 40);
 		Icon icono = new ImageIcon(
@@ -105,7 +85,13 @@ public class VentanaRestaurante extends JFrame {
 		panelNombre.add(panelNombreArriba);
 		panelNombre.add(panelNombreAbajo);
 
+
 		panelNombreArriba.add(titulo, BorderLayout.WEST);
+
+		panelNombreArriba.add(titulo, BorderLayout.CENTER);
+		panelNombreArriba.add(atras, BorderLayout.WEST);
+
+
 		panelIzquierda.add(panelNombre);
 
 		// Panel izquierdaAbajo
@@ -124,7 +110,7 @@ public class VentanaRestaurante extends JFrame {
 		text2.setEditable(false);
 
 		// PANEL1-foto1
-		for (Articulo a : articulos) {
+		for (Producto a : articulos) {
 			JPanel articulo=new JPanel();
 			JButton añadir = new JButton("AÑADIR");
 			JLabel nombre = new JLabel("HAMBURGUESA");
@@ -180,13 +166,16 @@ public class VentanaRestaurante extends JFrame {
 		panelDerecha.setLayout(new GridLayout(6, 2));
 		DefaultListModel modeloPedido = new DefaultListModel();
 
+
+		articulos.add(new Producto("Ensalada ", 23.0, "", null, false, TipoProducto.OTRO));
 		JList listaArticulos = new JList();
 		JLabel nombrePedido = new JLabel("PEDIDO ACTUAL:");
 		JButton eliminar = new JButton("ELIMINAR");
 		JButton pagar = new JButton("PAGAR");
 
 		if (!articulos.isEmpty()) {
-			for (Articulo articulo : articulos) {
+			for (Producto articulo : articulos) {
+				
 				modeloPedido.addElement(articulo.toString());
 
 			}
@@ -198,7 +187,7 @@ public class VentanaRestaurante extends JFrame {
 				JList list = (JList) evt.getSource();
 				if (evt.getClickCount() == 2) {
 
-					Articulo articulo = (Articulo) listaArticulos.getSelectedValue();
+					Producto articulo = (Producto) listaArticulos.getSelectedValue();
 
 				}
 
@@ -210,9 +199,10 @@ public class VentanaRestaurante extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// crear objeto Articulo con datos base datos
 
-				Articulo a = new Articulo(text1.getText(), 12, "", null, false);
+				
+				Producto a = new Producto(text1.getText(),12,"",null,false,null);
 				articulos.add(a);
-				System.out.println("add22");
+				System.out.println("add2");
 				modeloPedido.addElement(a.toString());
 
 			}
@@ -257,16 +247,27 @@ public class VentanaRestaurante extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pedidoActual.setRestaurante(titulo.getText());
 				pedidoActual.setPreciototal(precio);
 				new VentanaPago(pedidoActual);
 				setVisible(false);
 
 			}
 		});
+		
+		atras.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaAnterior.setVisible(true);
+				dispose();
+				
+				
+			}
+		});
 
 		listaArticulos.setModel(modeloPedido);
 		panelDerecha.add(listaArticulos, 1, 0);
+
 		panelDerecha.add(eliminar, 2, 1);
 		panelDerecha.add(pagar, 2, 2);
 
@@ -277,9 +278,10 @@ public class VentanaRestaurante extends JFrame {
 
 	}
 
-	void actualizarPrecio(ArrayList<Articulo> articulos,ArrayList<JPanel> panelesArticulos) {
-		float precioFinal=0;
-		for (Articulo a : articulos) {
+
+	void actualizarPrecio(ArrayList<Producto> articulos,ArrayList<JPanel> panelesArticulos) {
+		double precioFinal=0;
+		for (Producto a : articulos) {
 			
 			precioFinal=precioFinal+a.getPrecio();
 			
@@ -288,9 +290,9 @@ public class VentanaRestaurante extends JFrame {
 
 	}
 
-	void refrescarLista(ArrayList<Articulo> articulos, DefaultListModel modeloPedido) {
+	void refrescarLista(ArrayList<Producto> articulos, DefaultListModel modeloPedido) {
 		if (!articulos.isEmpty()) {
-			for (Articulo articulo : articulos) {
+			for (Producto articulo : articulos) {
 				modeloPedido.addElement(articulo.toString());
 
 			}
@@ -310,14 +312,7 @@ public class VentanaRestaurante extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				new VentanaRestaurante();
-
-			}
-		});
-
+		new VentanaRestaurante(null);
 	}
 
 }
