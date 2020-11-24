@@ -55,12 +55,17 @@ public class VentanaDirecciones extends JFrame{
 		
 			//panel Añadir direcciones
 		JPanel panelAñadir = new JPanel();
-		JLabel labelLogoUbicacion = new JLabel();
-		labelLogoUbicacion.setIcon(new ImageIcon("src/imagenes/ubicacion.png"));
 		JButton añadir = new JButton("AÑADIR");
-		JTextField direccion = new JTextField("C/Municipio/Calle/Portal/Piso-Puerta");
+		
+		
 		JTextField nombreDireccion = new JTextField("Nombre de dirección");
 		JTextField codigoPostal = new JTextField("Código postal");
+		JTextField calle = new JTextField("Calle");
+		JTextField municipio = new JTextField("Municipio");
+		JTextField portal = new JTextField("Portal");
+		JTextField pisoPuerta = new JTextField("Piso-puerta");
+		
+		
 		JLabel labelLogo = new JLabel();
 		labelLogo.setIcon(new ImageIcon("src/Imagenes/ubicacion.png"));
 		
@@ -68,7 +73,10 @@ public class VentanaDirecciones extends JFrame{
 		panelAñadir.add(labelLogo);
 		panelAñadir.add(nombreDireccion);
 		panelAñadir.add(codigoPostal);
-		panelAñadir.add(direccion);
+		panelAñadir.add(municipio);
+		panelAñadir.add(calle);
+		panelAñadir.add(portal);
+		panelAñadir.add(pisoPuerta);
 		panelAñadir.add(añadir);
 		
 		
@@ -97,16 +105,16 @@ public class VentanaDirecciones extends JFrame{
 		JScrollPane scrollPanelDirecciones = new JScrollPane(panelDirecciones);
 		panelAbajo.add(panelDirecciones);
 		
-		JList listaDirecciones = new JList();
-		DefaultListModel modeloListaDirecciones = new DefaultListModel();
+		JList<Direccion> listaDirecciones = new JList<Direccion>();
+		DefaultListModel<Direccion> modeloListaDirecciones = new DefaultListModel<Direccion>();
 		listaDirecciones.setModel(modeloListaDirecciones);
 		panelDirecciones.add(listaDirecciones);
 		
 		JPanel panelAbajoBotones = new JPanel();
-		JButton botonBorrarUbicacion =  new JButton("Borrar direccion");
-		JButton botonBorrarTodasUbicaciones =  new JButton("Borrar todas");
-		panelAbajoBotones.add(botonBorrarUbicacion);
-		panelAbajoBotones.add(botonBorrarTodasUbicaciones);
+		JButton botonBorrarDireccion =  new JButton("Borrar direccion");
+		JButton botonBorrarTodasDirecciones =  new JButton("Borrar todas");
+		panelAbajoBotones.add(botonBorrarDireccion);
+		panelAbajoBotones.add(botonBorrarTodasDirecciones);
 		panelAbajo.add(panelAbajoBotones);
 		
 		panelGeneral.add(panelAbajo);
@@ -133,9 +141,24 @@ public class VentanaDirecciones extends JFrame{
             	nombreDireccion.setText("");
             }
         });
-		direccion.addMouseListener(new MouseAdapter() {
+		municipio.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-            	direccion.setText("");
+            	municipio.setText("");
+            }
+        });
+		calle.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+            	calle.setText("");
+            }
+        });
+		portal.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+            	portal.setText("");
+            }
+        });
+		pisoPuerta.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+            	pisoPuerta.setText("");
             }
         });
 		codigoPostal.addMouseListener(new MouseAdapter() {
@@ -149,10 +172,31 @@ public class VentanaDirecciones extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Direccion nueva = new Direccion();
-				nueva.setDireccion(direccion.getText());
-				nueva.setCodigoPostal(Integer.parseInt(codigoPostal.getText()));
 				nueva.setNombre(nombreDireccion.getText());
+				nueva.setCodigoPostal(Integer.parseInt(codigoPostal.getText()));
+				nueva.setMunicipio(municipio.getText());
+				nueva.setCalle(calle.getText());
+				nueva.setPortal(Integer.parseInt(portal.getText()));
+				nueva.setPisoPuerta(pisoPuerta.getText());
 				modeloListaDirecciones.addElement(nueva);
+				
+			}
+		});
+		
+		botonBorrarTodasDirecciones.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				modeloListaDirecciones.removeAllElements();
+				//queda quitarlos de donde se guarden : bd o fichero
+			}
+		});
+		
+		botonBorrarDireccion.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaBorrarDireccion(modeloListaDirecciones);
 				
 			}
 		});

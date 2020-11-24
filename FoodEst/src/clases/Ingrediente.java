@@ -3,7 +3,6 @@ package clases;
 public class Ingrediente {
 	protected String nombre;
 	protected int id;
-
 	protected int calorias;
 
 	public Ingrediente(String nombre, int id, int calorias) {

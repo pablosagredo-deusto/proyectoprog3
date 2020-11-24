@@ -14,11 +14,11 @@ public class VentanaPrincipal extends JFrame {
 		
 		
 		
-		JButton supermercado =  new JButton("Telepizza");
-		JButton enviosExpres =  new JButton("Goiko-grill");
+		JButton telepizza =  new JButton("Telepizza");
+		JButton goikoGrill =  new JButton("Goiko-grill");
 		JButton kfc =  new JButton("KFC");
-		JButton comida =  new JButton("Deusto-Burguer");
-		JButton donacion =  new JButton("Pizza-Hut");
+		JButton deustoBurger =  new JButton("Deusto-Burguer");
+		JButton pizzaHut =  new JButton("Pizza-Hut");
 		JTextField buscador = new JTextField("¿Qué estas buscando?");
 		JButton buscar =  new JButton("Buscar");
 		
@@ -89,23 +89,18 @@ public class VentanaPrincipal extends JFrame {
 		
 		
 		
-		
-		
-		
-		
-		
 		//PANEL ABAJO
 		JPanel panelBotones = new JPanel();
 		panelBotones.setLayout(new GridLayout(1,9));
-		panelBotones.add(supermercado);
+		panelBotones.add(telepizza);
 		panelBotones.add(new JPanel());
-		panelBotones.add(enviosExpres);
+		panelBotones.add(goikoGrill);
 		panelBotones.add(new JPanel());
 		panelBotones.add(kfc);
 		panelBotones.add(new JPanel());
-		panelBotones.add(comida);
+		panelBotones.add(deustoBurger);
 		panelBotones.add(new JPanel());
-		panelBotones.add(donacion);
+		panelBotones.add(pizzaHut);
 		
 		
 		JPanel panelAbajo =  new JPanel();
@@ -130,7 +125,6 @@ public class VentanaPrincipal extends JFrame {
             }
         });
 		
-		supermercado.requestFocusInWindow();
 		
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -139,15 +133,27 @@ public class VentanaPrincipal extends JFrame {
 		setVisible(true);
 		
 		JFrame thisFrame = this;
-		kfc.addActionListener(new ActionListener() {
+		
+		//Action listeners para los botones
+		
+		ActionListener actionBotones = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				new VentanaRestaurante(thisFrame);
 				setVisible(false);
 			}
-		});
+		
+		};
+		
+		
+		telepizza.addActionListener(actionBotones);
+		goikoGrill.addActionListener(actionBotones);
+		kfc.addActionListener(actionBotones);
+		deustoBurger.addActionListener(actionBotones);
+		pizzaHut.addActionListener(actionBotones);
+		
 				
 	}
 	

@@ -5,19 +5,19 @@ import java.io.Serializable;
 public class Direccion implements Serializable{
 	protected String nombre;
 	protected String calle;
-	protected String pueblo;
+	protected String municipio;
 	protected int portal;
-	protected String puerta;
+	protected String pisoPuerta;
 	protected int codigoPostal;
 	
 	
-	public Direccion(String nombre, String calle, String pueblo, int portal, String puerta, int codigoPostal) {
+	public Direccion(String nombre, String calle, String municipio, int portal, String pisoPuerta, int codigoPostal) {
 		super();
 		this.nombre =  nombre;
 		this.calle =  calle;
-		this.pueblo =  pueblo;
+		this.municipio =  municipio;
 		this.portal =  portal;
-		this.puerta =  puerta;
+		this.pisoPuerta =  pisoPuerta;
 		this.codigoPostal =  codigoPostal;
 	}
 	
@@ -25,9 +25,9 @@ public class Direccion implements Serializable{
 		super();
 		this.nombre =  "";
 		this.calle =  "";
-		this.pueblo =  "";
+		this.municipio =  "";
 		this.portal =  0;
-		this.puerta =  "";
+		this.pisoPuerta =  "";
 		this.codigoPostal =  0;
 	}
 	
@@ -39,12 +39,12 @@ public class Direccion implements Serializable{
 		this.calle = calle;
 	}
 
-	public String getPueblo() {
-		return pueblo;
+	public String getMunicipio() {
+		return municipio;
 	}
 
-	public void setPueblo(String pueblo) {
-		this.pueblo = pueblo;
+	public void setMunicipio(String municipio) {
+		this.municipio = municipio;
 	}
 
 	public int getPortal() {
@@ -55,12 +55,12 @@ public class Direccion implements Serializable{
 		this.portal = portal;
 	}
 
-	public String getPuerta() {
-		return puerta;
+	public String getPisoPuerta() {
+		return pisoPuerta;
 	}
 
-	public void setPuerta(String puerta) {
-		this.puerta = puerta;
+	public void setPisoPuerta(String pisoPuerta) {
+		this.pisoPuerta = pisoPuerta;
 	}
 
 	public int getCodigoPostal() {
@@ -80,8 +80,7 @@ public class Direccion implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Direccion [nombre=" + nombre + ", calle=" + calle + ", pueblo=" + pueblo + ", portal=" + portal
-				+ ", puerta=" + puerta + ", codigoPostal=" + codigoPostal + "]";
+		return nombre + ": " + municipio + " (" + codigoPostal + ") " + "/" + calle + "/" + portal + "/" + pisoPuerta;
 	}
 	
 

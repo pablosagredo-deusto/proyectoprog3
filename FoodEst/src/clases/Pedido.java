@@ -20,6 +20,7 @@ public class Pedido {
 		this.direccion = direccion;
 		this.estado = estado;
 		this.productos = productos;
+		
 		this.preciototal = preciototal;
 		this.metodoPago = metodoPago;
 		this.cubiertos=cubiertos;

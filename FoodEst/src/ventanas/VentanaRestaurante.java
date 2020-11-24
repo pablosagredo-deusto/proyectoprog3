@@ -138,29 +138,29 @@ public class VentanaRestaurante extends JFrame {
 		JPanel panelDerecha = new JPanel();
 		panelDerecha.setLayout(new GridLayout(6, 2));
 		DefaultListModel modeloPedido = new DefaultListModel();
-		ArrayList<Articulo> articulos = new ArrayList<Articulo>();
+		ArrayList<Producto> productos = new ArrayList<Producto>();
 
-		articulos.add(new Articulo("Ensalada ", 23.0, "", null, false, TipoProducto.OTRO));
-		JList listaArticulos = new JList();
+		productos.add(new Producto("Ensalada ", 23.0, "", null, false, TipoProducto.OTRO));
+		JList listaProductos = new JList();
 		JLabel nombrePedido = new JLabel("PEDIDO ACTUAL:");
 		JButton eliminar = new JButton("ELIMINAR");
 		JButton pagar = new JButton("PAGAR");
 
-		if (!articulos.isEmpty()) {
-			for (Articulo articulo : articulos) {
-				modeloPedido.addElement(articulo.toString());
+		if (!productos.isEmpty()) {
+			for (Producto producto : productos) {
+				modeloPedido.addElement(producto.toString());
 
 			}
 
 		}
 
-		listaArticulos.addMouseListener(new MouseAdapter() {
+		listaProductos.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				System.out.println("BORRAR");
 				JList list = (JList) evt.getSource();
 				if (evt.getClickCount() == 2) {
 
-					Articulo articulo = (Articulo) listaArticulos.getSelectedValue();
+					Producto producto = (Producto) listaProductos.getSelectedValue();
 
 				}
 
@@ -171,8 +171,9 @@ public class VentanaRestaurante extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Articulo a = new Articulo();
-				articulos.add(a = new Articulo(text1.getText(), 12, "", null, false));
+				Producto a = new Producto();
+				//Corregir el constructor!!
+				productos.add(a = new Producto(text1.getText(), 12, "", null, false));
 				modeloPedido.addElement(a.toString());
 
 			}
@@ -183,14 +184,14 @@ public class VentanaRestaurante extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (listaArticulos.getSelectedValue() == null) {
+				if (listaProductos.getSelectedValue() == null) {
 					JOptionPane.showMessageDialog(null, "Selecciona un producto para eliminar");
 
 				} else {
-					Articulo articulo = (Articulo) listaArticulos.getSelectedValue();
-					int i=(int) listaArticulos.getSelectedValue();
-					articulos.remove(i);
-					modeloPedido.removeElement(articulo);
+					Producto producto = (Producto) listaProductos.getSelectedValue();
+					int i=(int) listaProductos.getSelectedValue();
+					productos.remove(i);
+					modeloPedido.removeElement(producto);
 
 
 				}
@@ -219,8 +220,8 @@ public class VentanaRestaurante extends JFrame {
 			}
 		});
 
-		listaArticulos.setModel(modeloPedido);
-		panelDerecha.add(listaArticulos, 1, 0);
+		listaProductos.setModel(modeloPedido);
+		panelDerecha.add(listaProductos, 1, 0);
 		panelDerecha.add(eliminar, 2, 1);
 		panelDerecha.add(pagar, 2, 2);
 
@@ -230,16 +231,4 @@ public class VentanaRestaurante extends JFrame {
 		add(panelGeneral);
 
 	}
-/*
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				new VentanaRestaurante();
-
-			}
-		});
-
-	}
-*/
 }
