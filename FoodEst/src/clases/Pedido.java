@@ -19,7 +19,12 @@ public class Pedido {
 		this.restaurante = restaurante;
 		this.direccion = direccion;
 		this.estado = estado;
+<<<<<<< HEAD
 		this.articulos = articulos;
+=======
+		this.productos = productos;
+		
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 		this.preciototal = preciototal;
 		this.metodopago = metodopago;
 		this.cubiertos=cubiertos;

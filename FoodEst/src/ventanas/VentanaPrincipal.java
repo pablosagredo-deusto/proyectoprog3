@@ -8,17 +8,27 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import clases.Usuario;
+
 public class VentanaPrincipal extends JFrame {
 	
-	public VentanaPrincipal() {
+	public VentanaPrincipal(Usuario usuario) {
 		
 		
 		
+<<<<<<< HEAD
 		JButton supermercado =  new JButton("Supermercados");
 		JButton enviosExpres =  new JButton("Envios expres");
 		JButton tiendas =  new JButton("Tiendas");
 		JButton comida =  new JButton("Comida");
 		JButton donacion =  new JButton("Donación");
+=======
+		JButton telepizza =  new JButton("Telepizza");
+		JButton goikoGrill =  new JButton("Goiko-grill");
+		JButton kfc =  new JButton("KFC");
+		JButton deustoBurger =  new JButton("Deusto-Burguer");
+		JButton pizzaHut =  new JButton("Pizza-Hut");
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 		JTextField buscador = new JTextField("¿Qué estas buscando?");
 		JButton buscar =  new JButton("Buscar");
 		
@@ -51,9 +61,15 @@ public class VentanaPrincipal extends JFrame {
 		panelArribaIzquierda.setLayout(new GridLayout(1, 3));
 		JPanel panelArribaIzquierda1 = new JPanel();
 		JMenuBar barra = new JMenuBar();
-		JMenu menuUbicacion = new JMenu("Ubicacion");
+		JMenu menuDireccion = new JMenu("Direccion");
+		JMenuItem misDirecciones =  new JMenuItem("Mis direcciones");
+		menuDireccion.add(misDirecciones);
 		JMenu menuPerfil = new JMenu("Perfil");
-		barra.add(menuUbicacion);
+		JMenuItem verPerfil =  new JMenuItem("Mi perfil");
+		JMenuItem otrasOpcionesPerfil =  new JMenuItem("Otras opciones");
+		menuPerfil.add(verPerfil);
+		menuPerfil.add(otrasOpcionesPerfil);
+		barra.add(menuDireccion);
 		barra.add(menuPerfil);
 		panelArribaIzquierda1.add(barra);
 		panelArribaIzquierda.add(panelArribaIzquierda1);
@@ -89,23 +105,18 @@ public class VentanaPrincipal extends JFrame {
 		
 		
 		
-		
-		
-		
-		
-		
 		//PANEL ABAJO
 		JPanel panelBotones = new JPanel();
 		panelBotones.setLayout(new GridLayout(1,9));
-		panelBotones.add(supermercado);
+		panelBotones.add(telepizza);
 		panelBotones.add(new JPanel());
-		panelBotones.add(enviosExpres);
+		panelBotones.add(goikoGrill);
 		panelBotones.add(new JPanel());
 		panelBotones.add(tiendas);
 		panelBotones.add(new JPanel());
-		panelBotones.add(comida);
+		panelBotones.add(deustoBurger);
 		panelBotones.add(new JPanel());
-		panelBotones.add(donacion);
+		panelBotones.add(pizzaHut);
 		
 		
 		JPanel panelAbajo =  new JPanel();
@@ -130,7 +141,6 @@ public class VentanaPrincipal extends JFrame {
             }
         });
 		
-		supermercado.requestFocusInWindow();
 		
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -138,6 +148,60 @@ public class VentanaPrincipal extends JFrame {
 		setSize(1150, 505);
 		setVisible(true);
 		
+<<<<<<< HEAD
+=======
+		JFrame thisFrame = this;
+		
+		//Action listeners para los botones
+		
+		ActionListener actionBotones = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				
+				new VentanaRestaurante(thisFrame);
+				setVisible(false);
+			}
+		
+		};
+		
+		
+		telepizza.addActionListener(actionBotones);
+		goikoGrill.addActionListener(actionBotones);
+		kfc.addActionListener(actionBotones);
+		deustoBurger.addActionListener(actionBotones);
+		pizzaHut.addActionListener(actionBotones);
+		
+		
+		buscar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String busqueda = buscar.getText();
+				new VentanaBuscador(thisFrame ,busqueda);
+				setVisible(false);
+			}
+		});
+		verPerfil.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaPerfil(thisFrame, usuario); //Recibira un usuario
+				setVisible(false);
+			}
+		});
+		
+		
+		misDirecciones.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaDirecciones(thisFrame, usuario); //Esta ventana recibira un usuario
+				setVisible(false);
+			}
+		});
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 				
 	}
 	
@@ -147,7 +211,8 @@ public class VentanaPrincipal extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new VentanaPrincipal();
+				Usuario usuario = new Usuario(); //Este ususario es para probar la ventana
+				new VentanaPrincipal(usuario);
 				
 			}
 		});

@@ -1,11 +1,19 @@
 package clases;
 
 public class Ingrediente {
+<<<<<<< HEAD
 	String nombre;
 	String id;
 	String tipo;
 
 	public Ingrediente(String nombre, String id, String tipo) {
+=======
+	protected String nombre;
+	protected int id;
+	protected int calorias;
+
+	public Ingrediente(String nombre, int id, int calorias) {
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 		super();
 		this.nombre = nombre;
 		this.id = id;

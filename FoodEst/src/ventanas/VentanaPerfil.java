@@ -3,6 +3,8 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import javax.swing.JTextField;
+
+import clases.Usuario;
 
 
 public class VentanaPerfil extends JFrame{
@@ -32,9 +36,10 @@ public class VentanaPerfil extends JFrame{
 	JButton guardar;
 	JButton cerrar;
 	JButton borrar;
+	JButton volver;
 	
 	
-	public VentanaPerfil() {
+	public VentanaPerfil(JFrame ventanaAnterior, Usuario usuario) {
 		setTitle("Perfil");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -136,6 +141,28 @@ public class VentanaPerfil extends JFrame{
 		borrar.setFont(new Font("Arial", Font.PLAIN, 12));
 		borrar.setBounds(950, 410, 140, 30);
 		pnlCentral.add(borrar);
+		
+		volver = new JButton();
+		volver.setText("Volver");
+		volver.setBackground(Color.white);
+		volver.setFont(new Font("Arial", Font.PLAIN, 12));
+		volver.setBounds(40, 410, 140, 30);
+		pnlCentral.add(volver);
+		
+		
+		
+		
+		volver.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaAnterior.setVisible(true);
+				dispose();
+				
+			}
+		});
+		
+		
 		
 		setVisible(true);
 	}

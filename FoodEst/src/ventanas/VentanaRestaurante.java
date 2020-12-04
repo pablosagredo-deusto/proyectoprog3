@@ -69,7 +69,7 @@ public class VentanaRestaurante extends JFrame {
 
 		buscar.setSize(40, 40);
 		Icon icono = new ImageIcon(
-				fot.getImage().getScaledInstance(buscar.getWidth(), buscar.getHeight(), Image.SCALE_DEFAULT));
+		fot.getImage().getScaledInstance(buscar.getWidth(), buscar.getHeight(), Image.SCALE_DEFAULT));
 		buscar.setIcon(icono);
 		buscar.repaint();
 		buscar.setOpaque(false);
@@ -165,29 +165,48 @@ public class VentanaRestaurante extends JFrame {
 		JPanel panelDerecha = new JPanel();
 		panelDerecha.setLayout(new GridLayout(6, 2));
 		DefaultListModel modeloPedido = new DefaultListModel();
+<<<<<<< HEAD
+=======
+		ArrayList<Producto> productos = new ArrayList<Producto>();
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 
+<<<<<<< HEAD
 
 		articulos.add(new Producto("Ensalada ", 23.0, "", null, false, TipoProducto.OTRO));
 		JList listaArticulos = new JList();
+=======
+		productos.add(new Producto("Ensalada ", 23.0, "", null, false, TipoProducto.OTRO));
+		JList listaProductos = new JList();
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 		JLabel nombrePedido = new JLabel("PEDIDO ACTUAL:");
 		JButton eliminar = new JButton("ELIMINAR");
 		JButton pagar = new JButton("PAGAR");
 
+<<<<<<< HEAD
 		if (!articulos.isEmpty()) {
 			for (Producto articulo : articulos) {
 				
 				modeloPedido.addElement(articulo.toString());
+=======
+		if (!productos.isEmpty()) {
+			for (Producto producto : productos) {
+				modeloPedido.addElement(producto.toString());
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 
 			}
 
 		}
 
-		listaArticulos.addMouseListener(new MouseAdapter() {
+		listaProductos.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 				JList list = (JList) evt.getSource();
 				if (evt.getClickCount() == 2) {
 
+<<<<<<< HEAD
 					Producto articulo = (Producto) listaArticulos.getSelectedValue();
+=======
+					Producto producto = (Producto) listaProductos.getSelectedValue();
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 
 				}
 
@@ -197,12 +216,18 @@ public class VentanaRestaurante extends JFrame {
 		b1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
 				// crear objeto Articulo con datos base datos
 
 				
 				Producto a = new Producto(text1.getText(),12,"",null,false,null);
 				articulos.add(a);
 				System.out.println("add2");
+=======
+				Producto a = new Producto();
+				//Corregir el constructor!!
+				productos.add(a = new Producto(text1.getText(), 12, "", null, false));
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 				modeloPedido.addElement(a.toString());
 
 			}
@@ -213,7 +238,21 @@ public class VentanaRestaurante extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+<<<<<<< HEAD
 				eliminarArticulo(listaArticulos, modeloPedido);
+=======
+				if (listaProductos.getSelectedValue() == null) {
+					JOptionPane.showMessageDialog(null, "Selecciona un producto para eliminar");
+
+				} else {
+					Producto producto = (Producto) listaProductos.getSelectedValue();
+					int i=(int) listaProductos.getSelectedValue();
+					productos.remove(i);
+					modeloPedido.removeElement(producto);
+
+
+				}
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 
 			}
 		});
@@ -264,10 +303,29 @@ public class VentanaRestaurante extends JFrame {
 				
 			}
 		});
+		/*
+		entrantes.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				for (Producto producto : restaurante.productos) {
+					
+				}
+				
+			}
+		});
+		*/
+		
 
+<<<<<<< HEAD
 		listaArticulos.setModel(modeloPedido);
 		panelDerecha.add(listaArticulos, 1, 0);
 
+=======
+		listaProductos.setModel(modeloPedido);
+		panelDerecha.add(listaProductos, 1, 0);
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 		panelDerecha.add(eliminar, 2, 1);
 		panelDerecha.add(pagar, 2, 2);
 
@@ -277,6 +335,7 @@ public class VentanaRestaurante extends JFrame {
 		add(panelGeneral);
 
 	}
+<<<<<<< HEAD
 
 
 	void actualizarPrecio(ArrayList<Producto> articulos,ArrayList<JPanel> panelesArticulos) {
@@ -315,4 +374,6 @@ public class VentanaRestaurante extends JFrame {
 		new VentanaRestaurante(null);
 	}
 
+=======
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 }
