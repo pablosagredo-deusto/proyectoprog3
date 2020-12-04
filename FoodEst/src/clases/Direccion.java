@@ -27,7 +27,7 @@ public class Direccion implements Serializable{
 		this.calle =  "";
 		this.municipio =  "";
 		this.portal =  0;
-		this.pisoPuerta =  "";
+		this.pisoPuerta =  " ";
 		this.codigoPostal =  0;
 	}
 	
