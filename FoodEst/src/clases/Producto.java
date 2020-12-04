@@ -7,34 +7,41 @@ import java.util.List;
 
 public class Producto {
 	protected String nombre;
+	protected int id;
 	protected double precio;
-	protected String caracteristica;
-	protected List<Ingrediente> ingredientes;
+	protected String decripcion;
+	protected ArrayList<Ingrediente> ingredientes;
 	protected boolean vegano; 
 	protected TipoProducto tipo;
+	protected Restaurante restaurante;
 	
 	
 	
 	
-	public Producto(String nombre, double precio, String caracteristica, List<Ingrediente> ingredientes,
-			boolean vegano, TipoProducto tipo) {
+	public Producto(String nombre,int id, double precio, String decripcion, ArrayList<Ingrediente> ingredientes,
+			boolean vegano, TipoProducto tipo, Restaurante restaurante) {
 		super();
 		this.nombre = nombre;
+		this.id = id;
 		this.precio = precio;
-		this.caracteristica = caracteristica;
+		this.decripcion = decripcion;
 		this.ingredientes = ingredientes;
 		this.vegano = vegano;
 		this.tipo = tipo;
+		this.restaurante = restaurante;
 	}
 	
+	//NO TIENE MUCHO SENTIDO CREAR UN PRODUCTO VACIO
 	public Producto() {
 		super();
 		this.nombre = "";
+		this.id = 0;
 		this.precio = 0;
-		this.caracteristica = "";
+		this.decripcion = "";
 		this.ingredientes = new ArrayList<Ingrediente>();
 		this.vegano = false;
-		this.tipo = tipo.OTRO;
+		this.tipo = TipoProducto.OTRO;
+		this.restaurante = new Restaurante();
 	}
 
 	public String getNombre() {
@@ -45,6 +52,14 @@ public class Producto {
 		this.nombre = nombre;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public double getPrecio() {
 		return precio;
 	}
@@ -53,16 +68,24 @@ public class Producto {
 		this.precio = precio;
 	}
 
-	public String getCaracteristica() {
-		return caracteristica;
+	public String getDecripcion() {
+		return decripcion;
 	}
 
-	public void setCaracteristica(String caracteristica) {
-		this.caracteristica = caracteristica;
+	public void setDecripcion(String decripcion) {
+		this.decripcion = decripcion;
 	}
 
-	public List<Ingrediente> getIngredientes() {
-		return ingredientes;
+	public ArrayList<Ingrediente> getIngredientes() {
+		return this.ingredientes;
+	}
+
+	public Restaurante getRestaurante() {
+		return restaurante;
+	}
+
+	public void setRestaurante(Restaurante restaurante) {
+		this.restaurante = restaurante;
 	}
 
 	public void setIngredientes(ArrayList<Ingrediente> ingredientes) {
@@ -88,7 +111,7 @@ public class Producto {
 
 	@Override
 	public String toString() {
-		return nombre +" "+ precio + " €";
+		return nombre +" "+ precio + "€";
 	}
 	
 	

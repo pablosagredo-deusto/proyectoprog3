@@ -8,11 +8,13 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import clases.Direccion;
+import clases.Usuario;
+import homeControl.Cancion;
 
 
 public class VentanaDirecciones extends JFrame{
 
-	public VentanaDirecciones() {
+	public VentanaDirecciones(JFrame ventanaAnterior, Usuario usuario) {
 		
 		
 		JSplitPane panelGeneral = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
@@ -196,10 +198,42 @@ public class VentanaDirecciones extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new VentanaBorrarDireccion(modeloListaDirecciones);
+				if(listaDirecciones.getSelectedValue() ==  null) {
+					JOptionPane.showMessageDialog(null, "Selecciona una direccion");
+				}else {
+					Direccion direccion = (Direccion) listaDirecciones.getSelectedValue();
+					modeloListaDirecciones.removeElement(direccion);
+					//ELIMINARLA del ususario
+				}
 				
 			}
 		});
+		
+		botonBorrarTodasDirecciones.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(modeloListaDirecciones.isEmpty() ==  true) {
+					JOptionPane.showMessageDialog(null, "No hay direcciones guardadas");
+				}else {
+				modeloListaDirecciones.clear();
+				
+				}
+			}
+		});
+		
+		atras.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaAnterior.setVisible(true);
+				dispose();
+				
+				
+			}
+		});
+		
+		
 		
 		
 		

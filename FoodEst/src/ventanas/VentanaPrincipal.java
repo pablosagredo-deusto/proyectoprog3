@@ -8,9 +8,11 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import clases.Usuario;
+
 public class VentanaPrincipal extends JFrame {
 	
-	public VentanaPrincipal() {
+	public VentanaPrincipal(Usuario usuario) {
 		
 		
 		
@@ -51,9 +53,15 @@ public class VentanaPrincipal extends JFrame {
 		panelArribaIzquierda.setLayout(new GridLayout(1, 3));
 		JPanel panelArribaIzquierda1 = new JPanel();
 		JMenuBar barra = new JMenuBar();
-		JMenu menuUbicacion = new JMenu("Ubicacion");
+		JMenu menuDireccion = new JMenu("Direccion");
+		JMenuItem misDirecciones =  new JMenuItem("Mis direcciones");
+		menuDireccion.add(misDirecciones);
 		JMenu menuPerfil = new JMenu("Perfil");
-		barra.add(menuUbicacion);
+		JMenuItem verPerfil =  new JMenuItem("Mi perfil");
+		JMenuItem otrasOpcionesPerfil =  new JMenuItem("Otras opciones");
+		menuPerfil.add(verPerfil);
+		menuPerfil.add(otrasOpcionesPerfil);
+		barra.add(menuDireccion);
 		barra.add(menuPerfil);
 		panelArribaIzquierda1.add(barra);
 		panelArribaIzquierda.add(panelArribaIzquierda1);
@@ -141,6 +149,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				
 				new VentanaRestaurante(thisFrame);
 				setVisible(false);
 			}
@@ -154,6 +163,34 @@ public class VentanaPrincipal extends JFrame {
 		deustoBurger.addActionListener(actionBotones);
 		pizzaHut.addActionListener(actionBotones);
 		
+		
+		buscar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String busqueda = buscar.getText();
+				new VentanaBuscador(thisFrame ,busqueda);
+				setVisible(false);
+			}
+		});
+		verPerfil.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaPerfil(thisFrame, usuario); //Recibira un usuario
+				setVisible(false);
+			}
+		});
+		
+		
+		misDirecciones.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaDirecciones(thisFrame, usuario); //Esta ventana recibira un usuario
+				setVisible(false);
+			}
+		});
 				
 	}
 	
@@ -163,7 +200,8 @@ public class VentanaPrincipal extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new VentanaPrincipal();
+				Usuario usuario = new Usuario(); //Este ususario es para probar la ventana
+				new VentanaPrincipal(usuario);
 				
 				
 			}

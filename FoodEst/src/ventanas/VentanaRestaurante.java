@@ -63,7 +63,7 @@ public class VentanaRestaurante extends JFrame {
 		ImageIcon fot = new ImageIcon("src/Imagenes/key .png");
 		buscar.setSize(40, 40);
 		Icon icono = new ImageIcon(
-				fot.getImage().getScaledInstance(buscar.getWidth(), buscar.getHeight(), Image.SCALE_DEFAULT));
+		fot.getImage().getScaledInstance(buscar.getWidth(), buscar.getHeight(), Image.SCALE_DEFAULT));
 		buscar.setIcon(icono);
 		buscar.repaint();
 		buscar.setOpaque(false);
@@ -219,6 +219,20 @@ public class VentanaRestaurante extends JFrame {
 				
 			}
 		});
+		/*
+		entrantes.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				for (Producto producto : restaurante.productos) {
+					
+				}
+				
+			}
+		});
+		*/
+		
 
 		listaProductos.setModel(modeloPedido);
 		panelDerecha.add(listaProductos, 1, 0);

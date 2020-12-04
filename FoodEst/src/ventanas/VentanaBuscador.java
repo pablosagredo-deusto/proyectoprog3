@@ -10,7 +10,7 @@ import javax.swing.*;
 
 public class VentanaBuscador extends JFrame {
 	
-	public VentanaBuscador() {
+	public VentanaBuscador(JFrame ventanaAnterior,String busqueda) {
 		
 		JSplitPane panelGeneral = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		panelGeneral.setBorder(null);
@@ -154,6 +154,16 @@ public class VentanaBuscador extends JFrame {
 				JMenu tipoRestaurante = new JMenu("Tipo de restaurante");
 				barraTipoRestaurante.add(tipoRestaurante);
 				panelSelecciones.add(barraTipoRestaurante, BorderLayout.EAST);
+				
+			}
+		});
+		
+		atras.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaAnterior.setVisible(true);
+				dispose();
 				
 			}
 		});
