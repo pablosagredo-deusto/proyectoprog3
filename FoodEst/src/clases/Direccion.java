@@ -23,7 +23,7 @@ public class Direccion implements Serializable{
 	
 	public Direccion() {
 		super();
-		this.nombre =  "";
+		this.nombre =  " ";
 		this.calle =  "";
 		this.municipio =  "";
 		this.portal =  0;
