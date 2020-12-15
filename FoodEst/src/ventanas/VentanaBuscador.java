@@ -174,6 +174,7 @@ public class VentanaBuscador extends JFrame {
 		setVisible(true);
 	}
 	
+	/*
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -184,5 +185,6 @@ public class VentanaBuscador extends JFrame {
 		});
 
 	}
+	*/
 		
 }

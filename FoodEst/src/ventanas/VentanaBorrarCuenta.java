@@ -86,6 +86,21 @@ public class VentanaBorrarCuenta extends JFrame{
 				
 			}
 		});
+		bborrar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int returnValue = 0;
+		    	returnValue = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres borrar tu cuenta de FoodEst?", "Borrar cuenta", JOptionPane.YES_NO_OPTION);
+		    		
+		    	if (returnValue == JOptionPane.YES_OPTION) {
+		    		//BORRAR CUENTA DE LA BASE DE DATOS
+		    	} else if (returnValue == JOptionPane.NO_OPTION) {
+		    		
+		    	}
+		    			
+			}
+		});
 	}
 	
 	public static void main(String[] args) {

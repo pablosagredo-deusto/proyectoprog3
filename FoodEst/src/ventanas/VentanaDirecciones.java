@@ -9,7 +9,6 @@ import javax.swing.*;
 
 import clases.Direccion;
 import clases.Usuario;
-import homeControl.Cancion;
 
 
 public class VentanaDirecciones extends JFrame{
@@ -243,6 +242,7 @@ public class VentanaDirecciones extends JFrame{
 		setVisible(true);
 		
 	}
+	/*
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -253,6 +253,7 @@ public class VentanaDirecciones extends JFrame{
 		});
 
 	}
+	*/
 	
 		
 }

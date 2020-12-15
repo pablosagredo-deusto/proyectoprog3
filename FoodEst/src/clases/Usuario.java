@@ -5,16 +5,19 @@ import java.util.ArrayList;
 public class Usuario {
 	protected String nombre;
 	protected String apellido;
-	protected int id; 
+	protected String contraseña;
+	protected int id;
+	public static int idContadorUsuario = 0;
 	protected ArrayList<Restaurante> restaurantesGuardados;
 	protected ArrayList<Pedido> pedidos;
 
-	public Usuario(String nombre, String apellido, int id, ArrayList<Pedido> pedidos,
+	public Usuario(String nombre, String apellido, String contraseña, ArrayList<Pedido> pedidos,
 			ArrayList<Restaurante> restaurantesGuardados) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.id = id;
+		this.contraseña = contraseña;
+		this.id = idContadorUsuario++;
 		this.pedidos = pedidos;
 		this.restaurantesGuardados = restaurantesGuardados;
 	}
@@ -23,9 +26,18 @@ public class Usuario {
 		super();
 		this.nombre = "";
 		this.apellido = "";
-		this.id = 0;
+		this.contraseña = "";
+		this.id = idContadorUsuario++;
 		this.pedidos = new ArrayList<Pedido>();
 		this.restaurantesGuardados = new ArrayList<Restaurante>();
+	}
+
+	public String getContraseña() {
+		return contraseña;
+	}
+
+	public void setContraseña(String contraseña) {
+		this.contraseña = contraseña;
 	}
 
 	public String getNombre() {
@@ -67,12 +79,6 @@ public class Usuario {
 	public void setPedidos(ArrayList<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-	
-	
-	public static void main(String[] args) {
-		System.out.println("holaa");
-	}
-	
 	
 
 }

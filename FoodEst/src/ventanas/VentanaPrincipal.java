@@ -4,10 +4,17 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import clases.ExceptionDB;
+import clases.ManagerDB;
+import clases.Restaurante;
 import clases.Usuario;
 
 public class VentanaPrincipal extends JFrame {
@@ -95,31 +102,65 @@ public class VentanaPrincipal extends JFrame {
 		
 		
 		
-		
+		JFrame thisFrame = this;
 		
 		//PANEL ABAJO
-		JPanel panelBotones = new JPanel();
-		panelBotones.setLayout(new GridLayout(1,9));
-		panelBotones.add(telepizza);
-		panelBotones.add(new JPanel());
-		panelBotones.add(goikoGrill);
-		panelBotones.add(new JPanel());
-		panelBotones.add(kfc);
-		panelBotones.add(new JPanel());
-		panelBotones.add(deustoBurger);
-		panelBotones.add(new JPanel());
-		panelBotones.add(pizzaHut);
-		
-		
 		JPanel panelAbajo =  new JPanel();
-		panelAbajo.setLayout(new GridLayout(2,1));
-		panelAbajo.add(panelBotones);
-		panelAbajo.add(new JPanel());
+		JScrollPane panelBotonesScroll = new JScrollPane(panelAbajo);
+		
+		ManagerDB db = new ManagerDB();
+		
+		try {
+			db.connect();
+		} catch (ExceptionDB e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		List<Restaurante> restaurantes;
+		try {
+			restaurantes = db.getTodosRestaurantes();
+			int numeroRestaurantes = restaurantes.size();
+			panelAbajo.setLayout(new GridLayout(1,numeroRestaurantes*2));
+			for (Restaurante restaurante : restaurantes) {
+				JButton boton = new JButton(restaurante.getNombre());
+				//Para cada boton añadimos el action listener, lanzando la VentanaRestaurante con el restaurante asociado
+				boton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						new VentanaRestaurante(thisFrame, restaurante);
+						
+					}
+				});
+				panelAbajo.add(boton);
+				panelAbajo.add(new JPanel());
+			}
+				
+			db.disconnect();
+		} catch (ExceptionDB e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+			
+		
+		
+		
+		
+		
+		
+
+		
+
+
+		
+		
+		
 		
 		
 		setLayout(new GridLayout(2,1));
 		add(panelArriba);
-		add(panelAbajo);
+		add(panelBotonesScroll);
 		
 		
 		
@@ -140,28 +181,10 @@ public class VentanaPrincipal extends JFrame {
 		setSize(1150, 505);
 		setVisible(true);
 		
-		JFrame thisFrame = this;
+		
 		
 		//Action listeners para los botones
 		
-		ActionListener actionBotones = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				
-				new VentanaRestaurante(thisFrame);
-				setVisible(false);
-			}
-		
-		};
-		
-		
-		telepizza.addActionListener(actionBotones);
-		goikoGrill.addActionListener(actionBotones);
-		kfc.addActionListener(actionBotones);
-		deustoBurger.addActionListener(actionBotones);
-		pizzaHut.addActionListener(actionBotones);
 		
 		
 		buscar.addActionListener(new ActionListener() {

@@ -7,18 +7,21 @@ import java.util.List;
 public class Restaurante {
 	protected String nombre;
 	protected String categoria;
+	protected String contraseña;
 	protected int id;
-	protected Direccion direccion;
+	public static int idContadorRestaurante = 0;
+	protected String direccion;
 	protected List<Producto> productos;
 	protected boolean enviogratis;
 	
 	
-	public Restaurante(String nombre, String categoria, int id, Direccion direccion, List<Producto> productos,
+	public Restaurante(String nombre, String categoria,String contraseña, String direccion, List<Producto> productos,
 			boolean enviogratis) {
 		super();
 		this.nombre = nombre;
 		this.categoria = categoria;
-		this.id = id;
+		this.contraseña = contraseña;
+		this.id = idContadorRestaurante++;
 		this.direccion = direccion;
 		this.productos = productos;
 		this.enviogratis = enviogratis;
@@ -28,10 +31,27 @@ public class Restaurante {
 		super();
 		this.nombre = "";
 		this.categoria = "";
-		this.id = 0;
-		this.direccion = new Direccion();
+		this.contraseña = "";
+		this.id = idContadorRestaurante++;
+		this.direccion ="";
 		this.productos = new ArrayList<Producto>();
 		this.enviogratis = false;
+	}
+
+	public String getContraseña() {
+		return contraseña;
+	}
+
+	public void setContraseña(String contraseña) {
+		this.contraseña = contraseña;
+	}
+
+	public List<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
 	}
 
 	public String getNombre() {
@@ -58,11 +78,11 @@ public class Restaurante {
 		this.id = id;
 	}
 
-	public Direccion getDireccion() {
+	public String getDireccion() {
 		return direccion;
 	}
 
-	public void setDireccion(Direccion direccion) {
+	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
 

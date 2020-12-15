@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import clases.Usuario;
 
@@ -166,8 +167,18 @@ public class VentanaPerfil extends JFrame{
 		
 		setVisible(true);
 	}
-	
+	/*
 	public static void main(String[] args) {
-		VentanaPerfil vp = new VentanaPerfil();
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				VentanaPerfil vp = new VentanaPerfil();
+				
+				
+				
+			}
+		});
+		
 	}
+	*/
 }

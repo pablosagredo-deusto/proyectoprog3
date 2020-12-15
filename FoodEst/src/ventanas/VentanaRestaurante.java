@@ -13,7 +13,7 @@ import javax.swing.*;
 
 public class VentanaRestaurante extends JFrame {
 
-	public VentanaRestaurante(JFrame ventanaAnterior) {
+	public VentanaRestaurante(JFrame ventanaAnterior, Restaurante restaurante) {
 		super("restaurante");
 		setSize(1150, 505);
 		setVisible(true);
@@ -140,7 +140,7 @@ public class VentanaRestaurante extends JFrame {
 		DefaultListModel modeloPedido = new DefaultListModel();
 		ArrayList<Producto> productos = new ArrayList<Producto>();
 
-		productos.add(new Producto("Ensalada ", 23.0, "", null, false, TipoProducto.OTRO));
+		//productos.add(new Producto("Ensalada ", 23.0, "", null, false, TipoProducto.OTRO));
 		JList listaProductos = new JList();
 		JLabel nombrePedido = new JLabel("PEDIDO ACTUAL:");
 		JButton eliminar = new JButton("ELIMINAR");
@@ -173,7 +173,7 @@ public class VentanaRestaurante extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Producto a = new Producto();
 				//Corregir el constructor!!
-				productos.add(a = new Producto(text1.getText(), 12, "", null, false));
+				//productos.add(a = new Producto(text1.getText(), 12, "", null, false));
 				modeloPedido.addElement(a.toString());
 
 			}
