@@ -68,12 +68,12 @@ public class ManagerDB {
 			while(rs.next()) {
 				Restaurante restaurante = new Restaurante();
 				restaurante.setNombre(rs.getString("NOMBRE_RESTAURANTE"));
-//				restaurante.setCategoria(rs.getString("CATEGORIA_RESTAURANTE"));
-//				restaurante.setContraseña(rs.getString("CONTRASEÑA_USUARIO"));
-//				restaurante.setId(rs.getInt("ID_RESTAURANTE"));
-//				restaurante.setDireccion(rs.getString("DIRECCION_RESTAURANTE"));
-//				if(rs.getInt("ENVIO_GRATIS") == 1) restaurante.setEnviogratis(true);
-//				
+				restaurante.setCategoria(rs.getString("CATEGORIA_RESTAURANTE")); //esto esta dando problemas --> revisar
+				restaurante.setContraseña(rs.getString("CONTRASEÑA_RESTAURANTE"));
+				restaurante.setId(rs.getInt("ID_RESTAURANTE"));
+				restaurante.setDireccion(rs.getString("DIRECCION_RESTAURANTE"));
+				if(rs.getInt("ENVIO_GRATIS") == 1) restaurante.setEnviogratis(true);
+				
 				restaurantes.add(restaurante);
 			}
 			
@@ -81,6 +81,32 @@ public class ManagerDB {
 		} catch (SQLException | DateTimeParseException e) {
 			throw new ExceptionDB("Error obteniendo los restaurantes", e);
 		}
+	}
+	
+	public List<Direccion> getTodasDirecciones() throws ExceptionDB {
+		List<Direccion> direcciones  = new ArrayList<Direccion>();
+		try (Statement stmt = conn.createStatement()) {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM DIRECCION");
+
+			while(rs.next()) {
+				Direccion direccion = new Direccion();
+				direccion.setNombre(rs.getString("NOMBRE_DIRECCION"));
+				direccion.setCalle(rs.getString("CALLE_DIRECCION"));
+				direccion.setMunicipio(rs.getString("MUNICPIO_DIRECCION"));
+				direccion.setPortal(rs.getInt("PORTAL_DIRECCION"));
+				direccion.setPisoPuerta(rs.getString("PISOPUERTA_DIRECCION"));
+				direccion.setCodigoPostal(rs.getInt("CODIGOPOSTAL_DIRECCION"));
+				
+				direcciones.add(direccion);
+		
+			}
+			
+			return direcciones;
+		} catch (SQLException | DateTimeParseException e) {
+			throw new ExceptionDB("Error obteniendo los direcciones", e);
+		}
+		
+		
 	}
 	
 }

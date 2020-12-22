@@ -51,8 +51,8 @@ public class VentanaPrincipal extends JFrame {
 		JPanel panelBotonBuscar = new JPanel();
 		panelBotonBuscar.setLayout(new GridLayout(1,3));
 		panelBotonBuscar.add(new JPanel());
-		panelBotonBuscar.add(buscar);
 		panelBotonBuscar.add(new JPanel());
+		panelBotonBuscar.add(buscar);
 		panelArribaMedioAbajo.add(panelBotonBuscar);
 		panelArribaMedio.add(panelArribaMedioAbajo);
 		
@@ -105,6 +105,36 @@ public class VentanaPrincipal extends JFrame {
 		JFrame thisFrame = this;
 		
 		//PANEL ABAJO
+		
+		//A cada boton de restaurante le vamos a añadir el siguiente actionlistener
+		/*
+		ActionListener ALBotonesRestaurante = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ManagerDB db = new ManagerDB();
+				try {
+					db.connect();
+					List<Restaurante> restaurantes = db.getTodosRestaurantes();
+					for (Restaurante restaurante : restaurantes) {
+						JButton b = (JButton) e.getSource();
+						if(restaurante.getNombre() == b.getText()) {
+							new VentanaRestaurante(thisFrame, restaurante);
+							setVisible(false);
+						}
+					}
+					
+				} catch (ExceptionDB e2) {
+					// TODO: handle exception
+				}
+
+			}
+		};
+		*/
+		
+		
+		
+		
 		JPanel panelAbajo =  new JPanel();
 		JScrollPane panelBotonesScroll = new JScrollPane(panelAbajo);
 		
@@ -116,6 +146,7 @@ public class VentanaPrincipal extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 		List<Restaurante> restaurantes;
 		try {
 			restaurantes = db.getTodosRestaurantes();
@@ -129,6 +160,7 @@ public class VentanaPrincipal extends JFrame {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						new VentanaRestaurante(thisFrame, restaurante);
+						setVisible(false);
 						
 					}
 				});
@@ -184,6 +216,11 @@ public class VentanaPrincipal extends JFrame {
 		
 		
 		//Action listeners para los botones
+		
+		
+		
+		
+		
 		
 		
 		

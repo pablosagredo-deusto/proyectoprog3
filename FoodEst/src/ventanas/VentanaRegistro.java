@@ -25,7 +25,7 @@ public class VentanaRegistro extends JFrame{
 	JLabel titulo;
 	JLabel userIcon;
 	
-	public VentanaRegistro() {
+	public VentanaRegistro(JFrame ventanaAnterior) {
 		
 		setTitle("Registro");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

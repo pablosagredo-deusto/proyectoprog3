@@ -4,6 +4,8 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.font.TextAttribute;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,6 +35,7 @@ public class VentanaLogin extends JFrame {
 	JLabel llave;
 	JLabel recuperar;
 	JLabel registrar;
+	JLabel registrarRestaurante;
 	JLabel titulo;
 	JButton user;
 	JButton restaurante;
@@ -75,7 +78,7 @@ public class VentanaLogin extends JFrame {
 		pnlCentral.add(mail);
 		
 		titulo = new JLabel();
-		titulo.setText("Inicia sesión en tu cuenta Foodest");
+		titulo.setText("Inicia sesión en Foodest");
 		titulo.setBounds(50, 30, 450, 90);
 		titulo.setFont(new Font("Arial", Font.PLAIN, 30));
 		pnlCentral.add(titulo);
@@ -89,11 +92,18 @@ public class VentanaLogin extends JFrame {
 		
 		
 		registrar = new JLabel();
-		registrar.setText("¿No tienes cuenta? Registrate");
+		registrar.setText("¿No tienes cuenta de usuario? Registrate");
 		registrar.setForeground(Color.blue);
 		registrar.setBounds(175, 540, 250, 60);
 		registrar.setFont(new Font("Arial", Font.PLAIN, 15)); 
 		pnlCentral.add(registrar);
+		
+		registrarRestaurante = new JLabel();
+		registrarRestaurante.setText("Registrar restaurante");
+		registrarRestaurante.setForeground(Color.green);
+		registrarRestaurante.setBounds(175, 540, 250, 60);
+		registrarRestaurante.setFont(new Font("Arial", Font.PLAIN, 15)); 
+		pnlCentral.add(registrarRestaurante);
 		
 		//Botones
 		
@@ -113,6 +123,81 @@ public class VentanaLogin extends JFrame {
 		pnlCentral.add(user);
 	        
 	    setVisible(true);
+	    
+	    
+	    
+	    JFrame thisFrame = this;
+	    
+	    registrar.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				setVisible(false);
+				new VentanaRegistro(thisFrame);
+				
+			}
+		});
+	    
+	    
+	    
+	    registrarRestaurante.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new VentanaResgistrarRestaurante();
+				
+			}
+		});
+	    
+	    
 	}
 	
 	public static void main(String[] args) {

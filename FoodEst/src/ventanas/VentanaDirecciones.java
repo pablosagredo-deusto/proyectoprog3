@@ -3,12 +3,12 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import clases.Direccion;
-import clases.Usuario;
+import clases.*;
 
 
 public class VentanaDirecciones extends JFrame{
@@ -21,6 +21,8 @@ public class VentanaDirecciones extends JFrame{
 		panelGeneral.setResizeWeight(0.06); 
 		panelGeneral.setEnabled(false); 
 		panelGeneral.setDividerSize(0); 
+		
+		
 		
 		
 		
@@ -117,6 +119,36 @@ public class VentanaDirecciones extends JFrame{
 		panelAbajoBotones.add(botonBorrarDireccion);
 		panelAbajoBotones.add(botonBorrarTodasDirecciones);
 		panelAbajo.add(panelAbajoBotones);
+		
+		
+		
+		ManagerDB db = new ManagerDB();
+		
+		try {
+			db.connect();
+		} catch (Exception e) {
+			
+		}
+		List<Direccion> direcciones;
+		try {
+			direcciones = db.getTodasDirecciones();
+			for (Direccion d : direcciones) {
+				modeloListaDirecciones.addElement(d);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		panelGeneral.add(panelAbajo);
 	

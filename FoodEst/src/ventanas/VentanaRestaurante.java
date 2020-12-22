@@ -39,7 +39,7 @@ public class VentanaRestaurante extends JFrame {
 		panelNombre.setResizeWeight(0.15);
 		panelNombre.setEnabled(false);
 		panelNombre.setDividerSize(0);
-		JLabel titulo = new JLabel("KFC");
+		JLabel titulo = new JLabel(restaurante.getNombre());
 		JButton atras = new JButton(new ImageIcon("src/imagenes/logoAtras2.png"));
 
 		Font font = new Font("Cooper Black", Font.BOLD, 40);
