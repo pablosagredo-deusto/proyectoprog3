@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="FoodEst/src"/>
 	<classpathentry kind="src" path="FoodEst/tests"/>
 	<classpathentry kind="lib" path="FoodEst/lib/sqlite-jdbc-3.32.3.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="FoodEst/bin"/>
 </classpath>

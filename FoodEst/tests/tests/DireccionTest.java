@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import clases.Articulo;
+
 import clases.Direccion;
 import clases.Ingrediente;
 import clases.TipoProducto;
