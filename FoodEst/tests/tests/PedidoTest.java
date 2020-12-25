@@ -14,8 +14,8 @@ public class PedidoTest {
 
 	@Before
 	public void setUp() {
-		Direccion direccionRestaurante = new  Direccion("BurgerKingDirec", "C/Leioa/Calle Menor/8/00", null, 48750, null, 0);
 		
+		Direccion direccionRestaurante = new  Direccion("BurguerKingDir", "C/Leioa/Calle Menor/8/00", "Bilbao",12, "3a", 45006);
 		List<Producto> productosBurgerKing = new ArrayList<>();
         	
 		
@@ -31,28 +31,27 @@ public class PedidoTest {
 		ingredientesHamburguesa.add(ing3);
 		ingredientesHamburguesa.add(ing4);
 		
-		
-		
-		Producto Pizza1 = new Producto("Piza", 001, 15.5, "pizza", null, false,  TipoProducto.PIZZA, null);
-		//("Piza", 15.5, "prueba", ingredientesPizza, false, TipoProducto.PIZZA);
-		Producto Hamburguesa1= new Producto("Hamburguesa", 002, 15.5, "Hamburguesa", null, false,  TipoProducto.HAMBURGUESA, null);
-		
+		Restaurante restaurante =new Restaurante("BurguerKing", "Comida rapida", "password" , direccionRestaurante, productosBurgerKing, false);
+	
+		Producto Pizza1 = new Producto("Piza", 001, 15.5, "pizza", ingredientesPizza, false,  TipoProducto.PIZZA, null);
+		Producto Hamburguesa1= new Producto("Hamburguesa", 002, 15.5, "Hamburguesa prueba", ingredientesHamburguesa, false,  TipoProducto.HAMBURGUESA, null);
 		
 		productosBurgerKing.add(Pizza1);
 		productosBurgerKing.add(Hamburguesa1);
 		
-		Restaurante restaurante = new Restaurante("BurgerKing", "Comida rapida", 001, direccionRestaurante, productosBurgerKing, false);
 		
-		Direccion direccionPedido = new  Direccion("CASA", "C/Deusto/Calle Mayor/3/1A", 48760);
-		List<Articulo> productosPedido = new ArrayList<>();
+		
+		
+		Direccion direccionPedido = new  Direccion("BurguerKingDir", "C/Leioa/Calle Menor/8/00", "Bilbao",12, "3a", 45006);
+		List<Producto> productosPedido = new ArrayList<>();
 		productosPedido.add(Pizza1);
 		
-		Pedido pedido = new Pedido(001, restaurante, direccionPedido, "enviado", EstadoPedido.OTRO, productosPedido);
+		Pedido pedido = new Pedido(1, restaurante, direccionPedido, null, productosBurgerKing, 50, "Efectivo", false);
 	}
 	
 	@Test
 	public void testGetCodigoPostal() {
-		assertEquals("C/Deusto/Calle Mayor/3/1A", direccion.getDireccion());
+		assertEquals("C/Deusto/Calle Mayor/3/1A", Direccion.getDireccion());
 	}
 	
 	

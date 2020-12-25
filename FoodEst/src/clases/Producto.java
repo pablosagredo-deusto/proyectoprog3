@@ -10,7 +10,7 @@ public class Producto {
 	protected int id;
 	protected double precio;
 	protected String decripcion;
-	protected ArrayList<Ingrediente> ingredientes;
+	protected List<Ingrediente> ingredientes;
 	protected boolean vegano; 
 	protected TipoProducto tipo;
 	protected Restaurante restaurante;
@@ -18,7 +18,7 @@ public class Producto {
 	
 	
 	
-	public Producto(String nombre,int id, double precio, String decripcion, ArrayList<Ingrediente> ingredientes,
+	public Producto(String nombre,int id, double precio, String decripcion, List<Ingrediente> ingredientes,
 			boolean vegano, TipoProducto tipo, Restaurante restaurante) {
 		super();
 		this.nombre = nombre;
@@ -38,7 +38,7 @@ public class Producto {
 		this.id = 0;
 		this.precio = 0;
 		this.decripcion = "";
-		this.ingredientes = new ArrayList<Ingrediente>();
+		this.ingredientes = null;
 		this.vegano = false;
 		this.tipo = TipoProducto.OTRO;
 		this.restaurante = new Restaurante();
@@ -76,7 +76,7 @@ public class Producto {
 		this.decripcion = decripcion;
 	}
 
-	public ArrayList<Ingrediente> getIngredientes() {
+	public List<Ingrediente> getIngredientes() {
 		return this.ingredientes;
 	}
 

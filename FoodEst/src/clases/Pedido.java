@@ -2,17 +2,19 @@ package clases;
 
 import java.util.ArrayList;
 
+import com.sun.tools.javac.util.List;
+
 public class Pedido {
 	int id;
 	Restaurante restaurante;
 	Direccion direccion;
 	EstadoPedido estado;
-	ArrayList<Producto> productos;
+	List<Producto> productos;
 	float preciototal;
 	String metodoPago;
 	boolean cubiertos;
 
-	public Pedido(int id, Restaurante restaurante, Direccion direccion, EstadoPedido estado, ArrayList<Producto> productos,
+	public Pedido(int id, Restaurante restaurante, Direccion direccion, EstadoPedido estado, List <Producto> productos,
 			float preciototal, String metodoPago,boolean cubiertos) {
 		super();
 		this.id = id;
@@ -20,7 +22,6 @@ public class Pedido {
 		this.direccion = direccion;
 		this.estado = estado;
 		this.productos = productos;
-		
 		this.preciototal = preciototal;
 		this.metodoPago = metodoPago;
 		this.cubiertos=cubiertos;
@@ -32,7 +33,7 @@ public class Pedido {
 		this.restaurante = new Restaurante();
 		this.direccion = new Direccion();
 		this.estado = EstadoPedido.OTRO;
-		this.productos = new ArrayList<Producto>();
+		this.productos = null;
 		this.preciototal = 0;
 		this.metodoPago = "";
 		this.cubiertos=false;
@@ -78,11 +79,11 @@ public class Pedido {
 		this.estado = estado;
 	}
 
-	public ArrayList<Producto> getArticulos() {
+	public List<Producto> getArticulos() {
 		return productos;
 	}
 
-	public void setArticulos(ArrayList<Producto> productos) {
+	public void setArticulos(List<Producto> productos) {
 		this.productos = productos;
 	}
 

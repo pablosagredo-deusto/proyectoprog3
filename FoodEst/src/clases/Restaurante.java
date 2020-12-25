@@ -8,14 +8,14 @@ public class Restaurante {
 	protected String nombre;
 	protected String categoria;
 	protected String contraseña;
-	protected int id;
-	public static int idContadorRestaurante = 0;
-	protected String direccion;
+	protected Direccion direccion;
 	protected List<Producto> productos;
 	protected boolean enviogratis;
-	
-	
-	public Restaurante(String nombre, String categoria,String contraseña, String direccion, List<Producto> productos,
+
+	protected int id;
+	public static int idContadorRestaurante = 0;
+
+	public Restaurante(String nombre, String categoria, String contraseña, Direccion direccion, List<Producto> productos,
 			boolean enviogratis) {
 		super();
 		this.nombre = nombre;
@@ -26,14 +26,14 @@ public class Restaurante {
 		this.productos = productos;
 		this.enviogratis = enviogratis;
 	}
-	
+
 	public Restaurante() {
 		super();
 		this.nombre = "";
 		this.categoria = "";
 		this.contraseña = "";
 		this.id = idContadorRestaurante++;
-		this.direccion ="";
+		this.direccion = null;
 		this.productos = new ArrayList<Producto>();
 		this.enviogratis = false;
 	}
@@ -78,11 +78,11 @@ public class Restaurante {
 		this.id = id;
 	}
 
-	public String getDireccion() {
+	public Direccion getDireccion() {
 		return direccion;
 	}
 
-	public void setDireccion(String direccion) {
+	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
 
@@ -107,10 +107,5 @@ public class Restaurante {
 		return "Restaurante [nombre=" + nombre + ", categoria=" + categoria + ", id=" + id + ", direccion=" + direccion
 				+ ", articulos=" + productos + ", enviogratis=" + enviogratis + "]";
 	}
-	
-	
-	
-	
-	
 
 }
