@@ -124,12 +124,13 @@ public class VentanaDirecciones extends JFrame{
 		
 		ManagerDB db = new ManagerDB();
 		
+		/*
 		try {
 			db.connect();
 		} catch (Exception e) {
 			
 		}
-		List<Direccion> direcciones;
+		//List<Direccion> direcciones;
 		try {
 			direcciones = db.getTodasDirecciones();
 			for (Direccion d : direcciones) {
@@ -141,7 +142,7 @@ public class VentanaDirecciones extends JFrame{
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+		*/
 		
 		
 		

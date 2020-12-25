@@ -3,7 +3,13 @@ package ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.font.TextAttribute;
@@ -13,191 +19,142 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 
 public class VentanaLogin extends JFrame {
 
-	JButton boton = new JButton();
-	JButton boton2 = new JButton();
 	
-
-	
-	JPanel pnlCentral;
-	JTextField usuario;
-	JTextField contraseña;
-	JLabel mail;
-	JLabel llave;
-	JLabel recuperar;
-	JLabel registrar;
-	JLabel registrarRestaurante;
-	JLabel titulo;
-	JButton user;
-	JButton restaurante;
-	Scanner sc;
-	ArrayList<String> usuarios = new ArrayList<>();
 	
 	public VentanaLogin() {
 		
-		setTitle("Login");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		//PanelArriba
+		JPanel panelArriba = new JPanel();
+		JLabel titulo = new JLabel("       INICIA SESION EN FOODEST");
+		titulo.setFont(new Font("Cooper Black", Font.BOLD, 20));
+		
+		JRadioButton checkRestaurante = new JRadioButton("Restaurante");
+		JRadioButton checkUsuario = new JRadioButton("Usuario");
+		ButtonGroup group = new ButtonGroup(); //Para que solo uno de ellos este seleccionado
+		group.add(checkRestaurante);
+		group.add(checkUsuario);
+	    JPanel panelChecks = new JPanel();
+	    panelChecks.setLayout(new FlowLayout());
+	    panelChecks.add(checkRestaurante);
+	    panelChecks.add(checkUsuario);
+
+	    panelArriba.setLayout(new GridLayout(2,1));
+	    panelArriba.add(titulo);
+	    panelArriba.add(panelChecks);
+	    
+	    //PanelMedio
+	    JPanel panelMedio = new JPanel();
+	    panelMedio.setLayout(new GridLayout(2,1));
+	    
+	    		//Para reducir los logos
+	    ImageIcon imagenUsuario = new ImageIcon("src/imagenes/userFoto.png"); 
+	    Image image = imagenUsuario.getImage(); 
+	    Image newImg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH); 
+	    imagenUsuario = new ImageIcon(newImg);
+	    JLabel logoUsuario = new JLabel();
+	    logoUsuario.setIcon(imagenUsuario);
+	    
+	    
+	    		//Para reducir los logos
+	    ImageIcon imagenContraseña = new ImageIcon("src/imagenes/key.png"); 
+	    Image image2 = imagenContraseña.getImage(); 
+	    Image newImg2 = image2.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH); 
+	    imagenContraseña = new ImageIcon(newImg2);
+	    JLabel logoContraseña = new JLabel();
+	    logoContraseña.setIcon(imagenContraseña);
+	    
+	    
+	    JPanel panel1 = new JPanel();
+	    panel1.setLayout(new BorderLayout());
+	    panel1.add(logoUsuario, BorderLayout.WEST);
+	    JTextField tusuario = new JTextField();
+	    panel1.add(tusuario, BorderLayout.CENTER);
+	    
+	    JPanel panel2 = new JPanel();
+	    panel2.setLayout(new BorderLayout());
+	    panel2.add(logoContraseña, BorderLayout.WEST);
+	    JPasswordField tcontraseña = new JPasswordField();
+	    panel2.add(tcontraseña, BorderLayout.CENTER);
+	    
+	    panelMedio.add(panel1);
+	    panelMedio.add(panel2);
+	    
+	    
+	    
+	    //panelAbajo 
+	    JPanel panelAbajo = new JPanel();
+	    
+	    JPanel panelAbajo1 = new JPanel();
+	    JButton bLogin = new JButton("Iniciar sesión");
+	    JButton bCerrar = new JButton("Cerrar FOODEST");
+	    
+	    panelAbajo1.add(bLogin);
+	    panelAbajo1.add(bCerrar);
+	    
+	    
+	    
+	    JPanel panelAbajo2 = new JPanel();
+	    panelAbajo2.setLayout(new GridLayout(2,1));
+	    
+	    JLabel crearCuentaUsuario = new JLabel();
+	    crearCuentaUsuario.setText("    Crear cuenta de usuario");
+	    crearCuentaUsuario.setForeground(Color.blue);
+	    panelAbajo2.add(crearCuentaUsuario);
+	    
+	    JLabel crearCuentaRestaurante = new JLabel();
+	    crearCuentaRestaurante.setText("Crear cuenta de restaurante");
+	    crearCuentaRestaurante.setForeground(Color.blue);
+	    panelAbajo2.add(crearCuentaRestaurante);
+	    
+	    
+	    
+	    
+	    panelAbajo.add(panelAbajo1);
+	    panelAbajo.add(panelAbajo2);
+	    
+	    
+	    setLayout(new GridLayout(3,1));
+	    add(panelArriba);
+	    add(panelMedio);
+	    add(panelAbajo);
+	    
+	    
+	    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setTitle("FoodEst");
+		setSize(400, 500);
 		setResizable(false);
-		setSize(550, 700);
-		setLocationRelativeTo(null);
-		getContentPane().setLayout(new BorderLayout(0, 0));
-		pnlCentral = new JPanel();
-		getContentPane().add(pnlCentral, BorderLayout.CENTER);
-		pnlCentral.setLayout(null);
-		pnlCentral.setBackground(Color.white);
-		
-		//Textfields
-		
-		usuario = new JTextField();
-		usuario.setBounds(250, 180, 180, 40);
-		pnlCentral.add(usuario);
-		
-		contraseña = new JTextField();
-		contraseña.setBounds(250, 280, 180, 40);
-		pnlCentral.add(contraseña);
-		
-		//Labels
-		
-		llave = new JLabel();
-		llave.setIcon(new ImageIcon("src/imagenes/key.png"));
-		llave.setBounds(110, 170, 120, 60);
-		pnlCentral.add(llave);
-		
-		mail = new JLabel();
-		mail.setIcon(new ImageIcon("src/imagenes/mail.png"));
-		mail.setBounds(130, 270, 120, 60);
-		pnlCentral.add(mail);
-		
-		titulo = new JLabel();
-		titulo.setText("Inicia sesión en Foodest");
-		titulo.setBounds(50, 30, 450, 90);
-		titulo.setFont(new Font("Arial", Font.PLAIN, 30));
-		pnlCentral.add(titulo);
-		
-		recuperar = new JLabel();
-		recuperar.setText("Recuperar contraseña");
-		recuperar.setForeground(Color.blue);
-		recuperar.setBounds(198, 330, 200, 90);
-		recuperar.setFont(new Font("Arial", Font.PLAIN, 15)); 
-		pnlCentral.add(recuperar);
+		setVisible(true);
 		
 		
-		registrar = new JLabel();
-		registrar.setText("¿No tienes cuenta de usuario? Registrate");
-		registrar.setForeground(Color.blue);
-		registrar.setBounds(175, 540, 250, 60);
-		registrar.setFont(new Font("Arial", Font.PLAIN, 15)); 
-		pnlCentral.add(registrar);
 		
-		registrarRestaurante = new JLabel();
-		registrarRestaurante.setText("Registrar restaurante");
-		registrarRestaurante.setForeground(Color.green);
-		registrarRestaurante.setBounds(175, 540, 250, 60);
-		registrarRestaurante.setFont(new Font("Arial", Font.PLAIN, 15)); 
-		pnlCentral.add(registrarRestaurante);
-		
-		//Botones
-		
-		
-		restaurante = new JButton();
-		restaurante.setText("Restaurante");
-		restaurante.setBackground(Color.white);
-		restaurante.setFont(new Font("Arial", Font.PLAIN, 22));
-		restaurante.setBounds(269, 430, 190, 90);
-		pnlCentral.add(restaurante);
-		
-		user = new JButton();
-		user.setText("Usuario");
-		user.setBackground(Color.LIGHT_GRAY);
-		user.setFont(new Font("Arial", Font.PLAIN, 22));
-		user.setBounds(75, 430, 190, 90);
-		pnlCentral.add(user);
-	        
-	    setVisible(true);
-	    
-	    
-	    
-	    JFrame thisFrame = this;
-	    
-	    registrar.addMouseListener(new MouseListener() {
+		//ACTIONLISTENERS
+		bCerrar.addActionListener(new ActionListener() {
 			
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				new VentanaRegistro(thisFrame);
+			public void actionPerformed(ActionEvent e) {
+				dispose();
 				
 			}
 		});
-	    
-	    
-	    
-	    registrarRestaurante.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				new VentanaResgistrarRestaurante();
-				
-			}
-		});
-	    
-	    
+		
+		
+	     
 	}
 	
 	public static void main(String[] args) {

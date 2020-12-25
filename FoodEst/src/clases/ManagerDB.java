@@ -58,6 +58,23 @@ public class ManagerDB {
 		}
 	}
 	
+	public void insertarUsuario(Usuario usuario) throws ExceptionDB {
+		try (Statement stmt = conn.createStatement()) {
+			ResultSet rs = stmt.executeQuery("INSERT INTO USUARIO VALUES(" 
+					+ "'" + usuario.getNombre()+ "'" + ","
+					+ "'" + usuario.getApellido()+ "'" +","
+					+ "'" + usuario.getContraseña()+ "'" + ","
+					+ "'" + usuario.getId() + "'" +");");
+
+			
+			
+			 
+		} catch (SQLException | DateTimeParseException e) {
+			throw new ExceptionDB("Error al insertar usuario'", e);
+		}
+	}
+	
+	
 	
 	public List<Restaurante> getTodosRestaurantes() throws ExceptionDB {
 		List<Restaurante> restaurantes = new ArrayList<Restaurante>();
