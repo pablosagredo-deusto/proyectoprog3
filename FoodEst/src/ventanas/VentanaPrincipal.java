@@ -105,32 +105,7 @@ public class VentanaPrincipal extends JFrame {
 		JFrame thisFrame = this;
 		
 		//PANEL ABAJO
-		
-		//A cada boton de restaurante le vamos a añadir el siguiente actionlistener
-		/*
-		ActionListener ALBotonesRestaurante = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ManagerDB db = new ManagerDB();
-				try {
-					db.connect();
-					List<Restaurante> restaurantes = db.getTodosRestaurantes();
-					for (Restaurante restaurante : restaurantes) {
-						JButton b = (JButton) e.getSource();
-						if(restaurante.getNombre() == b.getText()) {
-							new VentanaRestaurante(thisFrame, restaurante);
-							setVisible(false);
-						}
-					}
-					
-				} catch (ExceptionDB e2) {
-					// TODO: handle exception
-				}
 
-			}
-		};
-		*/
 		
 		
 		
@@ -143,7 +118,6 @@ public class VentanaPrincipal extends JFrame {
 		try {
 			db.connect();
 		} catch (ExceptionDB e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -252,9 +226,11 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 				
+		
 	}
 	
-	
+
+
 	
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {

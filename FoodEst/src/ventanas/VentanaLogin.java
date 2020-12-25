@@ -12,26 +12,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.font.TextAttribute;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
+import javax.swing.*;
+
+import clases.ExceptionDB;
+import clases.ManagerDB;
+import clases.Usuario;
 
 public class VentanaLogin extends JFrame {
 
@@ -83,13 +76,14 @@ public class VentanaLogin extends JFrame {
 	    JPanel panel1 = new JPanel();
 	    panel1.setLayout(new BorderLayout());
 	    panel1.add(logoUsuario, BorderLayout.WEST);
-	    JTextField tusuario = new JTextField();
+	    JTextField tusuario = new JTextField("Nombre de usuario");
 	    panel1.add(tusuario, BorderLayout.CENTER);
 	    
 	    JPanel panel2 = new JPanel();
 	    panel2.setLayout(new BorderLayout());
 	    panel2.add(logoContraseña, BorderLayout.WEST);
-	    JPasswordField tcontraseña = new JPasswordField();
+	    JPasswordField tcontraseña = new JPasswordField("Introduce tu contraseña");
+	    tcontraseña.setEchoChar((char) 0);
 	    panel2.add(tcontraseña, BorderLayout.CENTER);
 	    
 	    panelMedio.add(panel1);
@@ -144,6 +138,19 @@ public class VentanaLogin extends JFrame {
 		
 		
 		//ACTIONLISTENERS
+
+		tcontraseña.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+            	tcontraseña.setEchoChar('*'); 
+            	tcontraseña.setText("");
+            }
+        });
+		tusuario.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+            	tusuario.setText("");
+            }
+        });
+		
 		bCerrar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -152,7 +159,77 @@ public class VentanaLogin extends JFrame {
 				
 			}
 		});
+		JFrame thisFrame = this;
+		crearCuentaUsuario.addMouseListener(new MouseListener() {
+			
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new VentanaRegistro(thisFrame);
+				setVisible(false);
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
+		
+		bLogin.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ManagerDB db = new ManagerDB();
+				if(checkUsuario.isSelected()) {
+					List<Usuario> usuarios;
+					try {
+						db.connect();
+						usuarios = db.getTodosUsuarios();
+						
+						String nombreRecibido = tusuario.getText();
+						String contraseñaRecibido = String.valueOf(tcontraseña.getPassword());
+						
+						for (Usuario usuario : usuarios) {
+							if (usuario.getNombre() == nombreRecibido && usuario.getContraseña() == contraseñaRecibido  ) {
+								new VentanaPrincipal(usuario);
+							}
+						}
+						db.disconnect();
+					} catch (ExceptionDB e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+				}else if (checkRestaurante.isSelected()) {
+					//iniciar sesion en restaurantes
+					JOptionPane.showMessageDialog(null, "Implementar inicio de sesion en restaurantes");
+				}else {
+					JOptionPane.showMessageDialog(null, "Seleccione restaurante o usuario para iniciar sesión");		
+				}
+
+			}
+		});
 		
 	     
 	}

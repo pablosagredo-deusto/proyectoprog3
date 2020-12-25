@@ -3,33 +3,43 @@ package clases;
 import java.util.ArrayList;
 
 public class Usuario {
+	protected String nombreUsuario;
 	protected String nombre;
 	protected String apellido;
 	protected String contraseña;
 	protected int id;
-	public static int idContadorUsuario = 0;
 	protected ArrayList<Restaurante> restaurantesGuardados;
 	protected ArrayList<Pedido> pedidos;
 
-	public Usuario(String nombre, String apellido, String contraseña, ArrayList<Pedido> pedidos,
+	public Usuario(String nombreUsuario, String nombre, String apellido, String contraseña, int id, ArrayList<Pedido> pedidos,
 			ArrayList<Restaurante> restaurantesGuardados) {
 		super();
+		this.nombreUsuario = nombreUsuario;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.contraseña = contraseña;
-		this.id = idContadorUsuario++;
+		this.id = id;
 		this.pedidos = pedidos;
 		this.restaurantesGuardados = restaurantesGuardados;
 	}
 
 	public Usuario() {
 		super();
+		this.nombreUsuario = "";
 		this.nombre = "";
 		this.apellido = "";
 		this.contraseña = "";
-		this.id = idContadorUsuario++;
+		this.id = 0;
 		this.pedidos = new ArrayList<Pedido>();
 		this.restaurantesGuardados = new ArrayList<Restaurante>();
+	}
+
+	public String getNombreUsuario() {
+		return nombreUsuario;
+	}
+
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
 	}
 
 	public String getContraseña() {
