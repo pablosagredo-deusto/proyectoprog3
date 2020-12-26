@@ -204,7 +204,7 @@ public class VentanaLogin extends JFrame {
 				if(checkUsuario.isSelected()) {
 					List<Usuario> usuarios;
 					try {
-						db.connect("jdbc:sqlite:/C:\\Users\\guill\\git\\proyectoprog3\\FoodEst\\lib\\FoodEstDB");
+						db.connect();
 						
 						usuarios = db.getTodosUsuarios();
 						String nombreRecibido = tusuario.getText();

@@ -90,7 +90,7 @@ public class VentanaRegistro extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				ManagerDB db = new ManagerDB();
 				try {
-					db.connect("jdbc:sqlite:/C:\\Users\\guill\\git\\proyectoprog3\\FoodEst\\lib\\FoodEstDB" );
+					db.connect();
 				} catch (ExceptionDB e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

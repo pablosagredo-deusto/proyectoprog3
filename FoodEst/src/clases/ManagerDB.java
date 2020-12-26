@@ -21,8 +21,9 @@ public class ManagerDB {
 	
 
 	// METODO PARA CONECTAR CON LA BASE DE DATOS
-	public void connect(String nombreDB) throws ExceptionDB {
+	public void connect() throws ExceptionDB {
 		try {
+			String nombreDB = "jdbc:sqlite:/C:\\Users\\guill\\git\\proyectoprog3\\FoodEst\\lib\\FoodEstDB";
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(nombreDB);
 
