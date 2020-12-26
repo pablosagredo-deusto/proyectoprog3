@@ -23,7 +23,7 @@ public class Pruebas {
 		
 		ManagerDB db = new ManagerDB();
 		try {
-			db.connect();
+			db.connect("jdbc:sqlite:/C:\\Users\\guill\\git\\proyectoprog3\\FoodEst\\lib\\FoodEstDB");
 			
 			
 			Usuario us2 = new Usuario();

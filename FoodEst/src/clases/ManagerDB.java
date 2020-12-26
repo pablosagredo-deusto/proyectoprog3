@@ -22,15 +22,13 @@ public class ManagerDB {
 
 	// METODO PARA CONECTAR CON LA BASE DE DATOS
 	public void connect(String nombreDB) throws ExceptionDB {
-		String nombreBD = "jdbc:sqlite:/C:\\Users\\guill\\git\\proyectoprog3\\FoodEst\\lib\\FoodEstDB";
 		try {
-
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(nombreDB);
 
-			log(Level.INFO, "Conectada base de datos " + nombreBD, null);
+			log(Level.INFO, "Conectada base de datos ", null);
 		} catch (ClassNotFoundException | SQLException e) {
-			log( Level.SEVERE, "Error en conexion de base de datos " + nombreBD, e );
+			log( Level.SEVERE, "Error en conexion de base de datos ", e );
 		}
 	}
 
@@ -50,18 +48,10 @@ public class ManagerDB {
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		String SQL="";
 		try (Statement stmt = conn.createStatement()) {
-<<<<<<< HEAD
-			SQL="SELECT NOMBRE_USUARIO, APELLIDO_USUARIO, CONTRASEÑA_USUARIO, ID_USUARIO FROM USUARIO";
-			ResultSet rs = stmt.executeQuery(SQL);
-		
-			while (rs.next()) {
-=======
 			ResultSet rs = stmt.executeQuery("SELECT NOMBREUSUARIO_USUARIO, NOMBRE_USUARIO, APELLIDO_USUARIO, CONTRASEÑA_USUARIO, ID_USUARIO FROM USUARIO");
-
 			while(rs.next()) {
->>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 				Usuario usuario = new Usuario();
-				usuario.setNombreUsuario("NOMBREUSUARIO_USUARIO");
+				usuario.setNombreUsuario(rs.getString("NOMBREUSUARIO_USUARIO"));
 				usuario.setNombre(rs.getString("NOMBRE_USUARIO"));
 				usuario.setApellido(rs.getString("APELLIDO_USUARIO"));
 				usuario.setContraseña(rs.getString("CONTRASEÑA_USUARIO"));
@@ -77,9 +67,7 @@ public class ManagerDB {
 			
 		}
 	}
-<<<<<<< HEAD
 
-=======
 	//METODO PARA INSERTAR USUARIO POR PRIMERA VEZ
 	public void insertarUsuario(Usuario usuario) throws ExceptionDB {
 		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO USUARIO (NOMBREUSUARIO_USUARIO, NOMBRE_USUARIO, APELLIDO_USUARIO, CONTRASEÑA_USUARIO) VALUES (?, ?, ?, ?)"); 
@@ -100,7 +88,6 @@ public class ManagerDB {
 	
 	
 	
->>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 	public List<Restaurante> getTodosRestaurantes() throws ExceptionDB {
 		List<Restaurante> restaurantes = new ArrayList<Restaurante>();
 		String SQL="";
@@ -111,8 +98,7 @@ public class ManagerDB {
 			while (rs.next()) {
 				Restaurante restaurante = new Restaurante();
 				restaurante.setNombre(rs.getString("NOMBRE_RESTAURANTE"));
-				restaurante.setCategoria(rs.getString("CATEGORIA_RESTAURANTE")); // esto esta dando problemas -->
-																					// revisar
+				restaurante.setCategoria(rs.getString("CATEGORIA_RESTAURANTE")); 
 				restaurante.setContraseña(rs.getString("CONTRASEÑA_RESTAURANTE"));
 				restaurante.setId(rs.getInt("ID_RESTAURANTE"));
 				restaurante.setDireccion(rs.getString("DIRECCION_RESTAURANTE"));

@@ -8,14 +8,14 @@ public class Restaurante {
 	protected String nombre;
 	protected String categoria;
 	protected String contraseña;
-	protected Direccion direccion;
+	protected String direccion;
 	protected List<Producto> productos;
 	protected boolean enviogratis;
 
 	protected int id;
 	public static int idContadorRestaurante = 0;
 
-	public Restaurante(String nombre, String categoria, String contraseña, Direccion direccion, List<Producto> productos,
+	public Restaurante(String nombre, String categoria, String contraseña, String direccion, List<Producto> productos,
 			boolean enviogratis) {
 		super();
 		this.nombre = nombre;
@@ -78,11 +78,11 @@ public class Restaurante {
 		this.id = id;
 	}
 
-	public Direccion getDireccion() {
+	public String getDireccion() {
 		return direccion;
 	}
 
-	public void setDireccion(Direccion direccion) {
+	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
 

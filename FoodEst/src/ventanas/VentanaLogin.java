@@ -27,32 +27,8 @@ import clases.ManagerDB;
 import clases.Usuario;
 
 public class VentanaLogin extends JFrame {
-<<<<<<< HEAD
-
-	JButton boton = new JButton();
-	JButton boton2 = new JButton();
-=======
-
->>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
-	
-<<<<<<< HEAD
 
 	
-	JPanel pnlCentral;
-	JTextField usuario;
-	JTextField contraseña;
-	JLabel mail;
-	JLabel llave;
-	JLabel recuperar;
-	JLabel registrar;
-	JLabel registrarRestaurante;
-	JLabel titulo;
-	JButton user;
-	JButton restaurante;
-	Scanner sc;
-	ArrayList<String> usuarios = new ArrayList<>();
-=======
->>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 	
 	public VentanaLogin() {
 		
@@ -228,15 +204,16 @@ public class VentanaLogin extends JFrame {
 				if(checkUsuario.isSelected()) {
 					List<Usuario> usuarios;
 					try {
-						db.connect();
-						usuarios = db.getTodosUsuarios();
+						db.connect("jdbc:sqlite:/C:\\Users\\guill\\git\\proyectoprog3\\FoodEst\\lib\\FoodEstDB");
 						
+						usuarios = db.getTodosUsuarios();
 						String nombreRecibido = tusuario.getText();
 						String contraseñaRecibido = String.valueOf(tcontraseña.getPassword());
 						
 						for (Usuario usuario : usuarios) {
-							if (usuario.getNombre() == nombreRecibido && usuario.getContraseña() == contraseñaRecibido  ) {
+							if (usuario.getNombre().equals(nombreRecibido) && usuario.getContraseña().equals(contraseñaRecibido)) {
 								new VentanaPrincipal(usuario);
+								dispose();
 							}
 						}
 						db.disconnect();
@@ -255,7 +232,6 @@ public class VentanaLogin extends JFrame {
 			}
 		});
 		
-	     
 	}
 	
 	public static void main(String[] args) {

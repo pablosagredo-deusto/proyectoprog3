@@ -116,7 +116,7 @@ public class VentanaPrincipal extends JFrame {
 		ManagerDB db = new ManagerDB();
 		
 		try {
-			db.connect();
+			db.connect("jdbc:sqlite:/C:\\Users\\guill\\git\\proyectoprog3\\FoodEst\\lib\\FoodEstDB");
 		} catch (ExceptionDB e1) {
 			e1.printStackTrace();
 		}
