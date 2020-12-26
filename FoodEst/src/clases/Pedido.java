@@ -10,12 +10,12 @@ public class Pedido {
 	Direccion direccion;
 	EstadoPedido estado;
 	List<Producto> productos;
-	float preciototal;
+	double preciototal;
 	String metodoPago;
 	boolean cubiertos;
 
-	public Pedido(int id, Restaurante restaurante, Direccion direccion, EstadoPedido estado, List <Producto> productos,
-			float preciototal, String metodoPago,boolean cubiertos) {
+	public Pedido(int id, Restaurante restaurante, Direccion direccion, EstadoPedido estado, List<Producto> productos,
+			double preciototal, String metodoPago, boolean cubiertos) {
 		super();
 		this.id = id;
 		this.restaurante = restaurante;
@@ -24,9 +24,9 @@ public class Pedido {
 		this.productos = productos;
 		this.preciototal = preciototal;
 		this.metodoPago = metodoPago;
-		this.cubiertos=cubiertos;
+		this.cubiertos = cubiertos;
 	}
-	
+
 	public Pedido() {
 		super();
 		this.id = 0;
@@ -36,7 +36,7 @@ public class Pedido {
 		this.productos = null;
 		this.preciototal = 0;
 		this.metodoPago = "";
-		this.cubiertos=false;
+		this.cubiertos = false;
 	}
 
 	public boolean isCubiertos() {
@@ -87,20 +87,28 @@ public class Pedido {
 		this.productos = productos;
 	}
 
-	public float getPreciototal() {
+	public double getPreciototal() {
 		return preciototal;
 	}
 
-	public void setPreciototal(float preciototal) {
+	public void setPreciototal(double preciototal) {
 		this.preciototal = preciototal;
+	}
+
+	public List<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}
+
+	public void setMetodoPago(String metodoPago) {
+		this.metodoPago = metodoPago;
 	}
 
 	public String getMetodopago() {
 		return metodoPago;
-	}
-
-	public void setMetodopago(String metodopago) {
-		this.metodoPago = metodopago;
 	}
 
 	@Override
@@ -109,6 +117,9 @@ public class Pedido {
 				+ ", articulos=" + productos + ", preciototal=" + preciototal + ", metodopago=" + metodoPago
 				+ ", cubiertos=" + cubiertos + "";
 	}
-	
+
+	public Object getCubiertos() {
+		return cubiertos;
+	}
 
 }

@@ -2,6 +2,7 @@ package clases;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -49,11 +50,18 @@ public class ManagerDB {
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		String SQL="";
 		try (Statement stmt = conn.createStatement()) {
+<<<<<<< HEAD
 			SQL="SELECT NOMBRE_USUARIO, APELLIDO_USUARIO, CONTRASEÑA_USUARIO, ID_USUARIO FROM USUARIO";
 			ResultSet rs = stmt.executeQuery(SQL);
 		
 			while (rs.next()) {
+=======
+			ResultSet rs = stmt.executeQuery("SELECT NOMBREUSUARIO_USUARIO, NOMBRE_USUARIO, APELLIDO_USUARIO, CONTRASEÑA_USUARIO, ID_USUARIO FROM USUARIO");
+
+			while(rs.next()) {
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 				Usuario usuario = new Usuario();
+				usuario.setNombreUsuario("NOMBREUSUARIO_USUARIO");
 				usuario.setNombre(rs.getString("NOMBRE_USUARIO"));
 				usuario.setApellido(rs.getString("APELLIDO_USUARIO"));
 				usuario.setContraseña(rs.getString("CONTRASEÑA_USUARIO"));
@@ -69,7 +77,30 @@ public class ManagerDB {
 			
 		}
 	}
+<<<<<<< HEAD
 
+=======
+	//METODO PARA INSERTAR USUARIO POR PRIMERA VEZ
+	public void insertarUsuario(Usuario usuario) throws ExceptionDB {
+		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO USUARIO (NOMBREUSUARIO_USUARIO, NOMBRE_USUARIO, APELLIDO_USUARIO, CONTRASEÑA_USUARIO) VALUES (?, ?, ?, ?)"); 
+			Statement stmtForId = conn.createStatement()) {
+			
+			stmt.setString(1, usuario.getNombreUsuario());
+			stmt.setString(2, usuario.getNombre());
+			stmt.setString(3, usuario.getApellido());
+			stmt.setString(4, usuario.getContraseña());
+			
+	
+			stmt.executeUpdate();
+			 
+		} catch (SQLException | DateTimeParseException e) {
+			throw new ExceptionDB("Error al insertar usuario'", e);
+		}
+	}
+	
+	
+	
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 	public List<Restaurante> getTodosRestaurantes() throws ExceptionDB {
 		List<Restaurante> restaurantes = new ArrayList<Restaurante>();
 		String SQL="";

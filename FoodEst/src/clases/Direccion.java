@@ -82,6 +82,12 @@ public class Direccion implements Serializable{
 	public String toString() {
 		return nombre + ": " + municipio + " (" + codigoPostal + ") " + "/" + calle + "/" + portal + "/" + pisoPuerta;
 	}
+
+	public Object getDireccion() {
+		return null;
+	}
+
+	
 	
 	
 }
