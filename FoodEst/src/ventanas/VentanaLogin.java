@@ -238,6 +238,7 @@ public class VentanaLogin extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
+				System.out.println("prueba");
 				new VentanaLogin();
 				
 			}
