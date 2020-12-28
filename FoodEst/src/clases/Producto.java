@@ -108,11 +108,22 @@ public class Producto {
 	}
 
 
-	@Override
-	public String toString() {
+	public String toStringPrecio() {
 		return nombre +" "+ precio + "€";
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		return "Producto [nombre=" + nombre + ", id=" + id + ", precio=" + precio + ", decripcion=" + decripcion
+				+ ", ingredientes=" + ingredientes + ", vegano=" + vegano + ", tipo=" + tipo + ", restaurante="
+				+ restaurante + "]";
+	}
+
+	public static void main(String[] args) {
+		
+	}
 	
 	
 }
