@@ -12,7 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -23,17 +23,17 @@ public class VentanaPerfil extends JFrame{
 	
 	JPanel pnlCentral;
 	JLabel fPerfil;
-	JComboBox<String> pais;
-	JComboBox<String> idioma;
-	JComboBox<String> codInv;
-	JLabel p;
-	JLabel i;
-	JLabel in;
+	JTextField apellido;
+	JPasswordField contraseña;
+	JTextField email;
+	JLabel lapellido;
+	JLabel lcontraseña;
+	JLabel lid;
 	JLabel e;
 	JLabel editar;
-	JTextField email;
+	JTextField id;
 	JTextField tel;
-	JTextField nom;
+	JTextField nombre;
 	JButton guardar;
 	JButton cerrar;
 	JButton borrar;
@@ -57,23 +57,23 @@ public class VentanaPerfil extends JFrame{
 		
 		//Labels
 		
-		p = new JLabel();
-		p.setText("País");
-		p.setBounds(460, 100, 120, 120);
-		p.setFont(new Font("Arial", Font.PLAIN, 15)); 
-		pnlCentral.add(p);
+		lapellido = new JLabel();
+		lapellido.setText("Apellido");
+		lapellido.setBounds(460, 100, 120, 120);
+		lapellido.setFont(new Font("Arial", Font.PLAIN, 15)); 
+		pnlCentral.add(lapellido);
 		
-		i = new JLabel();
-		i.setText("Idioma");
-		i.setBounds(460, 150, 120, 120);
-		i.setFont(new Font("Arial", Font.PLAIN, 15)); 
-		pnlCentral.add(i);
+		lcontraseña = new JLabel();
+		lcontraseña.setText("Contraseña");
+		lcontraseña.setBounds(460, 150, 120, 120);
+		lcontraseña.setFont(new Font("Arial", Font.PLAIN, 15)); 
+		pnlCentral.add(lcontraseña);
 		
-		in = new JLabel();
-		in.setText("Invitación");
-		in.setBounds(460, 200, 120, 120);
-		in.setFont(new Font("Arial", Font.PLAIN, 15)); 
-		pnlCentral.add(in);
+		lid = new JLabel();
+		lid.setText("Id usuario");
+		lid.setBounds(460, 200, 120, 120);
+		lid.setFont(new Font("Arial", Font.PLAIN, 15)); 
+		pnlCentral.add(lid);
 		
 		e = new JLabel();
 		e.setText("Email");
@@ -87,39 +87,36 @@ public class VentanaPerfil extends JFrame{
 		pnlCentral.add(fPerfil);
 		
 		//Combobox
-		pais = new JComboBox<>();
-		pais.addItem("España");
-		pais.setBounds(580, 150, 102, 30);
-		pnlCentral.add(pais);
+		apellido = new JTextField(usuario.getApellido());
+		apellido.setBounds(580, 150, 102, 30);
+		pnlCentral.add(apellido);
 		
-		idioma = new JComboBox<>();
-		idioma.addItem("Español");
-		idioma.addItem("English");
-		idioma.setBounds(580, 200, 102, 30);
-		pnlCentral.add(idioma);
+		contraseña = new JPasswordField(usuario.getContraseña());
+		contraseña.setBounds(580, 200, 102, 30);
+		pnlCentral.add(contraseña);
 		
-		codInv = new JComboBox<>();
-		codInv.addItem("");
-		codInv.setBounds(580, 250, 102, 30);
-		pnlCentral.add(codInv);
-		
-		//Textfields
-		email = new JTextField();
-		email.setText("ejemplo@gmail.com");
+		email = new JTextField(usuario.getEmail());
 		email.setBounds(580, 300, 180, 30);
 		pnlCentral.add(email);
 		
+		//Textfields
+		id = new JTextField();
+		id.setEditable(false);
+		id.setText(String.valueOf(usuario.getId()));
+		id.setBounds(580, 250, 102, 30);
+		pnlCentral.add(id);
+		
 		tel = new JTextField();
-		tel.setText("Número de Teléfono");
+		tel.setText("@" + usuario.getNombreUsuario());
 		tel.setBounds(580, 80, 180, 30);
 		pnlCentral.add(tel);
 		
-		nom = new JTextField();
+		nombre = new JTextField();
 		Font fuente = new Font("Dialog", Font.BOLD, 26);
-		nom.setFont(fuente);
-		nom.setText("Nombre Apellido");
-		nom.setBounds(580, 20, 240, 50);
-		pnlCentral.add(nom); 
+		nombre.setFont(fuente);
+		nombre.setText(usuario.getNombre());
+		nombre.setBounds(580, 20, 240, 50);
+		pnlCentral.add(nombre); 
 		
 		//Botones
 		guardar = new JButton();
@@ -172,7 +169,8 @@ public class VentanaPerfil extends JFrame{
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				VentanaPerfil vp = new VentanaPerfil();
+				Usuario usuario = new Usuario();
+				VentanaPerfil vp = new VentanaPerfil(usuario);
 				
 				
 				
@@ -181,4 +179,5 @@ public class VentanaPerfil extends JFrame{
 		
 	}
 	*/
+	
 }

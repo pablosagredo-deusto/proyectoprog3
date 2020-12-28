@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import java.util.ArrayList;
@@ -28,19 +29,21 @@ import clases.Usuario;
 public class VentanaRegistro extends JFrame{
 	
 
-	
 	public VentanaRegistro(JFrame ventanaAnterior){
+
 
 		
 		JLabel lnombreUsuario = new JLabel("Nombre de usuario");
 		JLabel lnombre = new JLabel("Nombre");
 		JLabel lapellido = new JLabel("Apellido");
+		JLabel lemail = new JLabel("Email");
 		JLabel lcontraseña = new JLabel("Contraseña");
 		JLabel lrepetirContraseña = new JLabel("Repetir contraseña");
 		
 		JTextField tnombreUsuario = new JTextField();
 		JTextField tnombre = new JTextField();
 		JTextField tapellido = new JTextField();
+		JTextField temail = new JTextField();
 		JPasswordField tcontraseña = new JPasswordField();
 		JPasswordField trepetirContraseña = new JPasswordField();
 		
@@ -56,6 +59,9 @@ public class VentanaRegistro extends JFrame{
 		add(lapellido);
 		add(tapellido);
 		
+		add(lemail);
+		add(temail);
+		
 		add(lcontraseña);
 		add(tcontraseña);
 		
@@ -66,7 +72,7 @@ public class VentanaRegistro extends JFrame{
 		add(bCancelar);
 		
 		
-		setLayout(new GridLayout(6,2));
+		setLayout(new GridLayout(7,2));
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("FoodEst");
 		setSize(400, 500);
@@ -112,7 +118,8 @@ public class VentanaRegistro extends JFrame{
 								usuarioNuevo.setNombreUsuario(tnombreUsuario.getText());
 								usuarioNuevo.setNombre(tnombre.getText());
 								usuarioNuevo.setApellido(tapellido.getText());
-								usuarioNuevo.setContraseña(contraseña);
+								usuarioNuevo.setContraseña(contraseña); //la hemos guardado en un string arriba
+								usuarioNuevo.setEmail(temail.getText());
 								
 								db.insertarUsuario(usuarioNuevo); 
 								JOptionPane.showMessageDialog(null, "Usuario registrado con exito");	
@@ -133,6 +140,17 @@ public class VentanaRegistro extends JFrame{
 		
 		
 		
+		
+		
+	}
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				new VentanaRegistro();
+				
+			}
+		});
 	}
 	
 }

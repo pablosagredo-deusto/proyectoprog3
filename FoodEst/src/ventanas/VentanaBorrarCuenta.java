@@ -8,7 +8,7 @@ import javax.swing.border.TitledBorder;
 public class VentanaBorrarCuenta extends JFrame{
 	
 	
-	public VentanaBorrarCuenta() {
+	public VentanaBorrarCuenta(Usuario usuario) {
 		JLabel ltitulo = new JLabel("Borrar tu cuenta");
 		JLabel lcontraseña = new JLabel("Itroduce tu contraseña");
 		JTextField tcontraseña = new JTextField();

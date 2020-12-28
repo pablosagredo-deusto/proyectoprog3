@@ -12,7 +12,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
 import clases.Usuario;
-import sun.jvm.hotspot.types.JBooleanField;
+
 
 public class VentanaAdministracionRestaurante extends JFrame{
 	

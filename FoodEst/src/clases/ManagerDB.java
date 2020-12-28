@@ -49,13 +49,14 @@ public class ManagerDB {
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		String SQL="";
 		try (Statement stmt = conn.createStatement()) {
-			ResultSet rs = stmt.executeQuery("SELECT NOMBREUSUARIO_USUARIO, NOMBRE_USUARIO, APELLIDO_USUARIO, CONTRASEÑA_USUARIO, ID_USUARIO FROM USUARIO");
+			ResultSet rs = stmt.executeQuery("SELECT NOMBREUSUARIO_USUARIO, NOMBRE_USUARIO, APELLIDO_USUARIO, CONTRASEÑA_USUARIO, EMAIL_USUARIO, ID_USUARIO FROM USUARIO");
 			while(rs.next()) {
 				Usuario usuario = new Usuario();
 				usuario.setNombreUsuario(rs.getString("NOMBREUSUARIO_USUARIO"));
 				usuario.setNombre(rs.getString("NOMBRE_USUARIO"));
 				usuario.setApellido(rs.getString("APELLIDO_USUARIO"));
 				usuario.setContraseña(rs.getString("CONTRASEÑA_USUARIO"));
+				usuario.setEmail(rs.getString("EMAIL_USUARIO"));
 				usuario.setId(rs.getInt("ID_USUARIO"));
 				usuarios.add(usuario);
 			}
@@ -71,13 +72,14 @@ public class ManagerDB {
 
 	//METODO PARA INSERTAR USUARIO POR PRIMERA VEZ
 	public void insertarUsuario(Usuario usuario) throws ExceptionDB {
-		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO USUARIO (NOMBREUSUARIO_USUARIO, NOMBRE_USUARIO, APELLIDO_USUARIO, CONTRASEÑA_USUARIO) VALUES (?, ?, ?, ?)"); 
+		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO USUARIO (NOMBREUSUARIO_USUARIO, NOMBRE_USUARIO, APELLIDO_USUARIO, CONTRASEÑA_USUARIO, EMAIL_USUARIO) VALUES (?, ?, ?, ?, ?)"); 
 			Statement stmtForId = conn.createStatement()) {
 			
 			stmt.setString(1, usuario.getNombreUsuario());
 			stmt.setString(2, usuario.getNombre());
 			stmt.setString(3, usuario.getApellido());
 			stmt.setString(4, usuario.getContraseña());
+			stmt.setString(5, usuario.getEmail());
 			
 	
 			stmt.executeUpdate();
