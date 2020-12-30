@@ -17,13 +17,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
 
 import clases.ExceptionDB;
 import clases.ManagerDB;
+import clases.Restaurante;
 import clases.Usuario;
 
 public class VentanaLogin extends JFrame {
@@ -76,13 +76,13 @@ public class VentanaLogin extends JFrame {
 	    JPanel panel1 = new JPanel();
 	    panel1.setLayout(new BorderLayout());
 	    panel1.add(logoUsuario, BorderLayout.WEST);
-	    JTextField tusuario = new JTextField("Nombre de usuario");
-	    panel1.add(tusuario, BorderLayout.CENTER);
+	    JTextField tnombre = new JTextField("Nombre");
+	    panel1.add(tnombre, BorderLayout.CENTER);
 	    
 	    JPanel panel2 = new JPanel();
 	    panel2.setLayout(new BorderLayout());
 	    panel2.add(logoContraseña, BorderLayout.WEST);
-	    JPasswordField tcontraseña = new JPasswordField("Introduce tu contraseña");
+	    JPasswordField tcontraseña = new JPasswordField("Contraseña");
 	    tcontraseña.setEchoChar((char) 0);
 	    panel2.add(tcontraseña, BorderLayout.CENTER);
 	    
@@ -145,9 +145,9 @@ public class VentanaLogin extends JFrame {
             	tcontraseña.setText("");
             }
         });
-		tusuario.addMouseListener(new MouseAdapter() {
+		tnombre.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-            	tusuario.setText("");
+            	tnombre.setText("");
             }
         });
 		
@@ -159,12 +159,32 @@ public class VentanaLogin extends JFrame {
 				
 			}
 		});
+		
+		
+		checkRestaurante.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tnombre.setText("Nombre del restaurante");
+				
+			}
+		});
+		
+		
+		checkUsuario.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tnombre.setText("Nombre del usario");
+				
+			}
+		});
 		JFrame thisFrame = this;
 		crearCuentaUsuario.addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new VentanaRegistro(thisFrame);
+				new VentanaRegistro(thisFrame, 0);
 				setVisible(false);
 				
 			}
@@ -223,7 +243,7 @@ public class VentanaLogin extends JFrame {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new VentanaRegistro(thisFrame);
+				new VentanaRegistro(thisFrame, 1);
 				setVisible(false);
 				
 			}
@@ -235,13 +255,13 @@ public class VentanaLogin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ManagerDB db = new ManagerDB();
-				if(checkUsuario.isSelected()) {
+				if(checkUsuario.isSelected()) { //INICIO SESION USUARIO
 					List<Usuario> usuarios;
 					try {
 						db.connect();
 						
 						usuarios = db.getTodosUsuarios();
-						String nombreRecibido = tusuario.getText();
+						String nombreRecibido = tnombre.getText();
 						String contraseñaRecibido = String.valueOf(tcontraseña.getPassword());
 						
 						for (Usuario usuario : usuarios) {
@@ -256,9 +276,27 @@ public class VentanaLogin extends JFrame {
 						e1.printStackTrace();
 					}
 
-				}else if (checkRestaurante.isSelected()) {
-					//iniciar sesion en restaurantes
-					JOptionPane.showMessageDialog(null, "Implementar inicio de sesion en restaurantes");
+				}else if (checkRestaurante.isSelected()) { //INICIO SESION RESTAURANTE
+					List<Restaurante> restaurantes;
+					try {
+						db.connect();
+						
+						restaurantes = db.getTodosRestaurantes();
+						String nombreRecibido = tnombre.getText();
+						String contraseñaRecibido = String.valueOf(tcontraseña.getPassword());
+						
+						for (Restaurante restaurante : restaurantes) {
+							if (restaurante.getNombre().equals(nombreRecibido) && restaurante.getContraseña().equals(contraseñaRecibido)) {
+								new VentanaAdministracionRestaurante(restaurante);
+								dispose();
+							}
+						}
+						db.disconnect();
+					} catch (ExceptionDB e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
 				}else {
 					JOptionPane.showMessageDialog(null, "Seleccione restaurante o usuario para iniciar sesión");		
 				}
@@ -272,6 +310,7 @@ public class VentanaLogin extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
+				System.out.println("prueba");
 				new VentanaLogin();
 				
 			}

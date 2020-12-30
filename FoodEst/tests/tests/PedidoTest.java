@@ -45,7 +45,7 @@ public class PedidoTest {
 		ingredientesHamburguesa.add(ing3);
 		ingredientesHamburguesa.add(ing4);
 
-		Restaurante restaurante = new Restaurante("BurguerKing", "Comida rapida", "password", direccionRestaurante,
+		Restaurante restaurante = new Restaurante("BurguerKing", "Comida rapida", "password", "C/Leioa/Calle Menor/8/00",
 				productosBurgerKing, false);
 
 		Producto Pizza1 = new Producto("Piza", 001, 15.5, "pizza", ingredientesPizza, false, TipoProducto.PIZZA, null);
@@ -60,8 +60,8 @@ public class PedidoTest {
 		List<Producto> productosPedido = new ArrayList<Producto>();
 		productosPedido.add(Pizza1);
 
-		// list de pedidos problemos
-		Pedido pedido1 = new Pedido(1, restaurante, direccionPedido, EstadoPedido.RECIBIDO, null, 50.5, "Efectivo", false);
+		// list de pedidos problemos null1 direccion obj
+		Pedido pedido1 = new Pedido(1, restaurante, null, EstadoPedido.RECIBIDO, null, 50.5, "Efectivo", false);
 	}
 
 	@Test

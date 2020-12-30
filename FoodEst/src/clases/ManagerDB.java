@@ -24,6 +24,7 @@ public class ManagerDB {
 	public void connect() throws ExceptionDB {
 		try {
 			String nombreDB = "jdbc:sqlite:/C:\\Users\\guill\\git\\proyectoprog3\\FoodEst\\lib\\FoodEstDB";
+			
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(nombreDB);
 
@@ -89,6 +90,31 @@ public class ManagerDB {
 		}
 	}
 	
+	//METODO PARA INSERTAR RESTAURANTE POR PRIMERA VEZ
+	public void insertarRestaurante(Restaurante restaurante) throws ExceptionDB {
+		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO RESTAURANTE (NOMBRE_RESTAURANTE, CATEGORIA_RESTAURANTE, CONTRASEÑA_RESTAURANTE, DIRECCION_RESTAURANTE, ENVIO_GRATIS) VALUES (?, ?, ?, ?, ?)"); 
+			Statement stmtForId = conn.createStatement()) {
+			
+			stmt.setString(1, restaurante.getNombre());
+			stmt.setString(2, restaurante.getCategoria());
+			stmt.setString(3, restaurante.getContraseña());
+			stmt.setString(4, restaurante.getDireccion());
+			int intEnvioGratis = restaurante.isEnviogratis() ? 1 : 0; //para pasar de boolean a int y poder meterlo en la base de datos
+			stmt.setInt(5, intEnvioGratis);
+			
+			stmt.executeUpdate();
+			 
+		} catch (SQLException | DateTimeParseException e) {
+			throw new ExceptionDB("Error al insertar restaurante", e);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public List<Restaurante> getTodosRestaurantes() throws ExceptionDB {
@@ -145,6 +171,59 @@ public class ManagerDB {
 
 	}
 
+	
+	
+	
+	public List<Producto> getTodosProductos() throws ExceptionDB {
+		List<Producto> productos = new ArrayList<Producto>();
+		String SQL="";
+		try (Statement stmt = conn.createStatement()) {
+			SQL="SELECT NOMBRE_PRODUCTO, ID_PRODUCTO, PRECIO_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO FROM PRODUCTO";
+			ResultSet rs = stmt.executeQuery(SQL);
+			log( Level.INFO, "Buscar productos\t" + SQL, null );
+			while (rs.next()) {
+				Producto producto = new Producto();
+				producto.setNombre(rs.getString("NOMBRE_PRODUCTO"));
+				producto.setId(rs.getInt("ID_PRODUCTO"));
+				producto.setPrecio(rs.getDouble("PRECIO_PRODUCTO"));
+				producto.setDescripcion(rs.getString("DESCRIPCION_PRODUCTO"));
+				if(rs.getInt("VEGANO") == 1)  producto.setVegano(true);
+
+				productos.add(producto);
+			}
+
+			return productos;
+		} catch (SQLException | DateTimeParseException e) {
+			throw new ExceptionDB("Error obteniendo los direcciones", e);
+		}
+	}
+	
+	
+	public void insertarproducto(Producto producto) throws ExceptionDB {
+		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO PRODUCTO (NOMBRE_PRODUCTO, ID_PRODUCTO, PRECIO_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, ID_RESTAURANTE) VALUES (?, ?, ?, ?, ?, ?, ?)"); 
+			Statement stmtForId = conn.createStatement()) {
+			
+			stmt.setString(1, producto.getNombre());
+			stmt.setInt(2, producto.getId());
+			stmt.setDouble(3, producto.getPrecio());
+			stmt.setString(4, producto.getDescripcion());
+			int veganoInt = producto.isVegano() ? 1 : 0;
+			stmt.setInt(5, veganoInt);
+			stmt.setString(6, producto.getTipo().toString()); //utilizamos el metodo toString por defecto de las enumeraciones
+			stmt.setInt(7, producto.getRestaurante().getId()); //cogemos el int del restaurante al que esté asignado este producto
+			
+			stmt.executeUpdate();
+			 
+		} catch (SQLException | DateTimeParseException e) {
+			throw new ExceptionDB("Error al insertar restaurante", e);
+		}
+	}
+	
+
+	
+	
+	
+	
 	private static Logger logger = null;
 
 	// Metodo local para el logger

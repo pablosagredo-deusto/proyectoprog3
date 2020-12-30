@@ -24,12 +24,16 @@ import java.util.List;
 
 import clases.ExceptionDB;
 import clases.ManagerDB;
+import clases.Restaurante;
 import clases.Usuario;
 
-public class VentanaRegistro extends JFrame{
+
+
+//-----PESTAÑA REGISTRO USUARIO--------
+class VentanaRegistroUsuario extends JPanel{
 	
 
-	public VentanaRegistro(JFrame ventanaAnterior){
+	public VentanaRegistroUsuario(JFrame ventanaAnterior, JFrame ventanaActual){
 
 
 		
@@ -39,6 +43,10 @@ public class VentanaRegistro extends JFrame{
 		JLabel lemail = new JLabel("Email");
 		JLabel lcontraseña = new JLabel("Contraseña");
 		JLabel lrepetirContraseña = new JLabel("Repetir contraseña");
+		JLabel ltitulo1 = new JLabel("      Registrate");
+		JLabel ltitulo2 = new JLabel("en Foodest");
+		ltitulo1.setFont(new Font("Cooper Black", Font.BOLD, 25));
+		ltitulo2.setFont(new Font("Cooper Black", Font.BOLD, 25));
 		
 		JTextField tnombreUsuario = new JTextField();
 		JTextField tnombre = new JTextField();
@@ -50,6 +58,11 @@ public class VentanaRegistro extends JFrame{
 		JButton bRegistrar = new JButton("Registrar"); 
 		JButton bCancelar = new JButton("Cancelar"); 
 
+		 
+		
+		add(ltitulo1);
+		add(ltitulo2);
+		
 		add(lnombreUsuario);
 		add(tnombreUsuario);
 		
@@ -72,19 +85,17 @@ public class VentanaRegistro extends JFrame{
 		add(bCancelar);
 		
 		
-		setLayout(new GridLayout(7,2));
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle("FoodEst");
+		
 		setSize(400, 500);
-		setResizable(false);
-		setVisible(true);
+		setLayout(new GridLayout(8,2));
+		
 		
 		
 		bCancelar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				ventanaActual.dispose();
 				ventanaAnterior.setVisible(true);
 				
 			}
@@ -122,8 +133,123 @@ public class VentanaRegistro extends JFrame{
 								usuarioNuevo.setEmail(temail.getText());
 								
 								db.insertarUsuario(usuarioNuevo); 
-								JOptionPane.showMessageDialog(null, "Usuario registrado con exito");	
+								JOptionPane.showMessageDialog(null, "Usuario registrado con éxito");	
 							}else { //Que no lo esté
+								JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");					
+							}
+						}	
+					}	
+					db.disconnect();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+				
+				
+			}
+		});
+	}
+}
+
+class VentanRegistroRestaurante extends JPanel{
+	
+	public VentanRegistroRestaurante(JFrame ventanaAnterior, JFrame ventanaActual) {
+		setSize(400, 500);
+		setLayout(new GridLayout(7,2));
+		 
+		JLabel ltitulo1 = new JLabel("    Registra tu");
+		JLabel ltitulo2 = new JLabel("restaurante");
+		ltitulo1.setFont(new Font("Cooper Black", Font.BOLD, 25));
+		ltitulo2.setFont(new Font("Cooper Black", Font.BOLD, 25));
+
+
+		
+		JButton bregistrar = new JButton("Resgistrar");
+		JButton bcancelar = new JButton("Cancelar");
+
+		JLabel lnombreRestaurante = new JLabel("Nombre de restaurante:");
+		JTextField tnombreRestaurante = new JTextField();
+		
+		JLabel lcategoriaRestaurante = new JLabel("Categoria de restaurante:");
+		JTextField tcategoriaRestaurante = new JTextField();
+		
+		JLabel lcontraseñaRestaurante = new JLabel("Contraseña:");
+		JPasswordField tcontraseñaRestaurante = new JPasswordField();
+		
+		JLabel lrepetirContraseña = new JLabel("Repetir contraseña:");
+		JPasswordField trepetirContraseñaRestaurante = new JPasswordField();
+		
+		JLabel ldireccion = new JLabel("Direccion:");
+		JTextField tdireccion = new JPasswordField();
+		
+		
+		add(ltitulo1);
+		add(ltitulo2);
+		
+		add(lnombreRestaurante);
+		add(tnombreRestaurante);
+		
+		add(lcategoriaRestaurante);
+		add(tcategoriaRestaurante);
+		
+		add(lcontraseñaRestaurante);
+		add(tcontraseñaRestaurante);
+		
+		add(lrepetirContraseña);
+		add(trepetirContraseñaRestaurante);
+		
+		add(ldireccion);
+		add(tdireccion);
+		
+		add(bregistrar);
+		add(bcancelar);
+		
+		
+		
+		bcancelar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaActual.dispose();
+				ventanaAnterior.setVisible(true);
+				
+			}
+		});
+		
+		
+		bregistrar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ManagerDB db = new ManagerDB();
+				try {
+					db.connect();
+				} catch (ExceptionDB e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					List<Restaurante> restaurantesExistentes = db.getTodosRestaurantes();
+					for (Restaurante restaurante : restaurantesExistentes) { 
+						String nombre = restaurante.getNombre();
+						if(nombre.equals(tnombreRestaurante.getText())) {// YA ESXISTE ESE NOMBRE DE RESTAURANTE
+							JOptionPane.showMessageDialog(null, "Restaurante ya registrado");
+						}else{ //NO EXISTE ---> LO REGISTRAMOS
+							String contraseña = String.valueOf(tcontraseñaRestaurante.getPassword());
+							String confirmacionContraseña = String.valueOf(trepetirContraseñaRestaurante.getPassword());
+							
+							
+							if (contraseña.equals(confirmacionContraseña)) { //Que la contraseña esté bien confirmada
+								Restaurante restauranteNuevo = new Restaurante();
+								restauranteNuevo.setNombre(tnombreRestaurante.getText());
+								restauranteNuevo.setCategoria(tcategoriaRestaurante.getText());
+								restauranteNuevo.setContraseña(contraseña); //ya la hemos guardado en un string arriba
+								restauranteNuevo.setDireccion(tdireccion.getText());
+								restauranteNuevo.setEnviogratis(false); //esto luego se podra cambiar en ventanAdministracion
+								
+								db.insertarRestaurante(restauranteNuevo);
+								JOptionPane.showMessageDialog(null, "Restaurante registrado con éxito");	
+							}else { //Que no lo estén
 								JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");					
 							}
 						}	
@@ -142,15 +268,36 @@ public class VentanaRegistro extends JFrame{
 		
 		
 		
+		
+		
+		
 	}
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				new VentanaRegistro();
-				
-			}
-		});
+}
+
+
+
+public class VentanaRegistro extends JFrame{
+	
+	public VentanaRegistro(JFrame ventanaAnterior, int indiceVentanaPorDefecto) {
+		JTabbedPane panelPestañas = new JTabbedPane(); //contenedor de pestañas
+		
+		
+		JFrame ventanaActual = this;
+		panelPestañas.add("Registro Usuario", new VentanaRegistroUsuario(ventanaAnterior, ventanaActual));
+		panelPestañas.add("Registro Restaurante", new VentanRegistroRestaurante(ventanaAnterior, ventanaActual));
+		
+		
+		panelPestañas.setSelectedIndex(indiceVentanaPorDefecto);
+		
+		
+		
+		add(panelPestañas);
+		
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setTitle("FoodEst");
+		setSize(400, 500);
+		setResizable(false);
+		setVisible(true);
 	}
 	
 }

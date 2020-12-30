@@ -21,26 +21,11 @@ import ventanas.VentanaRestaurante;
 public class Pruebas {
 	public static void main(String[] args) {
 		
-		ManagerDB db = new ManagerDB();
-		try {
-			db.connect();
-			
-			
-			Usuario us2 = new Usuario();
-			us2.setNombre("prueba3");
-			us2.setNombreUsuario("prueba3");
-			us2.setContraseña("prueba3");
-			us2.setApellido("prueba3");
-			
-			
-			db.insertarUsuario(us2);
-			
-			db.disconnect();
-		} catch (ExceptionDB e1) {
-			e1.printStackTrace();
-		}
+		boolean bol = true;
 		
-	
+		int myInt = bol ? 1 : 0;
+		
+		System.out.println(myInt);
 		
 	}
 

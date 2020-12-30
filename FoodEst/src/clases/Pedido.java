@@ -20,6 +20,9 @@ public class Pedido {
 		this.direccion = direccion;
 		this.estado = estado;
 		this.productos = productos;
+		for (Producto producto : productos) {
+			preciototal=+producto.getPrecio();
+		}
 		this.preciototal = preciototal;
 		this.metodoPago = metodoPago;
 		this.cubiertos = cubiertos;
@@ -114,6 +117,10 @@ public class Pedido {
 		return "Pedido" + id + ", restaurante=" + restaurante + ", direccion=" + direccion + ", estado=" + estado
 				+ ", articulos=" + productos + ", preciototal=" + preciototal + ", metodopago=" + metodoPago
 				+ ", cubiertos=" + cubiertos + "";
+	}
+	
+	public String toStringProductos() {
+		return  "Productos" + productos + ", preciototal=" + preciototal + "";
 	}
 
 	public Object getCubiertos() {
