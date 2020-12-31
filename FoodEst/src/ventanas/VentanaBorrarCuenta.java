@@ -5,6 +5,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+import clases.Usuario;
+
 public class VentanaBorrarCuenta extends JFrame{
 	
 	

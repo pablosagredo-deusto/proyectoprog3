@@ -3,21 +3,17 @@ package clases;
 
 import java.util.*;
 
-
 public class Producto {
 	protected String nombre;
 	protected int id;
 	protected double precio;
 	protected String descripcion;
-	protected boolean vegano; 
+	protected boolean vegano;
 	protected TipoProducto tipo;
 	protected Restaurante restaurante;
-	
-	
-	
-	
-	public Producto(String nombre,int id, double precio, String descripcion,
-			boolean vegano, TipoProducto tipo, Restaurante restaurante) {
+
+	public Producto(String nombre, int id, double precio, String descripcion, boolean vegano, TipoProducto tipo,
+			Restaurante restaurante) {
 		super();
 		this.nombre = nombre;
 		this.id = id;
@@ -27,8 +23,8 @@ public class Producto {
 		this.tipo = tipo;
 		this.restaurante = restaurante;
 	}
-	
-	//NO TIENE MUCHO SENTIDO CREAR UN PRODUCTO VACIO
+
+	// NO TIENE MUCHO SENTIDO CREAR UN PRODUCTO VACIO
 	public Producto() {
 		super();
 		this.nombre = "";
@@ -72,8 +68,6 @@ public class Producto {
 		this.descripcion = descripcion;
 	}
 
-
-
 	public Restaurante getRestaurante() {
 		return restaurante;
 	}
@@ -81,8 +75,6 @@ public class Producto {
 	public void setRestaurante(Restaurante restaurante) {
 		this.restaurante = restaurante;
 	}
-
-
 
 	public boolean isVegano() {
 		return vegano;
@@ -100,23 +92,18 @@ public class Producto {
 		this.tipo = tipo;
 	}
 
-
 	public String toStringPrecio() {
-		return nombre +" "+ precio + "€";
+		return nombre + " " + precio + "€";
 	}
-	
-	
-	
+
 	@Override
 	public String toString() {
-		return "Producto [nombre=" + nombre + ", id=" + id + ", precio=" + precio + ", decripcion=" + decripcion
-				+ ", ingredientes=" + ingredientes + ", vegano=" + vegano + ", tipo=" + tipo + ", restaurante="
-				+ restaurante + "]";
+		return "Producto [nombre=" + nombre + ", id=" + id + ", precio=" + precio + ", vegano=" + vegano + ", tipo="
+				+ tipo + ", restaurante=" + restaurante + "]";
 	}
 
 	public static void main(String[] args) {
-		
+
 	}
-	
-	
+
 }

@@ -1,24 +1,35 @@
 package ventanas;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import java.io.File;
+
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+
 import javax.swing.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 import clases.EstadoPedido;
 import clases.Pedido;
 import clases.Producto;
-import clases.Restaurante;
 import clases.TipoProducto;
+import clases.Factura;
+
 
 public class VentanaPago extends JFrame {
 	JPanel pnlCentral;
@@ -37,19 +48,21 @@ public class VentanaPago extends JFrame {
 	ImageIcon imagenTarjeta;
 	Image image3;
 	Image newImg3;
-	
+
 	Producto Pizza1;
+	Factura fact;
+
+	String ruta = "src/lib/factura.txt";
+	String contenido = "pruebaa";
+	File file = new File(ruta);
 
 	public VentanaPago(Pedido ped) {
-		
-		
-		//para test de ventana
+
+		// para test de ventana
 		List<Producto> productosBurgerKing = new ArrayList<Producto>();
-		Pizza1 = new Producto("Piza", 001, 15.5, "pizza", null, false, TipoProducto.PIZZA, null);
+		Pizza1 = new Producto("Piza", 001, 15.5, "pizza", false, TipoProducto.PIZZA, null);
 		productosBurgerKing.add(Pizza1);
-		Pedido ped2= new Pedido(1, null, null, EstadoPedido.RECIBIDO, productosBurgerKing, 12, "", false);
-		
-		
+		Pedido ped2 = new Pedido(1, null, null, EstadoPedido.RECIBIDO, productosBurgerKing, 12, "", false);
 
 		setTitle("Perfil");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -78,20 +91,19 @@ public class VentanaPago extends JFrame {
 
 		pnlCentral.setBackground(Color.WHITE);
 
-		
-		double precio=ped.getPreciototal();
-		String cadena="";
+		double precio = ped.getPreciototal();
+		String cadena = "";
 		for (Producto producto : ped.getProductos()) {
-			cadena="\n"+producto.toStringPrecio();			
+			cadena = "\n" + producto.toStringPrecio();
 		}
 		p = new JLabel();
-		p.setText("TOTAL A PAGAR\n"+"  "+"---"+" "+ cadena);
+		p.setText("TOTAL A PAGAR\n" + "  " + "---" + " " + cadena);
 		p.setFont(new Font("Arial", Font.BOLD, 15));
 
 		p1 = new JLabel();
 		p1.setText("Seleccione su forma de pago --->");
 		p1.setFont(new Font("Arial", Font.BOLD, 15));
-		
+
 		JLabel p2 = new JLabel();
 		p2.setText("Generar factura en txt");
 		p2.setFont(new Font("Arial", Font.BOLD, 15));
@@ -115,8 +127,7 @@ public class VentanaPago extends JFrame {
 		Image newImg3 = image3.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
 		imagenTarjeta = new ImageIcon(newImg3);
 		tarjeta.setIcon(imagenTarjeta);
-		
-		
+
 		factura = new JButton();
 		factura.setFont(new Font("Arial", Font.BOLD, 15));
 
@@ -125,11 +136,10 @@ public class VentanaPago extends JFrame {
 		Image newImg4 = image4.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
 		imagenFactura = new ImageIcon(newImg4);
 		factura.setIcon(imagenFactura);
-		
-		
-		JRadioButton checkTxt= new JRadioButton(".txt");
+
+		JRadioButton checkTxt = new JRadioButton(".txt");
 		JRadioButton checkXml = new JRadioButton(".xml");
-		ButtonGroup group = new ButtonGroup(); 
+		ButtonGroup group = new ButtonGroup();
 		group.add(checkTxt);
 		group.add(checkXml);
 
@@ -140,23 +150,43 @@ public class VentanaPago extends JFrame {
 		pnlCentralIzq.add(checkXml);
 		pnlCentralIzq.add(factura);
 
-
 		pnlCentral.add(pnlCentralIzq);
 		pnlCentral.add(efectivo);
 		pnlCentral.add(tarjeta);
 		add(pnlCentral);
 		setVisible(true);
 
+		// texto
+		String ruta = "/ruta/filename.txt";
+		String contenido = "pruebaa";
+		File file = new File(ruta);
+		try {
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			FileWriter fw = new FileWriter(file);
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(contenido);
+			bw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (checkTxt.isSelected()) {
+
+		} else {
+
+		}
+
 		efectivo.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//setVisible(false);
+				// setVisible(false);
 				ped.setMetodoPago("Efectivo");
 				for (Producto producto : ped.getProductos()) {
 					producto.toStringPrecio();
 				}
-				
 
 			}
 		});
@@ -166,7 +196,21 @@ public class VentanaPago extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ped.setMetodoPago("Tarjeta");
+				System.out.println("factura creada por boton");
 
+			}
+		});
+
+		factura.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Factura fact=new Factura();
+				try {
+					fact.crearFactura(ped);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 

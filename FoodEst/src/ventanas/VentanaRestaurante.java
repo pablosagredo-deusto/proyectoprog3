@@ -93,7 +93,7 @@ public class VentanaRestaurante extends JFrame {
 		JPanel panelIzquierdaAbajo = new JPanel();
 		panelIzquierdaAbajo.setLayout(new GridLayout(2, 4, 30, 30)); // meter separacion entre espacios
 
-		// PANEL1
+		// Producto1
 		JPanel area1 = new JPanel();
 		area1.setLayout(new BorderLayout());
 		JLabel text1 = new JLabel("HAMBURGUESA");
@@ -101,12 +101,12 @@ public class VentanaRestaurante extends JFrame {
 		JTextArea text2 = new JTextArea("INGREDIENTES:\n -Pan\n -Lechuga \n -Carne");
 		text2.setEditable(false);
 
-		// PANEL1-foto1
-
 		area1.add(b1, BorderLayout.SOUTH);
 		area1.add(text1, BorderLayout.NORTH);
 		area1.add(text2, BorderLayout.CENTER);
 
+		
+		//productos restantes
 		JPanel area2 = new JPanel();
 		JPanel area3 = new JPanel();
 		JPanel area4 = new JPanel();
@@ -179,11 +179,11 @@ public class VentanaRestaurante extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Producto a = new Producto("", 001, 15.5, "pizza", null, false, TipoProducto.PIZZA, null);
+				Producto a = new Producto("", 001, 15.5, "pizza", false, TipoProducto.PIZZA, null);
 				a.setNombre(text1.getText());
 				productos.add(a);
 				//problema precio
-				precio= precio + a.getPrecio();
+				precio=+ a.getPrecio();
 				precioActual.setText("");
 				modeloPedido.addElement(a.toStringPrecio());
 
