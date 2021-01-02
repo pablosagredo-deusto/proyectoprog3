@@ -3,7 +3,6 @@ package clases;
 
 import java.util.*;
 
-
 public class Producto {
 	protected String nombre;
 	protected int id;
@@ -12,6 +11,7 @@ public class Producto {
 	protected List<String> ingredientes;
 	protected boolean vegano; 
 	protected TipoProducto tipo;
+
 	protected int idRestaurante;
 	
 	
@@ -29,8 +29,8 @@ public class Producto {
 		this.tipo = tipo;
 		this.idRestaurante = idRestaurante;
 	}
-	
-	//NO TIENE MUCHO SENTIDO CREAR UN PRODUCTO VACIO
+
+	// NO TIENE MUCHO SENTIDO CREAR UN PRODUCTO VACIO
 	public Producto() {
 		super();
 		this.nombre = "";
@@ -93,8 +93,6 @@ public class Producto {
 		this.idRestaurante = idRestaurante;
 	}
 
-
-
 	public boolean isVegano() {
 		return vegano;
 	}
@@ -111,13 +109,8 @@ public class Producto {
 		this.tipo = tipo;
 	}
 
-
 	public String toStringPrecio() {
-		return nombre +" "+ precio + "€";
+		return nombre + " " + precio + "€";
 	}
-	
 
-
-	
-	
 }

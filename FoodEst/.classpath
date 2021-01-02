@@ -9,5 +9,11 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.32.3.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/pdfbox-tools-2.0.22.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/xmpbox-2.0.22.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/preflight-2.0.22.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/fontbox-2.0.22.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/pdfbox-app-2.0.22.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/pdfbox-2.0.22.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

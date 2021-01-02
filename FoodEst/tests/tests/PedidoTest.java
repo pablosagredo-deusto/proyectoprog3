@@ -14,12 +14,7 @@ public class PedidoTest {
 	Producto Pizza1;
 	Producto Hamburguesa1;
 	List<Producto> productosBurgerKing;
-	List<Ingrediente> ingredientesPizza;
-	List<Ingrediente> ingredientesHamburguesa;
-	Ingrediente ing1 ;
-	Ingrediente ing2 ;
-	Ingrediente ing3 ;
-	Ingrediente ing4 ;
+	
 	Restaurante restaurante;
 	Direccion direccionPedido;
 	List<Producto> productosPedido;
@@ -33,23 +28,23 @@ public class PedidoTest {
 				45006);
 		List<Producto> productosBurgerKing = new ArrayList<Producto>();
 
+		
+		/*
 		List<Ingrediente> ingredientesPizza = new ArrayList<Ingrediente>();
 		List<Ingrediente> ingredientesHamburguesa = new ArrayList<Ingrediente>();
-		Ingrediente ing1 = new Ingrediente("Pan", 001, 20);
-		Ingrediente ing2 = new Ingrediente("Tomate", 002, 150);
 		ingredientesPizza.add(ing1);
 		ingredientesPizza.add(ing2);
 
 		Ingrediente ing3 = new Ingrediente("Carne", 001, 20);
 		Ingrediente ing4 = new Ingrediente("Pepinillo", 002, 150);
 		ingredientesHamburguesa.add(ing3);
-		ingredientesHamburguesa.add(ing4);
+		ingredientesHamburguesa.add(ing4);*/
 
 		Restaurante restaurante = new Restaurante("BurguerKing", "Comida rapida", "password", "C/Leioa/Calle Menor/8/00",
 				productosBurgerKing, false);
 
-		Producto Pizza1 = new Producto("Piza", 001, 15.5, "pizza", ingredientesPizza, false, TipoProducto.PIZZA, null);
-		Producto Hamburguesa1 = new Producto("Hamburguesa", 002, 15.5, "Hamburguesa prueba", ingredientesHamburguesa,
+		Producto Pizza1 = new Producto("Piza", 001, 15.5, "pizza", false, TipoProducto.PIZZA, null);
+		Producto Hamburguesa1 = new Producto("Hamburguesa", 002, 15.5, "Hamburguesa prueba",
 				false, TipoProducto.HAMBURGUESA, null);
 
 		productosBurgerKing.add(Pizza1);
