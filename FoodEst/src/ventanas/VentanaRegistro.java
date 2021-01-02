@@ -106,46 +106,50 @@ class VentanaRegistroUsuario extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ManagerDB db = new ManagerDB();
-				try {
-					db.connect();
-				} catch (ExceptionDB e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				
 				try {
+					db.connect();
 					List<Usuario> usuariosExistentes = db.getTodosUsuarios();
+					int numeroUsuarios = usuariosExistentes.size();
+					int usuariosComprobados = 0;
 					for (Usuario usuario : usuariosExistentes) { 
 						String nombre = usuario.getNombreUsuario();
 						if(nombre.equals(tnombreUsuario.getText())) {// YA ESXISTE ESE NOMBRE DE USUARIO
 							JOptionPane.showMessageDialog(null, "Nombre de usuario existente, elige otro");
-						}else{ //NO EXISTE ---> LO REGISTRAMOS
-							String contraseña = String.valueOf(tcontraseña.getPassword());
-							String confirmacionContraseña = String.valueOf(trepetirContraseña.getPassword());
+						}else{ 
+							usuariosComprobados = usuariosComprobados + 1;
+						}
+					}		
+							
+					if(usuariosComprobados == numeroUsuarios) {
+						//NO EXISTE ---> LO REGISTRAMOS
+						String contraseña = String.valueOf(tcontraseña.getPassword());
+						String confirmacionContraseña = String.valueOf(trepetirContraseña.getPassword());
 							
 							
-							if (contraseña.equals(confirmacionContraseña)) { //Que la contraseña esté bien confirmada
-								Usuario usuarioNuevo = new Usuario();
-								usuarioNuevo.setNombreUsuario(tnombreUsuario.getText());
-								usuarioNuevo.setNombre(tnombre.getText());
-								usuarioNuevo.setApellido(tapellido.getText());
-								usuarioNuevo.setContraseña(contraseña); //la hemos guardado en un string arriba
-								usuarioNuevo.setEmail(temail.getText());
+						if (contraseña.equals(confirmacionContraseña)) { //Que la contraseña esté bien confirmada
+							Usuario usuarioNuevo = new Usuario();
+							usuarioNuevo.setNombreUsuario(tnombreUsuario.getText());
+							usuarioNuevo.setNombre(tnombre.getText());
+							usuarioNuevo.setApellido(tapellido.getText());
+							usuarioNuevo.setContraseña(contraseña); //la hemos guardado en un string arriba
+							usuarioNuevo.setEmail(temail.getText());
 								
-								db.insertarUsuario(usuarioNuevo); 
-								JOptionPane.showMessageDialog(null, "Usuario registrado con éxito");	
-							}else { //Que no lo esté
-								JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");					
-							}
-						}	
-					}	
+							db.insertarUsuario(usuarioNuevo); 
+							JOptionPane.showMessageDialog(null, "Usuario registrado con éxito");	
+						}else { //Que no lo esté
+							JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");					
+						}
+					}
+						
+					
 					db.disconnect();
 				} catch (Exception e2) {
-					// TODO: handle exception
+					e2.printStackTrace();
 				}
 				
 				
-			}
+				}
 		});
 	}
 }
@@ -221,42 +225,48 @@ class VentanRegistroRestaurante extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ManagerDB db = new ManagerDB();
-				try {
-					db.connect();
-				} catch (ExceptionDB e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 				
 				try {
+					db.connect();
 					List<Restaurante> restaurantesExistentes = db.getTodosRestaurantes();
-					for (Restaurante restaurante : restaurantesExistentes) { 
+					int numeroRestaurantes = restaurantesExistentes.size();
+					int restaurantesComprobados = 0;
+					for (Restaurante restaurante : restaurantesExistentes) {
 						String nombre = restaurante.getNombre();
 						if(nombre.equals(tnombreRestaurante.getText())) {// YA ESXISTE ESE NOMBRE DE RESTAURANTE
 							JOptionPane.showMessageDialog(null, "Restaurante ya registrado");
-						}else{ //NO EXISTE ---> LO REGISTRAMOS
-							String contraseña = String.valueOf(tcontraseñaRestaurante.getPassword());
-							String confirmacionContraseña = String.valueOf(trepetirContraseñaRestaurante.getPassword());
+							break;
+						}else {
+							restaurantesComprobados = restaurantesComprobados +1;
+						}
+					}
+					
+					if(restaurantesComprobados == numeroRestaurantes ) { //si se han comprobado todos los restaurantes y no coincide ninguno (es decir, no esta)
+						String contraseña = String.valueOf(tcontraseñaRestaurante.getPassword());
+						String confirmacionContraseña = String.valueOf(trepetirContraseñaRestaurante.getPassword());
+						
+						
+						if (contraseña.equals(confirmacionContraseña)) { //Que la contraseña esté bien confirmada
+							Restaurante restauranteNuevo = new Restaurante();
+							restauranteNuevo.setNombre(tnombreRestaurante.getText());
+							restauranteNuevo.setCategoria(tcategoriaRestaurante.getText());
+							restauranteNuevo.setContraseña(contraseña); //ya la hemos guardado en un string arriba
+							restauranteNuevo.setDireccion(tdireccion.getText());
+							restauranteNuevo.setEnviogratis(false); //esto luego se podra cambiar en ventanAdministracion
 							
 							
-							if (contraseña.equals(confirmacionContraseña)) { //Que la contraseña esté bien confirmada
-								Restaurante restauranteNuevo = new Restaurante();
-								restauranteNuevo.setNombre(tnombreRestaurante.getText());
-								restauranteNuevo.setCategoria(tcategoriaRestaurante.getText());
-								restauranteNuevo.setContraseña(contraseña); //ya la hemos guardado en un string arriba
-								restauranteNuevo.setDireccion(tdireccion.getText());
-								restauranteNuevo.setEnviogratis(false); //esto luego se podra cambiar en ventanAdministracion
-								
-								db.insertarRestaurante(restauranteNuevo);
-								JOptionPane.showMessageDialog(null, "Restaurante registrado con éxito");	
-							}else { //Que no lo estén
-								JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");					
-							}
-						}	
-					}	
+							db.insertarRestaurante(restauranteNuevo);
+							
+							JOptionPane.showMessageDialog(null, "Restaurante registrado con éxito");	
+						}else { //Que no lo estén
+							JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");					
+						}
+					}
+					
+					
 					db.disconnect();
-				} catch (Exception e2) {
-					// TODO: handle exception
+				} catch (ExceptionDB e2) {
+					e2.printStackTrace();
 				}
 				
 				

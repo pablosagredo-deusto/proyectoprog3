@@ -45,7 +45,7 @@ public class VentanaPago extends JFrame {
 		
 		//para test de ventana
 		List<Producto> productosBurgerKing = new ArrayList<Producto>();
-		Pizza1 = new Producto("Piza", 001, 15.5, "pizza", null, false, TipoProducto.PIZZA, null);
+		//Pizza1 = new Producto("Piza", 001, 15.5, "pizza", null, false, TipoProducto.PIZZA, null);
 		productosBurgerKing.add(Pizza1);
 		Pedido ped2= new Pedido(1, null, null, EstadoPedido.RECIBIDO, productosBurgerKing, 12, "", false);
 		

@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -159,7 +160,7 @@ public class ManagerDB {
 				direccion.setPortal(rs.getInt("PORTAL_DIRECCION"));
 				direccion.setPisoPuerta(rs.getString("PISOPUERTA_DIRECCION"));
 				direccion.setCodigoPostal(rs.getInt("CODIGOPOSTAL_DIRECCION"));
-
+				
 				direcciones.add(direccion);
 
 			}
@@ -178,7 +179,7 @@ public class ManagerDB {
 		List<Producto> productos = new ArrayList<Producto>();
 		String SQL="";
 		try (Statement stmt = conn.createStatement()) {
-			SQL="SELECT NOMBRE_PRODUCTO, ID_PRODUCTO, PRECIO_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO FROM PRODUCTO";
+			SQL="SELECT NOMBRE_PRODUCTO, ID_PRODUCTO, PRECIO_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, INGREDIENTES_PRODUCTO, ID_RESTAURANTE FROM PRODUCTO";
 			ResultSet rs = stmt.executeQuery(SQL);
 			log( Level.INFO, "Buscar productos\t" + SQL, null );
 			while (rs.next()) {
@@ -188,7 +189,21 @@ public class ManagerDB {
 				producto.setPrecio(rs.getDouble("PRECIO_PRODUCTO"));
 				producto.setDescripcion(rs.getString("DESCRIPCION_PRODUCTO"));
 				if(rs.getInt("VEGANO") == 1)  producto.setVegano(true);
-
+				producto.setTipo(TipoProducto.valueOf(rs.getString("TIPO_PRODUCTO")));
+				producto.setIdRestaurante(rs.getInt("ID_RESTAURANTE"));
+				
+				String ingredientesSQL = rs.getString("INGREDIENTES_PRODUCTO");	
+				List<String> ingredientesJava = new ArrayList<>();
+				StringTokenizer st = new StringTokenizer(ingredientesSQL, ",");
+				while (st.hasMoreTokens()) {
+					 String token = st.nextToken();
+					 ingredientesJava.add(token);
+				}
+				producto.setIngredientes(ingredientesJava);
+				
+				
+				
+				
 				productos.add(producto);
 			}
 
@@ -198,19 +213,36 @@ public class ManagerDB {
 		}
 	}
 	
+	public static String removeLastCharacter(String str) {
+		   String result = null;
+		   if ((str != null) && (str.length() > 0)) {
+		      result = str.substring(0, str.length() - 1);
+		   }
+		   return result;
+	}
 	
-	public void insertarproducto(Producto producto) throws ExceptionDB {
-		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO PRODUCTO (NOMBRE_PRODUCTO, ID_PRODUCTO, PRECIO_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, ID_RESTAURANTE) VALUES (?, ?, ?, ?, ?, ?, ?)"); 
+	public void insertarProducto(Producto producto) throws ExceptionDB {
+		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO PRODUCTO (NOMBRE_PRODUCTO, PRECIO_PRODUCTO, INGREDIENTES_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, ID_RESTAURANTE) VALUES (?,?,?,?,?,?,?);"); 
 			Statement stmtForId = conn.createStatement()) {
 			
 			stmt.setString(1, producto.getNombre());
-			stmt.setInt(2, producto.getId());
-			stmt.setDouble(3, producto.getPrecio());
-			stmt.setString(4, producto.getDescripcion());
+			stmt.setDouble(2, producto.getPrecio());
+			
+			String ingredientesSQL = "";
+			for (String ingrediente : producto.getIngredientes()) {
+				ingredientesSQL = ingrediente + ",";
+				
+			}
+			removeLastCharacter(ingredientesSQL);
+			stmt.setString(3, ingredientesSQL);
+			
+			stmt.setString(3, producto.getDescripcion());
+			
 			int veganoInt = producto.isVegano() ? 1 : 0;
-			stmt.setInt(5, veganoInt);
-			stmt.setString(6, producto.getTipo().toString()); //utilizamos el metodo toString por defecto de las enumeraciones
-			stmt.setInt(7, producto.getRestaurante().getId()); //cogemos el int del restaurante al que esté asignado este producto
+			stmt.setInt(4, veganoInt);
+			
+			stmt.setString(5, producto.getTipo().toString()); //utilizamos el metodo toString por defecto de las enumeraciones
+			stmt.setInt(6, producto.getIdRestaurante()); //cogemos el int del restaurante al que esté asignado este producto
 			
 			stmt.executeUpdate();
 			 

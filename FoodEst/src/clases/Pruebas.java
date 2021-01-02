@@ -16,16 +16,22 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import clases.*;
+import ventanas.VentanaAdministracionRestaurante;
 import ventanas.VentanaRestaurante;
 
 public class Pruebas {
 	public static void main(String[] args) {
 		
-		boolean bol = true;
+		Restaurante rs = new Restaurante();
+		new VentanaAdministracionRestaurante(rs);
 		
-		int myInt = bol ? 1 : 0;
 		
-		System.out.println(myInt);
+		
+		
+		
+		
+		
+		
 		
 	}
 

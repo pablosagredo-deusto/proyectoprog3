@@ -15,6 +15,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
@@ -29,7 +30,8 @@ import clases.Usuario;
 
 
 public class VentanaAdministracionRestaurante extends JFrame{
-	
+
+
 	public VentanaAdministracionRestaurante(Restaurante restaurante) {
 		//PANEL DERECHA
 		JPanel panelDerecha = new JPanel();
@@ -54,9 +56,39 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		
 		
 		JPanel productosDisponibles = new JPanel();
-		JScrollPane scrollPedidosDisponibles = new JScrollPane(productosDisponibles);
+		JScrollPane scrollProductosDisponibles = new JScrollPane(productosDisponibles);
 		
+		/*
+		List<Producto> productos = null;
+		try {
+			ManagerDB db = new ManagerDB();
+			db.connect();
+			productos = db.getTodosProductos();
+			db.disconnect();
+		} catch (Exception e) {
+		}	
 		
+		for (Producto producto : productos) {
+			if(producto.getIdRestaurante() == restaurante.getId()) {
+				JPanel panel = new JPanel();
+				panel.setLayout(new BorderLayout());
+				
+				String nombre = producto.getNombre();
+				JLabel lnombre = new JLabel(nombre);
+				panel.add(lnombre, BorderLayout.NORTH);
+				
+				JTextArea ingredientes = new JTextArea("INGREDIENTES:\n -Pan\n -Lechuga \n -Carne");
+				ingredientes.setEditable(false);
+				panel.add(ingredientes, BorderLayout.CENTER);
+				
+				JButton beliminar = new JButton("Eliminar");
+				panel.add(beliminar, BorderLayout.SOUTH);
+				
+				productosDisponibles.add(panel);
+			}
+				
+		}
+		*/
 		
 		
 		
@@ -101,13 +133,14 @@ public class VentanaAdministracionRestaurante extends JFrame{
 	    panelIzquierda.add(panelArriba);
 	    panelIzquierda.add(panelAbajo);
 	    
-
+	    
+	    JFrame thisFrame = this;
 		
 	    bañadirProducto.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new VentanaAñadirProducto(restaurante);
+				//new VentanaAñadirProducto(restaurante, thisFrame);
 				
 			}
 		});
@@ -145,13 +178,13 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		});
 
 	}
-	
-
 }
+
 
 //VENTANA PARA AÑADIR PRODUCTO
 class VentanaAñadirProducto extends JFrame{
-	public VentanaAñadirProducto(Restaurante restaurante) {
+	
+	public VentanaAñadirProducto(Restaurante restaurante , JFrame ventanaAnterior) {
 		
 		setSize(300, 350);
 
@@ -223,15 +256,29 @@ class VentanaAñadirProducto extends JFrame{
 				
 				productoNuevo.setNombre(tnombre.getText());
 				productoNuevo.setDescripcion(tdescripcion.getText());
-				productoNuevo.setPrecio(Double. parseDouble(tprecio.getText()));
+				productoNuevo.setPrecio(Double.parseDouble(tprecio.getText()));
 				productoNuevo.setVegano(checkvegano.isSelected());
 				String tipoElegido = (String) comboTipoProducto.getSelectedItem();
 				productoNuevo.setTipo(TipoProducto.valueOf(tipoElegido));
-				productoNuevo.setRestaurante(restaurante);
+				productoNuevo.setIdRestaurante(restaurante.getId());
+				
+				try {
+					ManagerDB db = new ManagerDB();
+					db.connect();
+					db.insertarProducto(productoNuevo);
+					db.disconnect();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+				
+				dispose();
+				ventanaAnterior.dispose();
+				//new VentanaAdministracionRestaurante(restaurante);
 				
 				
 			}
 		});
+		
 		
 
 	}

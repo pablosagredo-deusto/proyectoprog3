@@ -66,8 +66,10 @@ public class VentanaPrincipal extends JFrame {
 		JMenu menuPerfil = new JMenu("Perfil");
 		JMenuItem verPerfil =  new JMenuItem("Mi perfil");
 		JMenuItem otrasOpcionesPerfil =  new JMenuItem("Otras opciones");
+		JMenuItem cerrarSesion =  new JMenuItem("Cerrar sesión");
 		menuPerfil.add(verPerfil);
 		menuPerfil.add(otrasOpcionesPerfil);
+		menuPerfil.add(cerrarSesion);
 		barra.add(menuDireccion);
 		barra.add(menuPerfil);
 		panelArribaIzquierda1.add(barra);
@@ -223,6 +225,16 @@ public class VentanaPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				new VentanaDirecciones(thisFrame, usuario); //Esta ventana recibira un usuario
 				setVisible(false);
+			}
+		});
+		
+		cerrarSesion.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new VentanaLogin();
+				
 			}
 		});
 				
