@@ -11,7 +11,6 @@ import java.util.List;
 
 import java.io.File;
 
-
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -29,7 +28,6 @@ import clases.Pedido;
 import clases.Producto;
 import clases.TipoProducto;
 import clases.Factura;
-
 
 public class VentanaPago extends JFrame {
 	JPanel pnlCentral;
@@ -138,16 +136,16 @@ public class VentanaPago extends JFrame {
 		factura.setIcon(imagenFactura);
 
 		JRadioButton checkTxt = new JRadioButton(".txt");
-		JRadioButton checkXml = new JRadioButton(".xml");
+		JRadioButton checkPdf = new JRadioButton(".pdf");
 		ButtonGroup group = new ButtonGroup();
 		group.add(checkTxt);
-		group.add(checkXml);
+		group.add(checkPdf);
 
 		pnlCentralIzq.setLayout(gridLayout2);
 		pnlCentralIzq.add(p);
 		pnlCentralIzq.add(p2);
 		pnlCentralIzq.add(checkTxt);
-		pnlCentralIzq.add(checkXml);
+		pnlCentralIzq.add(checkPdf);
 		pnlCentralIzq.add(factura);
 
 		pnlCentral.add(pnlCentralIzq);
@@ -157,7 +155,8 @@ public class VentanaPago extends JFrame {
 		setVisible(true);
 
 		// texto
-		String ruta = "/ruta/filename.txt";
+		
+		/*String ruta = "/ruta/filename.txt";
 		String contenido = "pruebaa";
 		File file = new File(ruta);
 		try {
@@ -170,13 +169,7 @@ public class VentanaPago extends JFrame {
 			bw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-
-		if (checkTxt.isSelected()) {
-
-		} else {
-
-		}
+		}*/
 
 		efectivo.addActionListener(new ActionListener() {
 
@@ -187,6 +180,8 @@ public class VentanaPago extends JFrame {
 				for (Producto producto : ped.getProductos()) {
 					producto.toStringPrecio();
 				}
+				
+				VentanaFinal vent =new VentanaFinal(ped);
 
 			}
 		});
@@ -197,6 +192,8 @@ public class VentanaPago extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ped.setMetodoPago("Tarjeta");
 				System.out.println("factura creada por boton");
+				VentanaFinal vent =new VentanaFinal(ped);
+
 
 			}
 		});
@@ -205,12 +202,28 @@ public class VentanaPago extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Factura fact=new Factura();
-				try {
-					fact.crearFactura(ped);
-				} catch (Exception e1) {
-					e1.printStackTrace();
+				Factura fact = new Factura();
+				if (checkPdf.isSelected()) {
+					System.out.println("pdf");
+					try {
+						fact.crearFacturaPdf(ped);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+
+				} else if (checkTxt.isSelected()) {
+
+					System.out.println("texto");
+					try {
+						fact.crearFacturaTxt(ped);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+
+				} else {
+					JOptionPane.showMessageDialog(null, "Seleccione un formato para su factura.");
 				}
+
 			}
 		});
 

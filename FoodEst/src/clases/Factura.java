@@ -1,7 +1,8 @@
 package clases;
 
+import java.io.BufferedWriter;
 import java.io.File;
-
+import java.io.FileWriter;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -12,9 +13,7 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 public class Factura {
 
-	
-
-	public void crearFactura(Pedido p) throws Exception {
+	public void crearFacturaPdf(Pedido p) throws Exception {
 		try (PDDocument document = new PDDocument()) {
 			PDPage page = new PDPage(PDRectangle.A4);
 			document.addPage(page);
@@ -45,11 +44,30 @@ public class Factura {
 			System.out.println("pdf creado");
 		}
 	}
-	
+
+	public void crearFacturaTxt(Pedido ped) throws Exception {
+		String texto = ped.toString();
+		String ruta = "src/imagenes";
+		File archivo = new File(ruta);
+		System.out.println("Texto" + texto);
+		try {
+			if (!archivo.exists()) {
+				archivo.createNewFile();
+			}
+			FileWriter fw = new FileWriter(archivo);
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(texto);
+			bw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	public static void main(String[] args) throws Exception {
-		Factura f=new Factura();
-		f.crearFactura(null);
-		
+		Factura f = new Factura();
+		f.crearFacturaPdf(null);
+
 	}
 
 }
