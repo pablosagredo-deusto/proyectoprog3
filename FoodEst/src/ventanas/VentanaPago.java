@@ -1,6 +1,7 @@
 package ventanas;
 
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -16,8 +17,10 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
+
+	
+//problemas imports con libs externas
 import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -58,7 +61,10 @@ public class VentanaPago extends JFrame {
 
 		// para test de ventana
 		List<Producto> productosBurgerKing = new ArrayList<Producto>();
-		Pizza1 = new Producto("Piza", 001, 15.5, "pizza", false, TipoProducto.PIZZA, null);
+
+		Pizza1 = new Producto();
+		//añadir datos con sets a este producto
+
 		productosBurgerKing.add(Pizza1);
 		Pedido ped2 = new Pedido(1, null, null, EstadoPedido.RECIBIDO, productosBurgerKing, 12, "", false);
 

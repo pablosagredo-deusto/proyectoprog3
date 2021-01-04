@@ -254,6 +254,7 @@ public class VentanaLogin extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				ManagerDB db = new ManagerDB();
 				if(checkUsuario.isSelected()) { //INICIO SESION USUARIO
 					List<Usuario> usuarios;
@@ -261,14 +262,22 @@ public class VentanaLogin extends JFrame {
 						db.connect();
 						
 						usuarios = db.getTodosUsuarios();
-						String nombreRecibido = tnombre.getText();
+						int numeroUsuarios = usuarios.size();
+						int usuariosComprobados = 0;
+						String nombreUsuarioRecibido = tnombre.getText();
 						String contraseñaRecibido = String.valueOf(tcontraseña.getPassword());
 						
 						for (Usuario usuario : usuarios) {
-							if (usuario.getNombre().equals(nombreRecibido) && usuario.getContraseña().equals(contraseñaRecibido)) {
+							if (usuario.getNombreUsuario().equals(nombreUsuarioRecibido) && usuario.getContraseña().equals(contraseñaRecibido)) {
 								new VentanaPrincipal(usuario);
-								dispose();
+								dispose();					
+							}else {
+								usuariosComprobados = usuariosComprobados + 1;
 							}
+						}
+						
+						if (usuariosComprobados == numeroUsuarios) {  // si se han comprobado todos ---> avisamos
+							JOptionPane.showMessageDialog(null, "No se ha encontrado el usuario");
 						}
 						db.disconnect();
 					} catch (ExceptionDB e1) {
@@ -276,12 +285,17 @@ public class VentanaLogin extends JFrame {
 						e1.printStackTrace();
 					}
 
+					
+					
+					
 				}else if (checkRestaurante.isSelected()) { //INICIO SESION RESTAURANTE
 					List<Restaurante> restaurantes;
 					try {
 						db.connect();
 						
 						restaurantes = db.getTodosRestaurantes();
+						int numeroRestaurantes = restaurantes.size();
+						int restaurantesComprobados = 0;
 						String nombreRecibido = tnombre.getText();
 						String contraseñaRecibido = String.valueOf(tcontraseña.getPassword());
 						
@@ -289,8 +303,17 @@ public class VentanaLogin extends JFrame {
 							if (restaurante.getNombre().equals(nombreRecibido) && restaurante.getContraseña().equals(contraseñaRecibido)) {
 								new VentanaAdministracionRestaurante(restaurante);
 								dispose();
+							}else {
+								restaurantesComprobados = restaurantesComprobados +1 ;
 							}
 						}
+						
+						if(restaurantesComprobados == numeroRestaurantes) {
+							JOptionPane.showMessageDialog(null, "No se ha encontrado el restaurante");
+						}
+						
+						
+						
 						db.disconnect();
 					} catch (ExceptionDB e1) {
 						// TODO Auto-generated catch block

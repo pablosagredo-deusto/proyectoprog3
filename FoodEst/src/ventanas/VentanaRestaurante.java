@@ -179,7 +179,9 @@ public class VentanaRestaurante extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Producto a = new Producto("", 001, 15.5, "pizza", false, TipoProducto.PIZZA, null);
+
+				//Producto a = new Producto("", 001, 15.5, "pizza", null, false, TipoProducto.PIZZA, null);
+
 				a.setNombre(text1.getText());
 				productos.add(a);
 				//problema precio

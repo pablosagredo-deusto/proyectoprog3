@@ -8,20 +8,26 @@ public class Producto {
 	protected int id;
 	protected double precio;
 	protected String descripcion;
-	protected boolean vegano;
+	protected List<String> ingredientes;
+	protected boolean vegano; 
 	protected TipoProducto tipo;
-	protected Restaurante restaurante;
 
-	public Producto(String nombre, int id, double precio, String descripcion, boolean vegano, TipoProducto tipo,
-			Restaurante restaurante) {
+	protected int idRestaurante;
+	
+	
+	
+	
+	public Producto(String nombre,int id, double precio, String descripcion, List<String> ingredientes,
+			boolean vegano, TipoProducto tipo, int idRestaurante) {
 		super();
 		this.nombre = nombre;
 		this.id = id;
 		this.precio = precio;
 		this.descripcion = descripcion;
+		this.ingredientes = ingredientes;
 		this.vegano = vegano;
 		this.tipo = tipo;
-		this.restaurante = restaurante;
+		this.idRestaurante = idRestaurante;
 	}
 
 	// NO TIENE MUCHO SENTIDO CREAR UN PRODUCTO VACIO
@@ -31,9 +37,18 @@ public class Producto {
 		this.id = 0;
 		this.precio = 0;
 		this.descripcion = "";
+		this.ingredientes = new ArrayList<String>();
 		this.vegano = false;
 		this.tipo = TipoProducto.OTRO;
-		this.restaurante = new Restaurante();
+		this.idRestaurante = 0;
+	}
+
+	public List<String> getIngredientes() {
+		return ingredientes;
+	}
+
+	public void setIngredientes(List<String> ingredientes) {
+		this.ingredientes = ingredientes;
 	}
 
 	public String getNombre() {
@@ -64,16 +79,18 @@ public class Producto {
 		return descripcion;
 	}
 
-	public void setDescripcion(String decripcion) {
+	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
-	public Restaurante getRestaurante() {
-		return restaurante;
+
+
+	public int getIdRestaurante() {
+		return idRestaurante;
 	}
 
-	public void setRestaurante(Restaurante restaurante) {
-		this.restaurante = restaurante;
+	public void setIdRestaurante(int idRestaurante) {
+		this.idRestaurante = idRestaurante;
 	}
 
 	public boolean isVegano() {
@@ -94,16 +111,6 @@ public class Producto {
 
 	public String toStringPrecio() {
 		return nombre + " " + precio + "€";
-	}
-
-	@Override
-	public String toString() {
-		return "Producto [nombre=" + nombre + ", id=" + id + ", precio=" + precio + ", vegano=" + vegano + ", tipo="
-				+ tipo + ", restaurante=" + restaurante + "]";
-	}
-
-	public static void main(String[] args) {
-
 	}
 
 }
