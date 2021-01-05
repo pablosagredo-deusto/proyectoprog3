@@ -1,11 +1,16 @@
 package ventanas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -15,12 +20,13 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 import clases.ManagerDB;
 import clases.Producto;
@@ -52,43 +58,83 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		
 		
 		
-		panelDerecha.add(panelBotonesArriba);
+		
 		
 		
 		JPanel productosDisponibles = new JPanel();
 		JScrollPane scrollProductosDisponibles = new JScrollPane(productosDisponibles);
+
 		
-		/*
-		List<Producto> productos = null;
+		panelDerecha.add(panelBotonesArriba);
+		panelDerecha.add(scrollProductosDisponibles);
+		
+	
+		
+		
+		
+		ManagerDB db = new ManagerDB();
+		List<Producto> productos;
 		try {
-			ManagerDB db = new ManagerDB();
+			
 			db.connect();
 			productos = db.getTodosProductos();
 			db.disconnect();
+			
+			int numeroProductos = productos.size();
+			
+			for (Producto producto : productos) {
+				if(restaurante.getId() == producto.getIdRestaurante()) {
+					JPanel panel = new JPanel();
+					panel.setLayout(new BorderLayout());
+					Border blackLine = BorderFactory.createLineBorder(Color.black);
+					panel.setBorder(blackLine);
+					
+					JLabel lnombre = new JLabel(producto.getNombre());
+					panel.add(lnombre, BorderLayout.NORTH);
+					
+					JTextArea textIngredientes = new JTextArea();
+					for (String ingrediente : producto.getIngredientes()) {
+						textIngredientes.setText(ingrediente + "\n");
+					}
+					textIngredientes.setEditable(false);
+					panel.add(textIngredientes, BorderLayout.CENTER);
+					
+					JButton beliminar = new JButton("Eliminar");
+					panel.add(beliminar, BorderLayout.SOUTH);
+					
+					beliminar.addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							
+							ManagerDB db = new ManagerDB();
+							
+							try {
+								db.connect();
+								db.borrarProducto(producto);
+								db.disconnect();
+								
+								dispose();
+								new VentanaAdministracionRestaurante(restaurante);
+								
+							} catch (Exception e2) {
+								// TODO: handle exception
+							}
+							
+						}
+					});
+					
+					
+					productosDisponibles.add(panel);
+					
+				}
+				
+			}
 		} catch (Exception e) {
 		}	
 		
-		for (Producto producto : productos) {
-			if(producto.getIdRestaurante() == restaurante.getId()) {
-				JPanel panel = new JPanel();
-				panel.setLayout(new BorderLayout());
-				
-				String nombre = producto.getNombre();
-				JLabel lnombre = new JLabel(nombre);
-				panel.add(lnombre, BorderLayout.NORTH);
-				
-				JTextArea ingredientes = new JTextArea("INGREDIENTES:\n -Pan\n -Lechuga \n -Carne");
-				ingredientes.setEditable(false);
-				panel.add(ingredientes, BorderLayout.CENTER);
-				
-				JButton beliminar = new JButton("Eliminar");
-				panel.add(beliminar, BorderLayout.SOUTH);
-				
-				productosDisponibles.add(panel);
-			}
-				
-		}
-		*/
+		
+		
 		
 		
 		
@@ -140,7 +186,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//new VentanaAñadirProducto(restaurante, thisFrame);
+				new VentanaAñadirProducto(restaurante, thisFrame, productosDisponibles);
 				
 			}
 		});
@@ -148,10 +194,17 @@ public class VentanaAdministracionRestaurante extends JFrame{
 	    
 	    
 	    
+	    String data[][];   
+	    String nombreColumnas[]={"ID","DIRECCION","PRODUCTOS", "PRECIO", "PAGO", "CUBIERTOS"};
+	    DefaultTableModel modeloTabla = new DefaultTableModel(null, nombreColumnas);
+	    JTable tablaPedidos = new JTable(modeloTabla);
+	    
+	    JScrollPane scrollTablaPedidos =new JScrollPane(tablaPedidos);   
 	    
 	    
 	    
 	    
+	    panelAbajoPedidos.add(scrollTablaPedidos);
 	    
 	    setLayout(new GridLayout(1,2));
 		add(panelIzquierda);
@@ -184,7 +237,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 //VENTANA PARA AÑADIR PRODUCTO
 class VentanaAñadirProducto extends JFrame{
 	
-	public VentanaAñadirProducto(Restaurante restaurante , JFrame ventanaAnterior) {
+	public VentanaAñadirProducto(Restaurante restaurante , JFrame ventanaAnterior, JPanel panelProductos) {
 		
 		setSize(300, 350);
 
@@ -262,8 +315,20 @@ class VentanaAñadirProducto extends JFrame{
 				productoNuevo.setTipo(TipoProducto.valueOf(tipoElegido));
 				productoNuevo.setIdRestaurante(restaurante.getId());
 				
+				
+				String ingredientes = tingredientes.getText();
+				List<String> ingredientesList = new ArrayList<String>();
+				StringTokenizer st = new StringTokenizer(ingredientes, ",");
+				while (st.hasMoreTokens()) {
+					 String token = st.nextToken();
+					 ingredientesList.add(token);
+				}
+				productoNuevo.setIngredientes(ingredientesList);
+				
+				
+				
+				ManagerDB db = new ManagerDB();
 				try {
-					ManagerDB db = new ManagerDB();
 					db.connect();
 					db.insertarProducto(productoNuevo);
 					db.disconnect();
@@ -273,9 +338,8 @@ class VentanaAñadirProducto extends JFrame{
 				
 				dispose();
 				ventanaAnterior.dispose();
-				//new VentanaAdministracionRestaurante(restaurante);
-				
-				
+				new VentanaAdministracionRestaurante(restaurante);
+				 
 			}
 		});
 		

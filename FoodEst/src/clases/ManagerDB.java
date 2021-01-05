@@ -13,6 +13,9 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import es.deusto.prog3.cap04.basedatos.manager.DBException;
+import es.deusto.prog3.cap04.basedatos.manager.User;
+
 
 
 
@@ -24,7 +27,7 @@ public class ManagerDB {
 	// METODO PARA CONECTAR CON LA BASE DE DATOS
 	public void connect() throws ExceptionDB {
 		try {
-			String nombreDB = "jdbc:sqlite:/C:\\Users\\Usuario\\git\\proyectoprog3\\FoodEst\\lib\\FoodEstDB";
+			String nombreDB = "jdbc:sqlite:/C:\\Users\\guill\\git\\proyectoprog3\\.classpath\\FoodEst\\lib\\FoodEstDB";
 			
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(nombreDB);
@@ -213,6 +216,7 @@ public class ManagerDB {
 		}
 	}
 	
+	//Metodo para borrar el ultimo caracter de un String
 	public static String removeLastCharacter(String str) {
 		   String result = null;
 		   if ((str != null) && (str.length() > 0)) {
@@ -233,16 +237,16 @@ public class ManagerDB {
 				ingredientesSQL = ingrediente + ",";
 				
 			}
-			removeLastCharacter(ingredientesSQL);
+			removeLastCharacter(ingredientesSQL); //He creado el metodo arriba para borrar el ultimo caracter
 			stmt.setString(3, ingredientesSQL);
 			
-			stmt.setString(3, producto.getDescripcion());
+			stmt.setString(4, producto.getDescripcion());
 			
 			int veganoInt = producto.isVegano() ? 1 : 0;
-			stmt.setInt(4, veganoInt);
+			stmt.setInt(5, veganoInt);
 			
-			stmt.setString(5, producto.getTipo().toString()); //utilizamos el metodo toString por defecto de las enumeraciones
-			stmt.setInt(6, producto.getIdRestaurante()); //cogemos el int del restaurante al que esté asignado este producto
+			stmt.setString(6, producto.getTipo().toString()); //utilizamos el metodo toString por defecto de las enumeraciones
+			stmt.setInt(7, producto.getIdRestaurante()); //cogemos el int del restaurante al que esté asignado este producto
 			
 			stmt.executeUpdate();
 			 
@@ -252,6 +256,16 @@ public class ManagerDB {
 	}
 	
 
+	
+	public void borrarProducto(Producto producto) throws ExceptionDB {
+		try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PRODUCTO WHERE ID_PRODUCTO=?")) {
+			stmt.setInt(1, producto.getId());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new ExceptionDB("No se pudo elimiar el producto con id " + producto.getId(), e);
+		}
+	}
+	
 	
 	
 	

@@ -21,9 +21,22 @@ import ventanas.VentanaRestaurante;
 
 public class Pruebas {
 	public static void main(String[] args) {
-		
-		Restaurante rs = new Restaurante();
-		new VentanaAdministracionRestaurante(rs);
+		ManagerDB db =  new ManagerDB();
+		List<Producto> productos;
+		try {
+			db.connect();
+			productos = db.getTodosProductos();
+			
+			
+			for (Producto producto : productos) {
+				if(producto.getId() == 2) {
+					db.borrarProducto(producto);
+				}
+			}
+			db.disconnect();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		
 		
