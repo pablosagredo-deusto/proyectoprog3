@@ -1,6 +1,7 @@
 package clases;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,8 +14,7 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import es.deusto.prog3.cap04.basedatos.manager.DBException;
-import es.deusto.prog3.cap04.basedatos.manager.User;
+
 
 
 
@@ -27,7 +27,7 @@ public class ManagerDB {
 	// METODO PARA CONECTAR CON LA BASE DE DATOS
 	public void connect() throws ExceptionDB {
 		try {
-			String nombreDB = "jdbc:sqlite:/C:\\Users\\guill\\git\\proyectoprog3\\.classpath\\FoodEst\\lib\\FoodEstDB";
+			String nombreDB = "jdbc:sqlite:/C:\\Users\\Usuario\\git\\proyectoprog3\\.classpath\\FoodEst\\lib\\FoodEstDB";
 			
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(nombreDB);

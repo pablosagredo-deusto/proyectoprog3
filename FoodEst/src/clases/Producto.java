@@ -11,11 +11,6 @@ public class Producto {
 	protected List<String> ingredientes;
 	protected boolean vegano; 
 	protected TipoProducto tipo;
-<<<<<<< HEAD
-=======
-	
-
->>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3.git
 	protected int idRestaurante;
 	protected int idMenu;
 	

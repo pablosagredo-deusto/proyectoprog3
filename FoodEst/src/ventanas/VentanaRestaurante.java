@@ -11,7 +11,6 @@ import java.util.List;
 import clases.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 public class VentanaRestaurante extends JFrame {
 
@@ -24,75 +23,14 @@ public class VentanaRestaurante extends JFrame {
 		setSize(1150, 505);
 		setVisible(true);
 
-		// PANEL GENERAL 
+		// PANEL GENERAL : parte izquierda y parte derecha
 		JSplitPane panelGeneral = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		panelGeneral.setBorder(null);
 		panelGeneral.setResizeWeight(0.66); // Esto es el porcentaje de la parte de la izquierda ---> ajustar
 		panelGeneral.setEnabled(false);
 		panelGeneral.setDividerSize(0);
-		
-		//--------------------------------Panel DERECHA-------------------------------------
-				JPanel panelDerecha = new JPanel();
-				panelDerecha.setLayout(new GridLayout(6, 2));
-				DefaultListModel modeloPedido = new DefaultListModel();
-				ArrayList<Producto> productosPedido = new ArrayList<Producto>();
 
-				
-				JList listaProductos = new JList();
-				JLabel nombrePedido = new JLabel("PEDIDO ACTUAL:");
-				JButton eliminar = new JButton("ELIMINAR");
-				JButton pagar = new JButton("PAGAR");
-				JLabel precioActual= new JLabel("Precio actual"+precio);
-				
-
-				
-
-				listaProductos.addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent evt) {
-						System.out.println("Seleccionar");
-						JList list = (JList) evt.getSource();
-						if (evt.getClickCount() == 2) {
-							Object producto = (Object) listaProductos.getSelectedValue();
-							
-
-						}
-
-					}
-
-				});
-				
-
-				eliminar.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-
-						if (listaProductos.getSelectedValue() == null) {
-							JOptionPane.showMessageDialog(null, "Selecciona un producto para eliminar");
-
-						} else {
-							System.out.println("entrando en eliminar");
-							System.out.println(listaProductos.getSelectedValue());
-							Object producto = (Object) listaProductos.getSelectedValue();
-							int i=(int) listaProductos.getSelectedIndex();
-							productosPedido.remove(i);
-							modeloPedido.remove(i);
-
-
-						}
-
-					}
-				});
-				
-				
-				
-				
-				
-		
-		
-		
-		
-		//----------------------------------------Panel IZQUIERDA------------------------------------
+		// Panel izquierda
 
 		JSplitPane panelIzquierda = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		panelIzquierda.setBorder(null);
@@ -111,6 +49,7 @@ public class VentanaRestaurante extends JFrame {
 
 		Font font = new Font("Cooper Black", Font.BOLD, 40);
 		titulo.setFont(font);
+
 		panelNombre.setBackground(Color.red);
 
 		// nombre panelNombreArriba
@@ -119,13 +58,12 @@ public class VentanaRestaurante extends JFrame {
 
 		// nombre panelNombreAbajo
 		JPanel panelNombreAbajo = new JPanel();
-		panelNombreAbajo.setLayout(new GridLayout(1, 5));
+		panelNombreAbajo.setLayout(new GridLayout(0, 5));
 
 		JButton entrantes = new JButton("ENTRANTES");
 		JButton principales = new JButton("PRINCIPALES");
 		JButton segundos = new JButton("SEGUNDOS");
 		JButton postres = new JButton("POSTRES");
-<<<<<<< HEAD
 		JButton buscar = new JButton();
 		ImageIcon fot = new ImageIcon("src/Imagenes/key .png");
 		buscar.setSize(40, 40);
@@ -136,18 +74,12 @@ public class VentanaRestaurante extends JFrame {
 		buscar.setOpaque(false);
 		buscar.setContentAreaFilled(false);
 		buscar.setBorderPainted(false);
-=======
-		JButton bebidas = new JButton("BEBIDAS");
->>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3.git
 
-		ImageIcon fot = new ImageIcon("src/Imagenes/key .png");
-		
-
-		panelNombreAbajo.add(entrantes);
-		panelNombreAbajo.add(principales);
-		panelNombreAbajo.add(segundos);
-		panelNombreAbajo.add(postres);
-		panelNombreAbajo.add(bebidas);
+		panelNombreAbajo.add(entrantes, 0, 0);
+		panelNombreAbajo.add(principales, 0, 1);
+		panelNombreAbajo.add(segundos, 0, 2);
+		panelNombreAbajo.add(postres, 0, 3);
+		panelNombreAbajo.add(buscar, 0, 4);
 
 		panelNombre.add(panelNombreArriba);
 		panelNombre.add(panelNombreAbajo);
@@ -161,31 +93,18 @@ public class VentanaRestaurante extends JFrame {
 		JPanel panelIzquierdaAbajo = new JPanel();
 		panelIzquierdaAbajo.setLayout(new GridLayout(2, 4, 30, 30)); // meter separacion entre espacios
 
-		// PRODUCTOS DEL RESTAURANTE EN PanelIzquierdaAbajo
-		ManagerDB db = new ManagerDB();
-		List<Producto> productosRestaurante;
-		try {
-			
-			db.connect();
-			productosRestaurante = db.getTodosProductos();
-			db.disconnect();
-			
-			int numeroProductos = productosRestaurante.size(); //para el layout
-			
-			for (Producto producto : productosRestaurante) {
-				if(restaurante.getId() == producto.getIdRestaurante()) {
-					JPanel panelProducto = new JPanel();
-					panelProducto.setLayout(new BorderLayout());
-					JLabel tnombreProducto = new JLabel(producto.getNombre());
-					JButton bañadir = new JButton("AÑADIR");
-					
-					
-					bañadir.addActionListener(new ActionListener() {
+		// Producto1
+		JPanel area1 = new JPanel();
+		area1.setLayout(new BorderLayout());
+		JLabel text1 = new JLabel("HAMBURGUESA");
+		JButton b1 = new JButton("AÑADIR");
+		JTextArea text2 = new JTextArea("INGREDIENTES:\n -Pan\n -Lechuga \n -Carne");
+		text2.setEditable(false);
 
-						@Override
-						public void actionPerformed(ActionEvent e) {
+		area1.add(b1, BorderLayout.SOUTH);
+		area1.add(text1, BorderLayout.NORTH);
+		area1.add(text2, BorderLayout.CENTER);
 
-<<<<<<< HEAD
 		// productos restantes
 		JPanel area2 = new JPanel();
 		JPanel area3 = new JPanel();
@@ -193,18 +112,10 @@ public class VentanaRestaurante extends JFrame {
 		JPanel area5 = new JPanel();
 		JPanel area6 = new JPanel();
 		JPanel area7 = new JPanel();
-=======
-							
->>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3.git
 
-							a.setNombre(producto.getNombre());
-							productosPedido.add(a);
-							//problema precio
-							precio=+ producto.getPrecio();
-							precioActual.setText("");
-							modeloPedido.addElement(a.toStringPrecio());
+		JScrollPane scroll = new JScrollPane(panelIzquierdaAbajo, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-<<<<<<< HEAD
 		area1.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 		area2.setBorder(BorderFactory.createLineBorder(Color.black, 5));
 		area3.setBorder(BorderFactory.createLineBorder(Color.black, 5));
@@ -254,29 +165,10 @@ public class VentanaRestaurante extends JFrame {
 				JList list = (JList) evt.getSource();
 				if (evt.getClickCount() == 2) {
 					Object producto = (Object) listaProductos.getSelectedValue();
-=======
-						}
-					});
-					
-					JTextArea tingredientes = new JTextArea("INGREDIENTES:\n");
-					for (String ingrediente : producto.getIngredientes()) {
-						tingredientes.setText(ingrediente + "\n");
-					}
-					
-					tingredientes.setEditable(false);
-					
-					panelProducto.add(bañadir, BorderLayout.SOUTH);
-					panelProducto.add(tnombreProducto, BorderLayout.NORTH);
-					panelProducto.add(tingredientes, BorderLayout.CENTER);
-					
->>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3.git
 
-					panelProducto.setBorder(BorderFactory.createLineBorder(Color.black, 5));
-					panelIzquierdaAbajo.add(panelProducto);
 				}
-				
+
 			}
-<<<<<<< HEAD
 
 		});
 		b1.addActionListener(new ActionListener() {
@@ -285,7 +177,7 @@ public class VentanaRestaurante extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				Producto a = new Producto("NOMBRE", 001, 15.5, "pizza", null, false,
-				TipoProducto.PIZZA, 001);
+				TipoProducto.PRINCIPAL, 001);
 				
 				/*
 				 * protected String nombre;
@@ -332,7 +224,7 @@ public class VentanaRestaurante extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Pedido p = new Pedido(1, restaurante, null, EstadoPedido.RECIBIDO, productos, 50.5, "", false);
+				Pedido p = new Pedido(1, null, restaurante, null, EstadoPedido.RECIBIDO, productos, 50.5, "", false);
 				if (productos != null && productos.size() > 0) {
 					new VentanaPago(p);
 					setVisible(false);
@@ -345,13 +237,6 @@ public class VentanaRestaurante extends JFrame {
 			}
 		});
 
-=======
-		} catch (Exception e) {
-		}	
-		
-		
-		
->>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3.git
 		atras.addActionListener(new ActionListener() {
 
 			@Override
@@ -361,47 +246,6 @@ public class VentanaRestaurante extends JFrame {
 
 			}
 		});
-		
-		
-		/* NO SE QUE ES ESTO
-		if (!productos.isEmpty()) {
-			for (Producto producto : productos) {
-				//el producto sin tostring de prueba
-				modeloPedido.addElement(producto.toStringPrecio());
-
-			}
-
-		}
-		*/
-		
-		
-
-		JScrollPane scroll = new JScrollPane(panelIzquierdaAbajo, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		
-		panelIzquierda.add(scroll);
-		panelIzquierdaAbajo.setBackground(Color.red);
-		panelGeneral.add(panelIzquierda);
-
-		
-		
-		pagar.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//Pedido pedido = new Pedido(1, restaurante, null, EstadoPedido.RECIBIDO, productosPedido, 50.5, "Efectivo", false);
-				for (Producto producto : productosPedido) {
-					System.out.println(producto.toStringPrecio());
-				}
-//				new VentanaPago(pedido);
-//				setVisible(false);
-
-			}
-		});
-		
-		
-		
-		
 		/*
 		 * entrantes.addActionListener(new ActionListener() {
 		 * 
@@ -426,7 +270,6 @@ public class VentanaRestaurante extends JFrame {
 		add(panelGeneral);
 
 	}
-<<<<<<< HEAD
 
 	public static void main(String[] args) {
 		Restaurante restaurante = new Restaurante("BurguerKing", "Comida rapida", "password",
@@ -435,23 +278,4 @@ public class VentanaRestaurante extends JFrame {
 
 	}
 
-=======
-	
-	
-		public static void main(String[] args) {
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					Restaurante restaurante = new Restaurante("BurguerKing", "Comida rapida", "password", "C/Leioa/Calle Menor/8/00",
-							null, false);
-					VentanaRestaurante vrest = new VentanaRestaurante(null,restaurante);
-					
-				}
-			});
-		}
-		
-		
-	
-	
->>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3.git
 }
