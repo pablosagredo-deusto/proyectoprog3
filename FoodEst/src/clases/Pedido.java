@@ -3,6 +3,7 @@ package clases;
 import java.util.*;
 
 public class Pedido {
+	Usuario usuario;
 	int id;
 	Restaurante restaurante;
 	Direccion direccion;
@@ -12,10 +13,11 @@ public class Pedido {
 	String metodoPago;
 	boolean cubiertos;
 
-	public Pedido(int id, Restaurante restaurante, Direccion direccion, EstadoPedido estado, List<Producto> productos,
+	public Pedido(int id, Usuario usuario, Restaurante restaurante, Direccion direccion, EstadoPedido estado, List<Producto> productos,
 			double preciototal, String metodoPago, boolean cubiertos) {
 		super();
 		this.id = id;
+		this.usuario = usuario;
 		this.restaurante = restaurante;
 		this.direccion = direccion;
 		this.estado = estado;
@@ -32,6 +34,7 @@ public class Pedido {
 		super();
 		this.id = 0;
 		this.restaurante = new Restaurante();
+		this.usuario = new Usuario();
 		this.direccion = new Direccion();
 		this.estado = EstadoPedido.OTRO;
 		this.productos = null;
@@ -46,6 +49,18 @@ public class Pedido {
 
 	public void setCubiertos(boolean cubiertos) {
 		this.cubiertos = cubiertos;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getMetodoPago() {
+		return metodoPago;
 	}
 
 	public int getId() {

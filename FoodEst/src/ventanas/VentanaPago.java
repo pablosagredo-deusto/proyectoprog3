@@ -66,7 +66,7 @@ public class VentanaPago extends JFrame {
 		//añadir datos con sets a este producto
 
 		productosBurgerKing.add(Pizza1);
-		Pedido ped2 = new Pedido(1, null, null, EstadoPedido.RECIBIDO, productosBurgerKing, 12, "", false);
+		//Pedido ped2 = new Pedido(, null, null, EstadoPedido.RECIBIDO, productosBurgerKing, 12, "", false);
 
 		setTitle("Perfil");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -187,7 +187,7 @@ public class VentanaPago extends JFrame {
 					producto.toStringPrecio();
 				}
 				
-				VentanaFinal vent =new VentanaFinal(ped);
+				//VentanaFinal vent =new VentanaFinal(ped);
 
 			}
 		});
@@ -198,7 +198,7 @@ public class VentanaPago extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ped.setMetodoPago("Tarjeta");
 				System.out.println("factura creada por boton");
-				VentanaFinal vent =new VentanaFinal(ped);
+				//VentanaFinal vent =new VentanaFinal(ped);
 
 
 			}

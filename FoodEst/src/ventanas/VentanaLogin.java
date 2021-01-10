@@ -301,7 +301,9 @@ public class VentanaLogin extends JFrame {
 						
 						for (Restaurante restaurante : restaurantes) {
 							if (restaurante.getNombre().equals(nombreRecibido) && restaurante.getContraseña().equals(contraseñaRecibido)) {
+								System.out.println("hola");
 								new VentanaAdministracionRestaurante(restaurante);
+								
 								dispose();
 							}else {
 								restaurantesComprobados = restaurantesComprobados +1 ;

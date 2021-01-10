@@ -13,6 +13,9 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import es.deusto.prog3.cap04.basedatos.manager.DBException;
+import es.deusto.prog3.cap04.basedatos.manager.User;
+
 
 
 
@@ -24,7 +27,7 @@ public class ManagerDB {
 	// METODO PARA CONECTAR CON LA BASE DE DATOS
 	public void connect() throws ExceptionDB {
 		try {
-			String nombreDB = "jdbc:sqlite:/C:\\Users\\Usuario\\git\\proyectoprog3\\FoodEst\\lib\\FoodEstDB";
+			String nombreDB = "jdbc:sqlite:/C:\\Users\\guill\\git\\proyectoprog3\\.classpath\\FoodEst\\lib\\FoodEstDB";
 			
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(nombreDB);
@@ -179,7 +182,7 @@ public class ManagerDB {
 		List<Producto> productos = new ArrayList<Producto>();
 		String SQL="";
 		try (Statement stmt = conn.createStatement()) {
-			SQL="SELECT NOMBRE_PRODUCTO, ID_PRODUCTO, PRECIO_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, INGREDIENTES_PRODUCTO, ID_RESTAURANTE FROM PRODUCTO";
+			SQL="SELECT NOMBRE_PRODUCTO, ID_PRODUCTO, PRECIO_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, INGREDIENTES_PRODUCTO, ID_RESTAURANTE FROM PRODUCTO;";
 			ResultSet rs = stmt.executeQuery(SQL);
 			log( Level.INFO, "Buscar productos\t" + SQL, null );
 			while (rs.next()) {
@@ -213,6 +216,7 @@ public class ManagerDB {
 		}
 	}
 	
+	//Metodo para borrar el ultimo caracter de un String
 	public static String removeLastCharacter(String str) {
 		   String result = null;
 		   if ((str != null) && (str.length() > 0)) {
@@ -233,16 +237,16 @@ public class ManagerDB {
 				ingredientesSQL = ingrediente + ",";
 				
 			}
-			removeLastCharacter(ingredientesSQL);
+			removeLastCharacter(ingredientesSQL); //He creado el metodo arriba para borrar el ultimo caracter
 			stmt.setString(3, ingredientesSQL);
 			
-			stmt.setString(3, producto.getDescripcion());
+			stmt.setString(4, producto.getDescripcion());
 			
 			int veganoInt = producto.isVegano() ? 1 : 0;
-			stmt.setInt(4, veganoInt);
+			stmt.setInt(5, veganoInt);
 			
-			stmt.setString(5, producto.getTipo().toString()); //utilizamos el metodo toString por defecto de las enumeraciones
-			stmt.setInt(6, producto.getIdRestaurante()); //cogemos el int del restaurante al que esté asignado este producto
+			stmt.setString(6, producto.getTipo().toString()); //utilizamos el metodo toString por defecto de las enumeraciones
+			stmt.setInt(7, producto.getIdRestaurante()); //cogemos el int del restaurante al que esté asignado este producto
 			
 			stmt.executeUpdate();
 			 
@@ -253,7 +257,53 @@ public class ManagerDB {
 	
 
 	
+	public void borrarProducto(Producto producto) throws ExceptionDB {
+		try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PRODUCTO WHERE ID_PRODUCTO=?")) {
+			stmt.setInt(1, producto.getId());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new ExceptionDB("No se pudo elimiar el producto con id " + producto.getId(), e);
+		}
+	}
 	
+	//OBTENER TODOS LOS MENUD DE UN RESTAURANTE
+	public List<Menu> getTodosMenus() throws ExceptionDB{
+		List<Menu> menus = new ArrayList<Menu>();
+		String SQL="";
+		try (Statement stmt = conn.createStatement()) {
+			SQL="SELECT NOMBRE_MENU, PRECIO_MENU, ID_MENU, ID_RESTAURANTE FROM MENU";
+			ResultSet rs = stmt.executeQuery(SQL);
+			log( Level.INFO, "Buscar menus\t" + SQL, null );
+			while (rs.next()) {
+				Menu menu = new Menu();
+				menu.setNombre(rs.getString("NOMBRE_MENU"));
+				menu.setPrecio(rs.getDouble("PRECIO_MENU"));
+				menu.setId(rs.getInt("ID_MENU"));
+				menu.setId(rs.getInt("ID_RESTAURANTE"));
+				
+				
+				menus.add(menu);
+			}
+
+			return menus;
+		} catch (SQLException | DateTimeParseException e) {
+			throw new ExceptionDB("Error obteniendo los menus", e);
+		}
+	}
+	//METODO INSERTAR MENU
+	 public void insertarMenu(Menu menu) throws ExceptionDB{
+		 try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO MENU (NOMBRE_MENU, PRECIO_MENU, ID_RESTAURANTE) VALUES (?,?,?);"); 
+					Statement stmtForId = conn.createStatement()) {
+					
+					stmt.setString(1, menu.getNombre());
+					stmt.setDouble(2, menu.getPrecio());
+					stmt.setInt(3, menu.getIdRestaurante());
+					stmt.executeUpdate();
+					 
+				} catch (SQLException | DateTimeParseException e) {
+					throw new ExceptionDB("Error al insertar menu", e);
+				}
+	 }
 	
 	
 	private static Logger logger = null;

@@ -21,11 +21,19 @@ import ventanas.VentanaRestaurante;
 
 public class Pruebas {
 	public static void main(String[] args) {
-		
-		Restaurante rs = new Restaurante();
-		new VentanaAdministracionRestaurante(rs);
-		
-		
+		ManagerDB db =  new ManagerDB();
+		List<Producto> productos;
+		try {
+			db.connect();
+			productos = db.getTodosProductos();
+			db.disconnect();
+			
+			for (Producto producto : productos) {
+				System.out.println(producto.getNombre());
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		
 		
