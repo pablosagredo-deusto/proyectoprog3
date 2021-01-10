@@ -226,7 +226,7 @@ public class ManagerDB {
 	}
 	
 	public void insertarProducto(Producto producto) throws ExceptionDB {
-		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO PRODUCTO (NOMBRE_PRODUCTO, PRECIO_PRODUCTO, INGREDIENTES_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, ID_RESTAURANTE) VALUES (?,?,?,?,?,?,?);"); 
+		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO PRODUCTO (NOMBRE_PRODUCTO, PRECIO_PRODUCTO, INGREDIENTES_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, ID_RESTAURANTE, ID_MENU) VALUES (?,?,?,?,?,?,?,?);"); 
 			Statement stmtForId = conn.createStatement()) {
 			
 			stmt.setString(1, producto.getNombre());

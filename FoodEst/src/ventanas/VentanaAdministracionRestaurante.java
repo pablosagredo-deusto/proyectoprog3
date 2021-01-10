@@ -34,6 +34,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import clases.ManagerDB;
+import clases.Menu;
 import clases.Producto;
 import clases.Restaurante;
 import clases.TipoProducto;
@@ -113,7 +114,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		panelDerechaAbajo.setEnabled(false);
 		panelDerechaAbajo.setDividerSize(0);
 		
-				//panelDerechaAbajo1 (barra + scroll)
+				//panelDerechaAbajo1 (barra + scroll) --> MENUS
 		JSplitPane panelDerechaAbajo1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT); //panelmenus
 		panelDerechaAbajo1.setBorder(null);
 		panelDerechaAbajo1.setResizeWeight(0.02);
@@ -127,13 +128,59 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		panelMenusBarra.add(bañadirMenu);
 		
 		JPanel menusDisponibles = new JPanel();
+		menusDisponibles.setLayout(new FlowLayout());
 		JScrollPane scrollMenusDisponibles = new JScrollPane(menusDisponibles);
 		
 		panelDerechaAbajo1.add(panelMenusBarra);
 		panelDerechaAbajo1.add(scrollMenusDisponibles);
 		
 		
-				//panelDerechaAbajo2 (barra + scroll)
+		
+		
+				//Inserccion de menus desde la basde de datos
+		ManagerDB db = new ManagerDB();
+		List<Menu> menus;
+		try {
+			
+			db.connect();
+			menus = db.getTodosMenus();
+			db.disconnect();
+			
+			
+			for (Menu menu : menus) {
+				if(restaurante.getId() == menu.getIdRestaurante()) {
+					
+					JPanel panel = new JPanel();
+					panel.setLayout(new BorderLayout());
+					panel.setBorder(BorderFactory.createLineBorder(Color.black));
+					
+					JLabel lnombre = new JLabel(menu.getNombre());
+					panel.add(lnombre, BorderLayout.NORTH);
+					
+					
+					JTextArea productosMenu = new JTextArea();
+					List<Producto> todosProductos = db.getTodosProductos();
+					
+					for (Producto producto : todosProductos) {
+						if (producto.getIdMenu() = menu.getId()) {
+							
+						}
+					}
+					
+				}
+				
+			}
+		} catch (Exception e) {
+		}	
+		
+		
+		
+		
+		
+		
+		
+		
+				//panelDerechaAbajo2 (barra + scroll) --> PRODUCTOS
 		JSplitPane panelDerechaAbajo2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT); //panelproductos
 		panelDerechaAbajo2.setBorder(null);
 		panelDerechaAbajo2.setResizeWeight(0.02);
@@ -201,7 +248,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		
 		
 		
-		
+		//Inserccion de productos desde la base de datos
 		ManagerDB db = new ManagerDB();
 		List<Producto> productos;
 		try {
@@ -221,6 +268,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 					panel.add(lnombre, BorderLayout.NORTH);
 					
 					JTextArea textIngredientes = new JTextArea();
+					textIngredientes.setText("Ingredientes:");
 					for (String ingrediente : producto.getIngredientes()) {
 						textIngredientes.setText(ingrediente + "\n");
 					}
@@ -231,7 +279,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 					panel.add(beliminar, BorderLayout.SOUTH);
 					
 					
-					productosDisponibles.add(panel);
+					productosDisponiblesCenter.add(panel);
 					
 					beliminar.addActionListener(new ActionListener() {
 						
@@ -253,9 +301,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 							
 						}
 					});
-					
-					
-					
+	
 					
 				}
 				
