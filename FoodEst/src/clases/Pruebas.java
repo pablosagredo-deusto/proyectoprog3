@@ -24,13 +24,26 @@ public class Pruebas {
 		ManagerDB db =  new ManagerDB();
 		List<Producto> productos;
 		try {
+			
+			Producto producto = new  Producto();
+			
+			producto.setNombre("ndo");
+			producto.setPrecio(9.5);
+			List<String> ingr = new ArrayList<String>();
+			ingr.add("asf");
+			ingr.add("asf");
+			ingr.add("asf");
+			producto.setIngredientes(ingr);
+			producto.setVegano(true);
+			producto.setIdRestaurante(2);
+			producto.setTipo(TipoProducto.POSTRE);
+					
+			
 			db.connect();
-			productos = db.getTodosProductos();
+			db.insertarProducto(producto);
 			db.disconnect();
 			
-			for (Producto producto : productos) {
-				System.out.println(producto.getNombre());
-			}
+		
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
