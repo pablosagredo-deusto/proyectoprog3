@@ -1,31 +1,46 @@
 package ventanas;
 
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import clases.Hilo;
 import clases.Pedido;
 
-public class VentanaFinal extends JFrame {
+public class VentanaFinal extends JFrame implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JPanel pnlCentral;
 	JPanel pnlCentralDerecha;
 	JPanel pnlCentralIzquierda;
-	JLabel recibido;
 	JLabel flecha;
+	JLabel flecha1;
+	JLabel flecha2;
+	JLabel flecha3;
+	JButton botonIniciar;
+	JButton botonAcabar;
 	ImageIcon imagenFlechaVerde;
 	Image image3;
 	Image newImg3;
+	public static boolean iniciaHilo = true;
+	boolean corriendo= false;
 
-	public void abrirBrowser() {
-
-	}
 
 	public VentanaFinal(Pedido ped) {
 
@@ -70,6 +85,7 @@ public class VentanaFinal extends JFrame {
 		JLabel flecha2 = new JLabel();
 		JLabel flecha3 = new JLabel();
 		JLabel mapa1 = new JLabel();
+		
 
 		ImageIcon imagenFlecha = new ImageIcon("src/imagenes/flecha.png");
 		Image image2 = imagenFlecha.getImage();
@@ -98,9 +114,17 @@ public class VentanaFinal extends JFrame {
 		pnlCentral.add(pnlCentralIzquierda);
 		pnlCentral.add(pnlCentralDerecha);
 
+		
+		botonIniciar = new JButton("Comenzar pedido");
+		botonIniciar.addActionListener(this);
+		botonAcabar = new JButton("Cancelar pedido");
+		botonAcabar.addActionListener(this);
+
 		// panelizquierdo
 		pnlCentralIzquierda.setBackground(Color.WHITE);
 		pnlCentralIzquierda.add(mapa1);
+		pnlCentralIzquierda.add(botonIniciar);
+		pnlCentralIzquierda.add(botonAcabar);
 
 		// panelderecho
 		// añadir labels
@@ -116,6 +140,8 @@ public class VentanaFinal extends JFrame {
 		pnlCentralDerecha.add(encamino);
 		pnlCentralDerecha.add(flecha3);
 		pnlCentralDerecha.add(entregado);
+		// botones
+		
 
 		// añadir central
 		add(pnlCentral);
@@ -125,70 +151,38 @@ public class VentanaFinal extends JFrame {
 
 	public static void main(String[] args) {
 		VentanaFinal vent = new VentanaFinal(null);
+
 	}
 
-	public JPanel getPnlCentral() {
-		return pnlCentral;
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==botonIniciar) {
+			System.out.println("iniciar pulsado");
+			if(corriendo==false) {
+				iniciaHilo=true;
+				corriendo=true;
+				iniciarHilo();
+			}
+			
+		}
+		if(e.getSource()==botonAcabar) {
+			System.out.println("acabar pulsado");
+			corriendo=false;
+			iniciaHilo=false;
+			
+		}
+		
 	}
+	
+	
+	//para usar el thread
+	public void iniciarHilo() {
+		if (iniciaHilo == true) {
+			System.out.println("Empieza el hilo");
+			Hilo miHilo = new Hilo(flecha2);
+			miHilo.start();
+		}
 
-	public void setPnlCentral(JPanel pnlCentral) {
-		this.pnlCentral = pnlCentral;
-	}
-
-	public JPanel getPnlCentralDerecha() {
-		return pnlCentralDerecha;
-	}
-
-	public void setPnlCentralDerecha(JPanel pnlCentralDerecha) {
-		this.pnlCentralDerecha = pnlCentralDerecha;
-	}
-
-	public JPanel getPnlCentralIzquierda() {
-		return pnlCentralIzquierda;
-	}
-
-	public void setPnlCentralIzquierda(JPanel pnlCentralIzquierda) {
-		this.pnlCentralIzquierda = pnlCentralIzquierda;
-	}
-
-	public JLabel getRecibido() {
-		return recibido;
-	}
-
-	public void setRecibido(JLabel recibido) {
-		this.recibido = recibido;
-	}
-
-	public JLabel getFlecha() {
-		return flecha;
-	}
-
-	public void setFlecha(JLabel flecha) {
-		this.flecha = flecha;
-	}
-
-	public ImageIcon getImagenFlechaVerde() {
-		return imagenFlechaVerde;
-	}
-
-	public void setImagenFlechaVerde(ImageIcon imagenFlechaVerde) {
-		this.imagenFlechaVerde = imagenFlechaVerde;
-	}
-
-	public Image getImage3() {
-		return image3;
-	}
-
-	public void setImage3(Image image3) {
-		this.image3 = image3;
-	}
-
-	public Image getNewImg3() {
-		return newImg3;
-	}
-
-	public void setNewImg3(Image newImg3) {
-		this.newImg3 = newImg3;
 	}
 
 }

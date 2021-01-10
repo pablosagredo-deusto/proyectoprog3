@@ -1,4 +1,4 @@
-package ventanas;
+ package ventanas;
 
 
 import java.awt.BorderLayout;
