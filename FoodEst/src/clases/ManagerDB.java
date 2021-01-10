@@ -182,7 +182,7 @@ public class ManagerDB {
 		List<Producto> productos = new ArrayList<Producto>();
 		String SQL="";
 		try (Statement stmt = conn.createStatement()) {
-			SQL="SELECT NOMBRE_PRODUCTO, ID_PRODUCTO, PRECIO_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, INGREDIENTES_PRODUCTO, ID_RESTAURANTE FROM PRODUCTO";
+			SQL="SELECT NOMBRE_PRODUCTO, ID_PRODUCTO, PRECIO_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, INGREDIENTES_PRODUCTO, ID_RESTAURANTE FROM PRODUCTO;";
 			ResultSet rs = stmt.executeQuery(SQL);
 			log( Level.INFO, "Buscar productos\t" + SQL, null );
 			while (rs.next()) {
@@ -266,8 +266,44 @@ public class ManagerDB {
 		}
 	}
 	
-	
-	
+	//OBTENER TODOS LOS MENUD DE UN RESTAURANTE
+	public List<Menu> getTodosMenus() throws ExceptionDB{
+		List<Menu> menus = new ArrayList<Menu>();
+		String SQL="";
+		try (Statement stmt = conn.createStatement()) {
+			SQL="SELECT NOMBRE_MENU, PRECIO_MENU, ID_MENU, ID_RESTAURANTE FROM MENU";
+			ResultSet rs = stmt.executeQuery(SQL);
+			log( Level.INFO, "Buscar menus\t" + SQL, null );
+			while (rs.next()) {
+				Menu menu = new Menu();
+				menu.setNombre(rs.getString("NOMBRE_MENU"));
+				menu.setPrecio(rs.getDouble("PRECIO_MENU"));
+				menu.setId(rs.getInt("ID_MENU"));
+				menu.setId(rs.getInt("ID_RESTAURANTE"));
+				
+				
+				menus.add(menu);
+			}
+
+			return menus;
+		} catch (SQLException | DateTimeParseException e) {
+			throw new ExceptionDB("Error obteniendo los menus", e);
+		}
+	}
+	//METODO INSERTAR MENU
+	 public void insertarMenu(Menu menu) throws ExceptionDB{
+		 try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO MENU (NOMBRE_MENU, PRECIO_MENU, ID_RESTAURANTE) VALUES (?,?,?);"); 
+					Statement stmtForId = conn.createStatement()) {
+					
+					stmt.setString(1, menu.getNombre());
+					stmt.setDouble(2, menu.getPrecio());
+					stmt.setInt(3, menu.getIdRestaurante());
+					stmt.executeUpdate();
+					 
+				} catch (SQLException | DateTimeParseException e) {
+					throw new ExceptionDB("Error al insertar menu", e);
+				}
+	 }
 	
 	
 	private static Logger logger = null;

@@ -13,7 +13,6 @@ public class Restaurante {
 	protected boolean enviogratis;
 
 	protected int id;
-	public static int idContadorRestaurante = 0;
 
 	public Restaurante(String nombre, String categoria, String contraseña, String direccion, List<Producto> productos,
 			boolean enviogratis) {
@@ -21,7 +20,6 @@ public class Restaurante {
 		this.nombre = nombre;
 		this.categoria = categoria;
 		this.contraseña = contraseña;
-		this.id = idContadorRestaurante++;
 		this.direccion = direccion;
 		this.productos = productos;
 		this.enviogratis = enviogratis;
@@ -32,7 +30,7 @@ public class Restaurante {
 		this.nombre = "";
 		this.categoria = "";
 		this.contraseña = "";
-		this.id = idContadorRestaurante++;
+		this.id = 0;
 		this.direccion = null;
 		this.productos = new ArrayList<Producto>();
 		this.enviogratis = false;

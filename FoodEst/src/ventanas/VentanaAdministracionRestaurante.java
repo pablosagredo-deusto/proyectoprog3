@@ -2,7 +2,10 @@ package ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +14,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -23,6 +27,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.LayoutFocusTraversalPolicy;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -40,35 +45,160 @@ public class VentanaAdministracionRestaurante extends JFrame{
 
 	public VentanaAdministracionRestaurante(Restaurante restaurante) {
 		//PANEL DERECHA
-		JPanel panelDerecha = new JPanel();
-		panelDerecha.setLayout(new GridLayout(2,1));
-		
-		JPanel panelBotonesArriba = new JPanel();
-		JButton bañadirProducto = new JButton("Añadir producto");
-		JButton bmisDatos = new JButton("Datos del restaurante");
-		
-		
-		JPanel panelBotones = new JPanel();
-		panelBotones.add(bañadirProducto);
-		panelBotones.add(bmisDatos);
-		
-		panelBotonesArriba.setLayout(new GridLayout(2,1));
-		panelBotonesArriba.add(new JPanel());
-		panelBotonesArriba.add(panelBotones);
+		JSplitPane panelDerecha = new JSplitPane(JSplitPane.VERTICAL_SPLIT); //panelmenus
+		panelDerecha.setBorder(null);
+		panelDerecha.setResizeWeight(0.10);
+		panelDerecha.setEnabled(false);
+		panelDerecha.setDividerSize(0);
 		
 		
 		
 		
 		
 		
-		JPanel productosDisponibles = new JPanel();
-		JScrollPane scrollProductosDisponibles = new JScrollPane(productosDisponibles);
+		
+		
+			//PANELARRIBA
+		JPanel panelDerechaArriba = new JPanel();
+		
+		JPanel panelDerechaArriba1 = new JPanel();
+		panelDerechaArriba1.setLayout(new GridLayout(4,3));
+		
+		JLabel lnombreRestaurante = new  JLabel("Nombre de restaurante:");
+		JTextField nombreRestaurante = new JTextField(restaurante.getNombre());
+		
+		JLabel lcategoriaRestaurante = new JLabel("Categoria de restaurante:");
+		JTextField categoriaRestaurante = new JTextField(restaurante.getCategoria());
+		
+		JLabel ldireccionRestaurante = new JLabel("Direccion de restaurante:");
+		JTextField direccionRestaurante = new JTextField(restaurante.getDireccion());
+		
+		JLabel lenvioGratisRestaurante = new JLabel("Direccion de restaurante:");
+		JTextField envioGratisRestaurante = new JTextField(restaurante.getDireccion());
+		
+		panelDerechaArriba1.add(lnombreRestaurante);
+		panelDerechaArriba1.add(nombreRestaurante);	
+		panelDerechaArriba1.add(new JPanel());	
+		
+		panelDerechaArriba1.add(lcategoriaRestaurante);
+		panelDerechaArriba1.add(categoriaRestaurante);
+		panelDerechaArriba1.add(new JPanel());	
 
 		
-		panelDerecha.add(panelBotonesArriba);
-		panelDerecha.add(scrollProductosDisponibles);
+		panelDerechaArriba1.add(ldireccionRestaurante);
+		panelDerechaArriba1.add(direccionRestaurante);	
+		panelDerechaArriba1.add(new JPanel());	
+
+		
+		panelDerechaArriba1.add(lenvioGratisRestaurante);
+		panelDerechaArriba1.add(envioGratisRestaurante);
+		JButton guardarCambios = new JButton("Guardar cambios");
+		panelDerechaArriba1.add(guardarCambios);	
+
+		
+		
+		panelDerechaArriba.add(panelDerechaArriba1);
+		panelDerechaArriba.add(new JPanel());
+		
+				
+				
+				
+				
+		
+			//PANELADERECHABAJO 
+
+		JSplitPane panelDerechaAbajo = new JSplitPane(JSplitPane.VERTICAL_SPLIT); //panelmenus
+		panelDerechaAbajo.setBorder(null);
+		panelDerechaAbajo.setResizeWeight(0.35);
+		panelDerechaAbajo.setEnabled(false);
+		panelDerechaAbajo.setDividerSize(0);
+		
+				//panelDerechaAbajo1 (barra + scroll)
+		JSplitPane panelDerechaAbajo1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT); //panelmenus
+		panelDerechaAbajo1.setBorder(null);
+		panelDerechaAbajo1.setResizeWeight(0.02);
+		panelDerechaAbajo1.setEnabled(false);
+		panelDerechaAbajo1.setDividerSize(0);
+		
+		JPanel panelMenusBarra = new JPanel();
+		JLabel lmenusRestaurante = new JLabel("MENUS DEL RESTAURANTE:    ");
+		JButton bañadirMenu = new JButton("Añadir menu");
+		panelMenusBarra.add(lmenusRestaurante);
+		panelMenusBarra.add(bañadirMenu);
+		
+		JPanel menusDisponibles = new JPanel();
+		JScrollPane scrollMenusDisponibles = new JScrollPane(menusDisponibles);
+		
+		panelDerechaAbajo1.add(panelMenusBarra);
+		panelDerechaAbajo1.add(scrollMenusDisponibles);
+		
+		
+				//panelDerechaAbajo2 (barra + scroll)
+		JSplitPane panelDerechaAbajo2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT); //panelproductos
+		panelDerechaAbajo2.setBorder(null);
+		panelDerechaAbajo2.setResizeWeight(0.02);
+		panelDerechaAbajo2.setEnabled(false);
+		panelDerechaAbajo2.setDividerSize(0);
+		
+		JPanel panelProductosbarra = new JPanel();
+		JLabel lproductosRestaurante = new JLabel("PRODUCTOS DEL RESTAURANTE:    ");
+		JButton bañadirProducto = new JButton("Añadir producto");
+		panelProductosbarra.add(lproductosRestaurante);
+		panelProductosbarra.add(bañadirProducto);
+		
+		JPanel productosDisponibles = new JPanel();
+		JPanel productosDisponiblesCenter = new JPanel();
+
+		productosDisponibles.setLayout(new BorderLayout());   
+		productosDisponibles.add(productosDisponiblesCenter, BorderLayout.CENTER);
+		productosDisponiblesCenter.setLayout(new GridLayout(0,4));
+		
+		JScrollPane scrollProductos = new JScrollPane(productosDisponiblesCenter);
+
+		
+		panelDerechaAbajo2.add(panelProductosbarra);
+		panelDerechaAbajo2.add(scrollProductos);
+
+		
+		
+		panelDerechaAbajo.add(panelDerechaAbajo1);
+		panelDerechaAbajo.add(panelDerechaAbajo2);
+
+		
+		
+		
+
+		
+		panelDerecha.add(panelDerechaArriba);
+		panelDerecha.add(panelDerechaAbajo);
+		
+		
+//		for (int i = 0; i < 80; i++) {
+//		JPanel panelPruba= new JPanel();
+//		panelPruba.setBorder(BorderFactory.createLineBorder(Color.black));
+//		panelPruba.setLayout(new BorderLayout());
+//		panelPruba.add(new JLabel("Prueba"), BorderLayout.NORTH);
+//		JPanel panelmedio = new JPanel();
+//		panelmedio.add(new JButton("pruba"));
+//		panelmedio.add(new JButton("pruba"));
+//		panelmedio.add(new JButton("pruba"));
+//		
+//		panelPruba.add(panelmedio, BorderLayout.CENTER);
+//
+//		panelPruba.add(new JButton("pruba"), BorderLayout.SOUTH);
+//		
+//		
+//			
+//		productosDisponiblesCenter.add(panelPruba);
+//		}
+			
+			
+		
+		
 		
 	
+		
+		
 		
 		
 		
@@ -80,14 +210,12 @@ public class VentanaAdministracionRestaurante extends JFrame{
 			productos = db.getTodosProductos();
 			db.disconnect();
 			
-			int numeroProductos = productos.size();
 			
 			for (Producto producto : productos) {
 				if(restaurante.getId() == producto.getIdRestaurante()) {
 					JPanel panel = new JPanel();
 					panel.setLayout(new BorderLayout());
-					Border blackLine = BorderFactory.createLineBorder(Color.black);
-					panel.setBorder(blackLine);
+					panel.setBorder(BorderFactory.createLineBorder(Color.black));
 					
 					JLabel lnombre = new JLabel(producto.getNombre());
 					panel.add(lnombre, BorderLayout.NORTH);
@@ -102,13 +230,15 @@ public class VentanaAdministracionRestaurante extends JFrame{
 					JButton beliminar = new JButton("Eliminar");
 					panel.add(beliminar, BorderLayout.SOUTH);
 					
+					
+					productosDisponibles.add(panel);
+					
 					beliminar.addActionListener(new ActionListener() {
 						
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							
 							ManagerDB db = new ManagerDB();
-							
 							try {
 								db.connect();
 								db.borrarProducto(producto);
@@ -125,7 +255,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 					});
 					
 					
-					productosDisponibles.add(panel);
+					
 					
 				}
 				
@@ -139,26 +269,42 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		//PANEL IZQUIERDA
 		
 		JSplitPane panelIzquierda = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		panelIzquierda.setBorder(null);
-		panelIzquierda.setResizeWeight(0.15); // Esto es el porcentaje de la parte de la izquierda ---> ajustar
+		panelIzquierda.setResizeWeight(0.15); // Esto es el porcentaje de la parte de arriba ---> ajustar
 		panelIzquierda.setEnabled(false);
 		panelIzquierda.setDividerSize(0);
 		
 		
 		
-		JPanel panelArriba = new JPanel();
+		JPanel panelIzquierdaArriba = new JPanel();
 		JLabel titulo = new JLabel("ADMINISTRACION DE " + restaurante.getNombre());
 		titulo.setFont(new Font("Cooper Black", Font.BOLD, 20));
-		panelArriba.add(titulo);
+		panelIzquierdaArriba.add(titulo);
 		
-		JSplitPane panelAbajo = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		panelAbajo.setBorder(null);
-		panelAbajo.setResizeWeight(0.80); 
-		panelAbajo.setEnabled(false);
-		panelAbajo.setDividerSize(0);
+		JSplitPane panelIzquierdaAbajo = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		panelIzquierdaAbajo.setBorder(null);
+		panelIzquierdaAbajo.setResizeWeight(0.80); 
+		panelIzquierdaAbajo.setEnabled(false);
+		panelIzquierdaAbajo.setDividerSize(0);
 		
 		JPanel panelAbajoPedidos = new JPanel(); //añadir la jtable a esteee!!!
 		TitledBorder border = new TitledBorder("Pedidos recibidos");
@@ -173,11 +319,11 @@ public class VentanaAdministracionRestaurante extends JFrame{
 	    panelAbajoBotones.add(botonMarcarTodosPedidos);
 
 	    
-	    panelAbajo.add(panelAbajoPedidos);
-	    panelAbajo.add(panelAbajoBotones);
+	    panelIzquierdaAbajo.add(panelAbajoPedidos);
+	    panelIzquierdaAbajo.add(panelAbajoBotones);
 	    
-	    panelIzquierda.add(panelArriba);
-	    panelIzquierda.add(panelAbajo);
+	    panelIzquierda.add(panelIzquierdaArriba);
+	    panelIzquierda.add(panelIzquierdaAbajo);
 	    
 	    
 	    JFrame thisFrame = this;
@@ -206,16 +352,26 @@ public class VentanaAdministracionRestaurante extends JFrame{
 	    
 	    panelAbajoPedidos.add(scrollTablaPedidos);
 	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	    setLayout(new GridLayout(1,2));
 		add(panelIzquierda);
 		add(panelDerecha);
-		
+
 		
 		
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("FoodEst");
-		setSize(1150, 505);
+		setSize(1150, 590);
 		setVisible(true);
 	}
 	
@@ -234,7 +390,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 }
 
 
-//VENTANA PARA AÑADIR PRODUCTO
+//------------------------------------------------------------VENTANA PARA AÑADIR PRODUCTO----------------------------------------------------------------------------------------------------
 class VentanaAñadirProducto extends JFrame{
 	
 	public VentanaAñadirProducto(Restaurante restaurante , JFrame ventanaAnterior, JPanel panelProductos) {

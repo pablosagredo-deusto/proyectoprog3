@@ -11,8 +11,10 @@ public class Producto {
 	protected List<String> ingredientes;
 	protected boolean vegano; 
 	protected TipoProducto tipo;
+	
 
 	protected int idRestaurante;
+	protected int idMenu;
 	
 	
 	
@@ -28,6 +30,7 @@ public class Producto {
 		this.vegano = vegano;
 		this.tipo = tipo;
 		this.idRestaurante = idRestaurante;
+		this.idMenu = idMenu;
 	}
 
 	// NO TIENE MUCHO SENTIDO CREAR UN PRODUCTO VACIO
@@ -39,8 +42,17 @@ public class Producto {
 		this.descripcion = "";
 		this.ingredientes = new ArrayList<String>();
 		this.vegano = false;
-		this.tipo = TipoProducto.OTRO;
+		this.tipo = TipoProducto.PRINCIPAL;
 		this.idRestaurante = 0;
+		this.idMenu = 0;
+	}
+
+	public int getIdMenu() {
+		return idMenu;
+	}
+
+	public void setIdMenu(int idMenu) {
+		this.idMenu = idMenu;
 	}
 
 	public List<String> getIngredientes() {

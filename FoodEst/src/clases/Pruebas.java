@@ -26,19 +26,14 @@ public class Pruebas {
 		try {
 			db.connect();
 			productos = db.getTodosProductos();
-			
+			db.disconnect();
 			
 			for (Producto producto : productos) {
-				if(producto.getId() == 2) {
-					db.borrarProducto(producto);
-				}
+				System.out.println(producto.getNombre());
 			}
-			db.disconnect();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-		
 		
 		
 		
