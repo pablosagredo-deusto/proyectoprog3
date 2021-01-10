@@ -17,6 +17,7 @@ public class Hilo extends Thread {
 	int max = 15;
 	JLabel eti;
 	
+	
 
 	public Hilo(JLabel flecha) {
 		this.eti = flecha;
@@ -35,6 +36,7 @@ public class Hilo extends Thread {
 					x++;			
 				}else {
 					VentanaFinal.iniciaHilo=false;
+					eti.setVisible(false);
 				}
 			}
 
