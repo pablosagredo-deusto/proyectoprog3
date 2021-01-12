@@ -15,28 +15,31 @@ public class Hilo extends Thread {
 	static int limite = 0;
 	int min = 5;
 	int max = 15;
-	JLabel eti;
 	
 	
+	JLabel eti=new JLabel();
+
 
 	public Hilo(JLabel flecha) {
-		this.eti = flecha;
+		this.eti =flecha;
 	}
 
 	public void run() {
 		try {
 			limite = numeroRandom(5, 10);
 			int x=0;
-			System.out.println("limite--> " + limite);
+			System.out.println("Tiempo de pedido--> " + limite);
 			
 			while (VentanaFinal.iniciaHilo) {
 				Thread.sleep(1000);
 				if(x!=limite) {
-					System.out.println("La x--> "+x);
+					if(x==3) {
+						ejecutarHilo(x);
+					}
+					System.out.println("x --> " + x);
 					x++;			
 				}else {
 					VentanaFinal.iniciaHilo=false;
-					eti.setVisible(false);
 				}
 			}
 
@@ -45,6 +48,13 @@ public class Hilo extends Thread {
 			System.out.println("Error" + e);
 
 		}
+	}
+	
+	private void ejecutarHilo(int x) {
+		System.out.println(x+ " --- "+Thread.currentThread().getName());
+		
+		eti.setVisible(false);
+		
 	}
 
 	private static int numeroRandom(int min, int max) {

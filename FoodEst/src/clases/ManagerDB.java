@@ -27,8 +27,7 @@ public class ManagerDB {
 	// METODO PARA CONECTAR CON LA BASE DE DATOS
 	public void connect() throws ExceptionDB {
 		try {
-			String nombreDB = "jdbc:sqlite:/C:\\Users\\Usuario\\git\\proyectoprog3\\.classpath\\FoodEst\\lib\\FoodEstDB";
-			
+			String nombreDB = "jdbc:sqlite:C:\\Users\\Usuario\\git\\proyectoprog3\\FoodEst\\lib\\FoodEstDB";
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(nombreDB);
 
@@ -179,6 +178,7 @@ public class ManagerDB {
 	
 	
 	public List<Producto> getTodosProductos() throws ExceptionDB {
+		//devuelve lista de productos
 		List<Producto> productos = new ArrayList<Producto>();
 		String SQL="";
 		try (Statement stmt = conn.createStatement()) {

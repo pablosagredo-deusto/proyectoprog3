@@ -162,9 +162,9 @@ public class VentanaAdministracionRestaurante extends JFrame{
 					List<Producto> todosProductos = db.getTodosProductos();
 					
 					for (Producto producto : todosProductos) {
-						if (producto.getIdMenu() = menu.getId()) {
+						/*if (producto.getIdMenu() = menu.getId()) {
 							
-						}
+						}*/
 					}
 					
 				}
@@ -249,11 +249,11 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		
 		
 		//Inserccion de productos desde la base de datos
-		ManagerDB db = new ManagerDB();
+		//ManagerDB db = new ManagerDB();
 		List<Producto> productos;
 		try {
 			
-			db.connect();
+			//db.connect();
 			productos = db.getTodosProductos();
 			db.disconnect();
 			
@@ -527,16 +527,7 @@ class VentanaAñadirProducto extends JFrame{
 				}
 				productoNuevo.setIngredientes(ingredientesList);
 				
-				
-				
-				ManagerDB db = new ManagerDB();
-				try {
-					db.connect();
-					db.insertarProducto(productoNuevo);
-					db.disconnect();
-				} catch (Exception e2) {
-					// TODO: handle exception
-				}
+
 				
 				dispose();
 				ventanaAnterior.dispose();

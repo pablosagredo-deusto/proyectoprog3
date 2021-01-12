@@ -19,7 +19,7 @@ public class DireccionTest {
 	@Before
 	public void setUp() {
 		
-		direccion = new Direccion("CASA", "C/Deusto/Calle Mayor/3/1A", 48760);
+		direccion = new Direccion("CASA", "C/Deusto/Calle Mayor/3/1A", null, 48760, null, 0);
 	}
 	
 	@Test

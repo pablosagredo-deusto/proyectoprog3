@@ -29,7 +29,7 @@ public class VentanaFinal extends JFrame implements ActionListener {
 	JPanel pnlCentral;
 	JPanel pnlCentralDerecha;
 	JPanel pnlCentralIzquierda;
-	JLabel flecha;
+	private JLabel flecha;
 	JLabel flecha1;
 	JLabel flecha2;
 	JLabel flecha3;
@@ -133,6 +133,7 @@ public class VentanaFinal extends JFrame implements ActionListener {
 		pnlCentralDerecha.setBackground(Color.WHITE);
 		pnlCentralDerecha.add(recibido);
 		pnlCentralDerecha.add(flecha);
+
 		pnlCentralDerecha.add(preparando);
 		pnlCentralDerecha.add(flecha1);
 		pnlCentralDerecha.add(enviado);
@@ -179,10 +180,14 @@ public class VentanaFinal extends JFrame implements ActionListener {
 	public void iniciarHilo() {
 		if (iniciaHilo == true) {
 			System.out.println("Empieza el hilo");
-			Hilo miHilo = new Hilo(flecha2);
+			Hilo miHilo = new Hilo(flecha);
 			miHilo.start();
 		}
 
+	}
+
+	public JLabel getFlecha() {
+		return flecha;
 	}
 
 }

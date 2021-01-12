@@ -1,16 +1,20 @@
 package ventanas;
 
 import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import clases.*;
 
 import javax.swing.*;
+
+import com.sun.crypto.provider.DESCipher;
 
 public class VentanaRestaurante extends JFrame {
 
@@ -18,7 +22,7 @@ public class VentanaRestaurante extends JFrame {
 	Pedido p;
 	double precio = 0.0;
 
-	public VentanaRestaurante(JFrame ventanaAnterior, Restaurante restaurante) {
+	public VentanaRestaurante(JFrame ventanaAnterior, Restaurante restaurante,List<Producto> lProductos) {
 		super("restaurante");
 		setSize(1150, 505);
 		setVisible(true);
@@ -101,6 +105,23 @@ public class VentanaRestaurante extends JFrame {
 		JTextArea text2 = new JTextArea("INGREDIENTES:\n -Pan\n -Lechuga \n -Carne");
 		text2.setEditable(false);
 
+		
+		
+		//pruebas auto añadir jlabels
+		
+		List<JLabel> labelsNombres = new ArrayList<>();
+		String descripcion="";
+		for (Producto p : lProductos) {
+			JLabel label = new JLabel(p.getNombre());
+			labelsNombres.add(label);
+			for (String product : p.getIngredientes()) {
+				descripcion=descripcion+" "+product+" \n ";
+			}
+			JTextArea label2 = new JTextArea();
+			
+
+		}
+
 		area1.add(b1, BorderLayout.SOUTH);
 		area1.add(text1, BorderLayout.NORTH);
 		area1.add(text2, BorderLayout.CENTER);
@@ -176,19 +197,14 @@ public class VentanaRestaurante extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				Producto a = new Producto("NOMBRE", 001, 15.5, "pizza", null, false,
-				TipoProducto.PRINCIPAL, 001);
-				
+				Producto a = new Producto("NOMBRE", 001, 15.5, "pizza", null, false, TipoProducto.PRINCIPAL, 001);
+
 				/*
-				 * protected String nombre;
-				protected int id;
-				protected double precio;
-				protected String descripcion;
-				protected List<String> ingredientes;
-				protected boolean vegano; 
-				protected TipoProducto tipo;
-				protected int idRestaurante;*/
-				
+				 * protected String nombre; protected int id; protected double precio; protected
+				 * String descripcion; protected List<String> ingredientes; protected boolean
+				 * vegano; protected TipoProducto tipo; protected int idRestaurante;
+				 */
+
 				a.setNombre(text1.getText());
 				productos.add(a);
 				// problema precio
@@ -246,17 +262,33 @@ public class VentanaRestaurante extends JFrame {
 
 			}
 		});
-		/*
-		 * entrantes.addActionListener(new ActionListener() {
-		 * 
-		 * @Override public void actionPerformed(ActionEvent e) {
-		 * 
-		 * for (Producto producto : restaurante.productos) {
-		 * 
-		 * }
-		 * 
-		 * } });
-		 */
+
+		entrantes.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				area1.setVisible(false);
+
+			}
+		});
+		
+		principales.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				area1.setVisible(false);
+
+			}
+		});
+		
+		principales.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				area1.setVisible(false);
+
+			}
+		});
 
 		listaProductos.setModel(modeloPedido);
 		panelDerecha.add(listaProductos, 1, 0);
@@ -270,11 +302,12 @@ public class VentanaRestaurante extends JFrame {
 		add(panelGeneral);
 
 	}
+	
 
 	public static void main(String[] args) {
 		Restaurante restaurante = new Restaurante("BurguerKing", "Comida rapida", "password",
 				"C/Leioa/Calle Menor/8/00", null, false);
-		VentanaRestaurante vrest = new VentanaRestaurante(null, restaurante);
+		VentanaRestaurante vrest = new VentanaRestaurante(null, restaurante,null);
 
 	}
 

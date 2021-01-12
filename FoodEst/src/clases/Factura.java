@@ -84,14 +84,10 @@ public class Factura {
 		File archivo = new File(ruta);
 		System.out.println("Texto" + texto);
 		
-		try {
-			//si no existe crea un archivo
-			/*if (!archivo.exists()) {
-				archivo.createNewFile();
-			}*/
-			
+		try {		
 			FileWriter fw = new FileWriter(archivo);
 			BufferedWriter bw = new BufferedWriter(fw);
+			
 			System.out.println("bw write");
 			bw.write(texto);
 			bw.close();

@@ -23,6 +23,7 @@ import javax.swing.*;
 
 import clases.ExceptionDB;
 import clases.ManagerDB;
+import clases.Producto;
 import clases.Restaurante;
 import clases.Usuario;
 
@@ -262,6 +263,7 @@ public class VentanaLogin extends JFrame {
 						db.connect();
 						
 						usuarios = db.getTodosUsuarios();
+						List<Producto> productos = db.getTodosProductos();
 						int numeroUsuarios = usuarios.size();
 						int usuariosComprobados = 0;
 						String nombreUsuarioRecibido = tnombre.getText();
