@@ -7,19 +7,21 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import clases.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 
+
 public class VentanaRestaurante extends JFrame {
-	
-	Producto a;
+
 	Pedido p;
 	double precio=0.0;
+	
 
-	public VentanaRestaurante(JFrame ventanaAnterior, Restaurante restaurante) {
+	public VentanaRestaurante(JFrame ventanaAnterior, Restaurante restaurante, Usuario usuario) {
 		super("restaurante");
 		setSize(1150, 505);
 		setVisible(true);
@@ -36,24 +38,24 @@ public class VentanaRestaurante extends JFrame {
 				JPanel panelDerecha = new JPanel();
 				panelDerecha.setLayout(new GridLayout(6, 2));
 				DefaultListModel modeloPedido = new DefaultListModel();
-				ArrayList<Producto> productosPedido = new ArrayList<Producto>();
+				ArrayList<Producto> listaPedido = new ArrayList<Producto>();
 
 				
-				JList listaProductos = new JList();
+				JList jlistaProductos = new JList();
 				JLabel nombrePedido = new JLabel("PEDIDO ACTUAL:");
 				JButton eliminar = new JButton("ELIMINAR");
 				JButton pagar = new JButton("PAGAR");
-				JLabel precioActual= new JLabel("Precio actual"+precio);
+				JLabel precioActual= new JLabel("Precio actual:");
 				
 
 				
 
-				listaProductos.addMouseListener(new MouseAdapter() {
+				jlistaProductos.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent evt) {
 						System.out.println("Seleccionar");
 						JList list = (JList) evt.getSource();
 						if (evt.getClickCount() == 2) {
-							Object producto = (Object) listaProductos.getSelectedValue();
+							Object producto = (Object) jlistaProductos.getSelectedValue();
 							
 
 						}
@@ -68,15 +70,15 @@ public class VentanaRestaurante extends JFrame {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 
-						if (listaProductos.getSelectedValue() == null) {
+						if (jlistaProductos.getSelectedValue() == null) {
 							JOptionPane.showMessageDialog(null, "Selecciona un producto para eliminar");
 
 						} else {
 							System.out.println("entrando en eliminar");
-							System.out.println(listaProductos.getSelectedValue());
-							Object producto = (Object) listaProductos.getSelectedValue();
-							int i=(int) listaProductos.getSelectedIndex();
-							productosPedido.remove(i);
+							System.out.println(jlistaProductos.getSelectedValue());
+							Object producto = (Object) jlistaProductos.getSelectedValue();
+							int i=(int) jlistaProductos.getSelectedIndex();
+							listaPedido.remove(i);
 							modeloPedido.remove(i);
 
 
@@ -102,25 +104,30 @@ public class VentanaRestaurante extends JFrame {
 		panelIzquierda.setDividerSize(0);
 
 		// PanelNombre
-		JSplitPane panelNombre = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		panelNombre.setBorder(null);
-		panelNombre.setResizeWeight(0.15);
-		panelNombre.setEnabled(false);
-		panelNombre.setDividerSize(0);
-		JLabel titulo = new JLabel(restaurante.getNombre());
-		JButton atras = new JButton(new ImageIcon("src/imagenes/logoAtras2.png"));
+		JSplitPane panelIzquierdaArriba = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		panelIzquierdaArriba.setBorder(null);
+		panelIzquierdaArriba.setResizeWeight(0.15);
+		panelIzquierdaArriba.setEnabled(false);
+		panelIzquierdaArriba.setDividerSize(0);
+		
 
 		Font font = new Font("Cooper Black", Font.BOLD, 40);
+		
+		panelIzquierdaArriba.setBackground(Color.red);
+
+			// nombre panelIzquierdaArriba1
+		JPanel panelIzquierdaArriba1 = new JPanel();
+		panelIzquierdaArriba1.setLayout(new BorderLayout());
+		JLabel titulo = new JLabel(restaurante.getNombre());
 		titulo.setFont(font);
-		panelNombre.setBackground(Color.red);
+		JButton atras = new JButton(new ImageIcon("src/imagenes/logoAtras2.png"));
+		
+		panelIzquierdaArriba1.add(titulo, BorderLayout.CENTER);
+		panelIzquierdaArriba1.add(atras, BorderLayout.WEST);
 
-		// nombre panelNombreArriba
-		JPanel panelNombreArriba = new JPanel();
-		panelNombreArriba.setLayout(new BorderLayout());
-
-		// nombre panelNombreAbajo
-		JPanel panelNombreAbajo = new JPanel();
-		panelNombreAbajo.setLayout(new GridLayout(1, 5));
+			// nombre panelIzquierdaArriba2
+		JPanel panelIzquierdaArriba2 = new JPanel();
+		panelIzquierdaArriba2.setLayout(new GridLayout(1, 5));
 
 		JButton entrantes = new JButton("ENTRANTES");
 		JButton principales = new JButton("PRINCIPALES");
@@ -131,19 +138,20 @@ public class VentanaRestaurante extends JFrame {
 		ImageIcon fot = new ImageIcon("src/Imagenes/key .png");
 		
 
-		panelNombreAbajo.add(entrantes);
-		panelNombreAbajo.add(principales);
-		panelNombreAbajo.add(segundos);
-		panelNombreAbajo.add(postres);
-		panelNombreAbajo.add(bebidas);
+		panelIzquierdaArriba2.add(entrantes);
+		panelIzquierdaArriba2.add(principales);
+		panelIzquierdaArriba2.add(segundos);
+		panelIzquierdaArriba2.add(postres);
+		panelIzquierdaArriba2.add(bebidas);
 
-		panelNombre.add(panelNombreArriba);
-		panelNombre.add(panelNombreAbajo);
+		
+		
+		panelIzquierdaArriba.add(panelIzquierdaArriba1);
+		panelIzquierdaArriba.add(panelIzquierdaArriba2);
 
-		panelNombreArriba.add(titulo, BorderLayout.CENTER);
-		panelNombreArriba.add(atras, BorderLayout.WEST);
+		
 
-		panelIzquierda.add(panelNombre);
+		panelIzquierda.add(panelIzquierdaArriba);
 
 		// Panel izquierdaAbajo
 		JPanel panelIzquierdaAbajo = new JPanel();
@@ -151,16 +159,17 @@ public class VentanaRestaurante extends JFrame {
 
 		// PRODUCTOS DEL RESTAURANTE EN PanelIzquierdaAbajo
 		ManagerDB db = new ManagerDB();
-		List<Producto> productosRestaurante;
+		List<Producto> todosProductos = null;
 		try {
 			
 			db.connect();
-			productosRestaurante = db.getTodosProductos();
+			todosProductos = db.getTodosProductos();
 			db.disconnect();
 			
-			int numeroProductos = productosRestaurante.size(); //para el layout
+			int numeroProductos = todosProductos.size(); //para el layout
 			
-			for (Producto producto : productosRestaurante) {
+			//Para cada producto se añade al panel de productos
+			for (Producto producto : todosProductos) {
 				if(restaurante.getId() == producto.getIdRestaurante()) {
 					JPanel panelProducto = new JPanel();
 					panelProducto.setLayout(new BorderLayout());
@@ -173,24 +182,27 @@ public class VentanaRestaurante extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 
+							listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
+							precio = precio+ producto.getPrecio();
+							precioActual.setText("Precio actual:" + String.valueOf(precio) + "€");
 							
-
-							a.setNombre(producto.getNombre());
-							productosPedido.add(a);
-							//problema precio
-							precio=+ producto.getPrecio();
-							precioActual.setText("");
-							modeloPedido.addElement(a.toStringPrecio());
+							modeloPedido.addElement(producto.toStringPrecio());
 
 						}
 					});
 					
-					JTextArea tingredientes = new JTextArea("INGREDIENTES:\n");
-					for (String ingrediente : producto.getIngredientes()) {
-						tingredientes.setText(ingrediente + "\n");
-					}
 					
+					//Los ingredientes del producto
+					JTextArea tingredientes = new JTextArea();
 					tingredientes.setEditable(false);
+					tingredientes.append("INGREDIENTES:" + "\n");
+					StringTokenizer st = new StringTokenizer(producto.getIngredientes(), " ,");
+					 while (st.hasMoreTokens()) {
+						 String token = st.nextToken();
+						 tingredientes.append(" - " + token + "\n");
+					 }
+					
+					
 					
 					panelProducto.add(bañadir, BorderLayout.SOUTH);
 					panelProducto.add(tnombreProducto, BorderLayout.NORTH);
@@ -198,6 +210,7 @@ public class VentanaRestaurante extends JFrame {
 					
 
 					panelProducto.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+					//Y finalmente añadimos el panel
 					panelIzquierdaAbajo.add(panelProducto);
 				}
 				
@@ -205,6 +218,422 @@ public class VentanaRestaurante extends JFrame {
 		} catch (Exception e) {
 		}	
 		
+		
+
+		//IMPORTANT
+		
+		
+		
+		
+		
+		
+		
+		//BOTONES PARA FILTRAR UN TIPO DE PRODUCTO
+		
+		//FILTRAR SOLO BEBIDAS
+		bebidas.addActionListener(new ActionListener() {
+
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//----Para quitar los productos que hay añadidos-----
+				Component[] components = panelIzquierdaAbajo.getComponents();
+				for (Component component : components) {
+					panelIzquierdaAbajo.remove(component);  
+				}
+				panelIzquierdaAbajo.revalidate();
+				panelIzquierdaAbajo.repaint();
+				//-----------------------------------------------
+				
+				
+				ManagerDB db = new ManagerDB();
+				List<Producto> todosProductos = null;
+				try {
+					
+					db.connect();
+					todosProductos = db.getTodosProductosDeUnTipo(TipoProducto.BEBIDA);
+					db.disconnect();
+					
+					int numeroProductos = todosProductos.size(); //para el layout
+					
+					//Para cada producto se añade al panel de productos
+					for (Producto producto : todosProductos) {
+						if(restaurante.getId() == producto.getIdRestaurante()) {
+							JPanel panelProducto = new JPanel();
+							panelProducto.setLayout(new BorderLayout());
+							JLabel tnombreProducto = new JLabel(producto.getNombre());
+							JButton bañadir = new JButton("AÑADIR");
+							
+							
+							bañadir.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+
+									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
+									precio = precio+ producto.getPrecio();
+									precioActual.setText("Precio actual:" + String.valueOf(precio) + "€");
+									
+									modeloPedido.addElement(producto.toStringPrecio());
+
+								}
+							});
+							
+							
+							//Los ingredientes del producto
+							JTextArea tingredientes = new JTextArea();
+							tingredientes.append("INGREDIENTES:" + "\n");
+							StringTokenizer st = new StringTokenizer(producto.getIngredientes(), " ,");
+							 while (st.hasMoreTokens()) {
+								 String token = st.nextToken();
+								 tingredientes.append(" - " + token + "\n");
+							 }
+							
+							tingredientes.setEditable(false);
+							
+							panelProducto.add(bañadir, BorderLayout.SOUTH);
+							panelProducto.add(tnombreProducto, BorderLayout.NORTH);
+							panelProducto.add(tingredientes, BorderLayout.CENTER);
+							
+
+							panelProducto.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+							//Y finalmente añadimos el panel
+							panelIzquierdaAbajo.add(panelProducto);
+						}
+						
+					}
+				} catch (Exception e1) {
+				}
+				
+			}
+		});
+		
+		//FILTRAR SOLO SEGUNDOS
+		segundos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				//----Para quitar los productos que hay añadidos-----
+				Component[] components = panelIzquierdaAbajo.getComponents();
+				for (Component component : components) {
+					panelIzquierdaAbajo.remove(component);  
+				}
+				panelIzquierdaAbajo.revalidate();
+				panelIzquierdaAbajo.repaint();
+				//-----------------------------------------------
+				ManagerDB db = new ManagerDB();
+				List<Producto> todosProductos = null;
+				try {
+					
+					db.connect();
+					todosProductos = db.getTodosProductosDeUnTipo(TipoProducto.SEGUNDO);
+					db.disconnect();
+					
+					int numeroProductos = todosProductos.size(); //para el layout
+					
+					//Para cada producto se añade al panel de productos
+					for (Producto producto : todosProductos) {
+						if(restaurante.getId() == producto.getIdRestaurante()) {
+							JPanel panelProducto = new JPanel();
+							panelProducto.setLayout(new BorderLayout());
+							JLabel tnombreProducto = new JLabel(producto.getNombre());
+							JButton bañadir = new JButton("AÑADIR");
+							
+							
+							bañadir.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+
+									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
+									precio = precio+ producto.getPrecio();
+									precioActual.setText("Precio actual:" + String.valueOf(precio) + "€");
+									
+									modeloPedido.addElement(producto.toStringPrecio());
+
+								}
+							});
+							
+							
+							//Los ingredientes del producto
+							JTextArea tingredientes = new JTextArea();
+							tingredientes.append("INGREDIENTES:" + "\n");
+							StringTokenizer st = new StringTokenizer(producto.getIngredientes(), " ,");
+							 while (st.hasMoreTokens()) {
+								 String token = st.nextToken();
+								 tingredientes.append(" - " + token + "\n");
+							 }
+							
+							tingredientes.setEditable(false);
+							
+							panelProducto.add(bañadir, BorderLayout.SOUTH);
+							panelProducto.add(tnombreProducto, BorderLayout.NORTH);
+							panelProducto.add(tingredientes, BorderLayout.CENTER);
+							
+
+							panelProducto.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+							//Y finalmente añadimos el panel
+							panelIzquierdaAbajo.add(panelProducto);
+						}
+						
+					}
+				} catch (Exception e1) {
+				}
+				
+			}
+		});
+		
+		//FILTRAR SOLO POSTRES
+		postres.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//----Para quitar los productos que hay añadidos-----
+				Component[] components = panelIzquierdaAbajo.getComponents();
+				for (Component component : components) {
+					panelIzquierdaAbajo.remove(component);  
+				}
+				panelIzquierdaAbajo.revalidate();
+				panelIzquierdaAbajo.repaint();
+				//-----------------------------------------------
+				ManagerDB db = new ManagerDB();
+				List<Producto> todosProductos = null;
+				try {
+					
+					db.connect();
+					todosProductos = db.getTodosProductosDeUnTipo(TipoProducto.POSTRE);
+					db.disconnect();
+					
+					int numeroProductos = todosProductos.size(); //para el layout
+					
+					//Para cada producto se añade al panel de productos
+					for (Producto producto : todosProductos) {
+						if(restaurante.getId() == producto.getIdRestaurante()) {
+							JPanel panelProducto = new JPanel();
+							panelProducto.setLayout(new BorderLayout());
+							JLabel tnombreProducto = new JLabel(producto.getNombre());
+							JButton bañadir = new JButton("AÑADIR");
+							
+							
+							bañadir.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+
+									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
+									precio = precio+ producto.getPrecio();
+									precioActual.setText("Precio actual:" + String.valueOf(precio) + "€");
+									
+									modeloPedido.addElement(producto.toStringPrecio());
+
+								}
+							});
+							
+							
+							//Los ingredientes del producto
+							JTextArea tingredientes = new JTextArea();
+							tingredientes.append("INGREDIENTES:" + "\n");
+							StringTokenizer st = new StringTokenizer(producto.getIngredientes(), " ,");
+							 while (st.hasMoreTokens()) {
+								 String token = st.nextToken();
+								 tingredientes.append(" - " + token + "\n");
+							 }
+							
+							tingredientes.setEditable(false);
+							
+							panelProducto.add(bañadir, BorderLayout.SOUTH);
+							panelProducto.add(tnombreProducto, BorderLayout.NORTH);
+							panelProducto.add(tingredientes, BorderLayout.CENTER);
+							
+
+							panelProducto.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+							//Y finalmente añadimos el panel
+							panelIzquierdaAbajo.add(panelProducto);
+						}
+						
+					}
+				} catch (Exception e1) {
+				}
+				
+			}
+		});
+
+		//FILTRAR SOLO PRINCIPALES
+		principales.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//----Para quitar los productos que hay añadidos-----
+				Component[] components = panelIzquierdaAbajo.getComponents();
+				for (Component component : components) {
+					panelIzquierdaAbajo.remove(component);  
+				}
+				panelIzquierdaAbajo.revalidate();
+				panelIzquierdaAbajo.repaint();
+				//-----------------------------------------------
+				ManagerDB db = new ManagerDB();
+				List<Producto> todosProductos = null;
+				try {
+					
+					db.connect();
+					todosProductos = db.getTodosProductosDeUnTipo(TipoProducto.PRINCIPAL);
+					db.disconnect();
+					
+					int numeroProductos = todosProductos.size(); //para el layout
+					
+					//Para cada producto se añade al panel de productos
+					for (Producto producto : todosProductos) {
+						if(restaurante.getId() == producto.getIdRestaurante()) {
+							JPanel panelProducto = new JPanel();
+							panelProducto.setLayout(new BorderLayout());
+							JLabel tnombreProducto = new JLabel(producto.getNombre());
+							JButton bañadir = new JButton("AÑADIR");
+							
+							
+							bañadir.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+
+									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
+									precio = precio+ producto.getPrecio();
+									precioActual.setText("Precio actual:" + String.valueOf(precio) + "€");
+									
+									modeloPedido.addElement(producto.toStringPrecio());
+
+								}
+							});
+							
+							
+							//Los ingredientes del producto
+							JTextArea tingredientes = new JTextArea();
+							tingredientes.append("INGREDIENTES:" + "\n");
+							StringTokenizer st = new StringTokenizer(producto.getIngredientes(), " ,");
+							 while (st.hasMoreTokens()) {
+								 String token = st.nextToken();
+								 tingredientes.append(" - " + token + "\n");
+							 }
+							
+							tingredientes.setEditable(false);
+							
+							panelProducto.add(bañadir, BorderLayout.SOUTH);
+							panelProducto.add(tnombreProducto, BorderLayout.NORTH);
+							panelProducto.add(tingredientes, BorderLayout.CENTER);
+							
+
+							panelProducto.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+							//Y finalmente añadimos el panel
+							panelIzquierdaAbajo.add(panelProducto);
+						}
+						
+					}
+				} catch (Exception e1) {
+				}
+				
+			}
+		});
+		
+		//FILTRAR SOLO ENTRANTES
+		entrantes.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//----Para quitar los productos que hay añadidos-----
+				Component[] components = panelIzquierdaAbajo.getComponents();
+				for (Component component : components) {
+					panelIzquierdaAbajo.remove(component);  
+				}
+				panelIzquierdaAbajo.revalidate();
+				panelIzquierdaAbajo.repaint();
+				//-----------------------------------------------
+				ManagerDB db = new ManagerDB();
+				List<Producto> todosProductos = null;
+				try {
+					
+					db.connect();
+					todosProductos = db.getTodosProductosDeUnTipo(TipoProducto.ENTRANTE);
+					db.disconnect();
+					
+					int numeroProductos = todosProductos.size(); //para el layout
+					
+					//Para cada producto se añade al panel de productos
+					for (Producto producto : todosProductos) {
+						if(restaurante.getId() == producto.getIdRestaurante()) {
+							JPanel panelProducto = new JPanel();
+							panelProducto.setLayout(new BorderLayout());
+							JLabel tnombreProducto = new JLabel(producto.getNombre());
+							JButton bañadir = new JButton("AÑADIR");
+							
+							
+							bañadir.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+
+									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
+									precio = precio+ producto.getPrecio();
+									precioActual.setText("Precio actual:" + String.valueOf(precio) + "€");
+									
+									modeloPedido.addElement(producto.toStringPrecio());
+
+								}
+							});
+							
+							
+							//Los ingredientes del producto
+							JTextArea tingredientes = new JTextArea();
+							tingredientes.append("INGREDIENTES:" + "\n");
+							StringTokenizer st = new StringTokenizer(producto.getIngredientes(), " ,");
+							 while (st.hasMoreTokens()) {
+								 String token = st.nextToken();
+								 tingredientes.append(" - " + token + "\n");
+							 }
+							
+							tingredientes.setEditable(false);
+							
+							panelProducto.add(bañadir, BorderLayout.SOUTH);
+							panelProducto.add(tnombreProducto, BorderLayout.NORTH);
+							panelProducto.add(tingredientes, BorderLayout.CENTER);
+							
+
+							panelProducto.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+							//Y finalmente añadimos el panel
+							panelIzquierdaAbajo.add(panelProducto);
+						}
+						
+					}
+				} catch (Exception e1) {
+				}
+				
+			}
+		});
+		
+		
+		
+		
+		
+		
+		
+		JScrollPane scroll = new JScrollPane(panelIzquierdaAbajo, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		panelIzquierda.add(scroll); //aqui se añade panelIzquierdaAbajo (el de los productos) metido en el scroll
+		panelIzquierdaAbajo.setBackground(Color.red);
+		panelGeneral.add(panelIzquierda);
+
+		
+		
+		pagar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Pedido pedido = new Pedido();
+				pedido.setProductos(listaPedido);
+				pedido.setUsuario(usuario);
+				
+			}
+		});
 		
 		
 		atras.addActionListener(new ActionListener() {
@@ -218,63 +647,9 @@ public class VentanaRestaurante extends JFrame {
 			}
 		});
 		
-		
-		/* NO SE QUE ES ESTO
-		if (!productos.isEmpty()) {
-			for (Producto producto : productos) {
-				//el producto sin tostring de prueba
-				modeloPedido.addElement(producto.toStringPrecio());
 
-			}
-
-		}
-		*/
-		
-		
-
-		JScrollPane scroll = new JScrollPane(panelIzquierdaAbajo, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		
-		panelIzquierda.add(scroll);
-		panelIzquierdaAbajo.setBackground(Color.red);
-		panelGeneral.add(panelIzquierda);
-
-		
-		
-		pagar.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//Pedido pedido = new Pedido(1, restaurante, null, EstadoPedido.RECIBIDO, productosPedido, 50.5, "Efectivo", false);
-				for (Producto producto : productosPedido) {
-					System.out.println(producto.toStringPrecio());
-				}
-//				new VentanaPago(pedido);
-//				setVisible(false);
-
-			}
-		});
-		
-		
-		
-		
-		/*
-		entrantes.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				for (Producto producto : restaurante.productos) {
-					
-				}
-				
-			}
-		});
-		*/
-		
-
-		listaProductos.setModel(modeloPedido);
-		panelDerecha.add(listaProductos, 1, 0);
+		jlistaProductos.setModel(modeloPedido);
+		panelDerecha.add(jlistaProductos, 1, 0);
 		panelDerecha.add(eliminar, 2, 1);
 		panelDerecha.add(pagar, 2, 2);
 		panelDerecha.add(precioActual, 2, 3);
@@ -286,18 +661,6 @@ public class VentanaRestaurante extends JFrame {
 
 	}
 	
-	
-		public static void main(String[] args) {
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					Restaurante restaurante = new Restaurante("BurguerKing", "Comida rapida", "password", "C/Leioa/Calle Menor/8/00",
-							null, false);
-					VentanaRestaurante vrest = new VentanaRestaurante(null,restaurante);
-					
-				}
-			});
-		}
 		
 		
 	

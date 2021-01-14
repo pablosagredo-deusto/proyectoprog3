@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,36 +22,23 @@ import ventanas.VentanaRestaurante;
 
 public class Pruebas {
 	public static void main(String[] args) {
-		ManagerDB db =  new ManagerDB();
-		List<Producto> productos;
+		ManagerDB db = new ManagerDB();
+		
+		List<Producto> productosSegundos;
 		try {
-			
-			Producto producto = new  Producto();
-			
-			producto.setNombre("ndo");
-			producto.setPrecio(9.5);
-			List<String> ingr = new ArrayList<String>();
-			ingr.add("asf");
-			ingr.add("asf");
-			ingr.add("asf");
-			producto.setIngredientes(ingr);
-			producto.setVegano(true);
-			producto.setIdRestaurante(2);
-			producto.setTipo(TipoProducto.POSTRE);
-					
-			
 			db.connect();
-			db.insertarProducto(producto);
+			productosSegundos = db.getTodosProductosDeUnTipo(TipoProducto.BEBIDA);
+
 			db.disconnect();
 			
-		
+			for (Producto producto : productosSegundos) {
+				System.out.println(producto.getNombre());
+				
+			}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-		
-		
-		
 		
 		
 		

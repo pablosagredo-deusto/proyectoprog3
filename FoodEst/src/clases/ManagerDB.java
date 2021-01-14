@@ -195,14 +195,8 @@ public class ManagerDB {
 				producto.setTipo(TipoProducto.valueOf(rs.getString("TIPO_PRODUCTO")));
 				producto.setIdRestaurante(rs.getInt("ID_RESTAURANTE"));
 				
-				String ingredientesSQL = rs.getString("INGREDIENTES_PRODUCTO");	
-				List<String> ingredientesJava = new ArrayList<>();
-				StringTokenizer st = new StringTokenizer(ingredientesSQL, ",");
-				while (st.hasMoreTokens()) {
-					 String token = st.nextToken();
-					 ingredientesJava.add(token);
-				}
-				producto.setIngredientes(ingredientesJava);
+				
+				producto.setIngredientes(rs.getString("INGREDIENTES_PRODUCTO"));
 				
 				
 				
@@ -216,6 +210,74 @@ public class ManagerDB {
 		}
 	}
 	
+	
+	//Devuelve todos los productos de un tipoProducto
+	
+	public List<Producto> getTodosProductosDeUnTipo(TipoProducto tipo) throws ExceptionDB {
+		List<Producto> productos = new ArrayList<Producto>();
+		String SQL="";
+		try (Statement stmt = conn.createStatement()) {
+			SQL="SELECT NOMBRE_PRODUCTO, ID_PRODUCTO, PRECIO_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, INGREDIENTES_PRODUCTO, ID_RESTAURANTE FROM PRODUCTO;";
+			ResultSet rs = stmt.executeQuery(SQL);
+			log( Level.INFO, "Buscar productos\t" + SQL, null );
+			while (rs.next()) {
+				Producto producto = new Producto();
+				producto.setNombre(rs.getString("NOMBRE_PRODUCTO"));
+				producto.setId(rs.getInt("ID_PRODUCTO"));
+				producto.setPrecio(rs.getDouble("PRECIO_PRODUCTO"));
+				producto.setDescripcion(rs.getString("DESCRIPCION_PRODUCTO"));
+				if(rs.getInt("VEGANO") == 1)  producto.setVegano(true);
+				producto.setTipo(TipoProducto.valueOf(rs.getString("TIPO_PRODUCTO")));
+				producto.setIdRestaurante(rs.getInt("ID_RESTAURANTE"));
+				
+				
+				producto.setIngredientes(rs.getString("INGREDIENTES_PRODUCTO"));
+				
+				
+				
+				if(producto.getTipo().equals(tipo)) productos.add(producto);
+				
+			}
+
+			return productos;
+		} catch (SQLException | DateTimeParseException e) {
+			throw new ExceptionDB("Error obteniendo los direcciones", e);
+		}
+	}
+	
+	
+	//Devuelve todos los productos de un restaurante
+	public List<Producto> getTodosProductosDeRestaurante(Restaurante restaurante) throws ExceptionDB{
+		List<Producto> productos = new ArrayList<Producto>();
+		String SQL="";
+		try (Statement stmt = conn.createStatement()) {
+			SQL="SELECT NOMBRE_PRODUCTO, ID_PRODUCTO, PRECIO_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, INGREDIENTES_PRODUCTO, ID_RESTAURANTE FROM PRODUCTO WHERE ID_RESTAURANTE=" + restaurante.getId() + ";";
+			ResultSet rs = stmt.executeQuery(SQL);
+			log( Level.INFO, "Buscar productos\t" + SQL, null );
+			while (rs.next()) {
+				Producto producto = new Producto();
+				producto.setNombre(rs.getString("NOMBRE_PRODUCTO"));
+				producto.setId(rs.getInt("ID_PRODUCTO"));
+				producto.setPrecio(rs.getDouble("PRECIO_PRODUCTO"));
+				producto.setDescripcion(rs.getString("DESCRIPCION_PRODUCTO"));
+				if(rs.getInt("VEGANO") == 1)  producto.setVegano(true);
+				producto.setTipo(TipoProducto.valueOf(rs.getString("TIPO_PRODUCTO")));
+				producto.setIdRestaurante(rs.getInt("ID_RESTAURANTE"));
+				producto.setIngredientes(rs.getString("INGREDIENTES_PRODUCTO"));
+
+				productos.add(producto);
+			}
+
+			return productos;
+		} catch (SQLException | DateTimeParseException e) {
+			throw new ExceptionDB("Error obteniendo los direcciones", e);
+		}
+	}
+	
+	
+	
+	
+	/*
 	//Metodo para borrar el ultimo caracter de un String
 	public static String removeLastCharacter(String str) {
 		   String result = null;
@@ -224,45 +286,63 @@ public class ManagerDB {
 		   }
 		   return result;
 	}
-	
+	*/
+	//INSERTAR PRODUCTO
 	public void insertarProducto(Producto producto) throws ExceptionDB {
-		try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO PRODUCTO (NOMBRE_PRODUCTO, PRECIO_PRODUCTO, INGREDIENTES_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, ID_RESTAURANTE, ID_MENU) VALUES (?,?,?,?,?,?,?,?);"); 
-			Statement stmtForId = conn.createStatement()) {
-			
-			stmt.setString(1, producto.getNombre());
-			stmt.setDouble(2, producto.getPrecio());
-			
-			String ingredientesSQL = "";
-			for (String ingrediente : producto.getIngredientes()) {
-				ingredientesSQL = ingrediente + ",";
+
+			try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO PRODUCTO (NOMBRE_PRODUCTO, PRECIO_PRODUCTO, INGREDIENTES_PRODUCTO, DESCRIPCION_PRODUCTO, VEGANO, TIPO_PRODUCTO, ID_RESTAURANTE) VALUES (?,?,?,?,?,?,?);"); 
+				Statement stmtForId = conn.createStatement()) {
 				
+				stmt.setString(1, producto.getNombre());
+				stmt.setDouble(2, producto.getPrecio());
+				
+				
+												 
+				stmt.setString(3, producto.getIngredientes());
+				
+				stmt.setString(4, producto.getDescripcion());
+				
+				int veganoInt = producto.isVegano() ? 1 : 0;
+				stmt.setInt(5, veganoInt);
+				
+				stmt.setString(6, producto.getTipo().toString()); //utilizamos el metodo toString por defecto de las enumeraciones
+				stmt.setInt(7, producto.getIdRestaurante()); //cogemos el int del restaurante al que esté asignado este producto
+				
+				
+				stmt.executeUpdate();
+				 
+			} catch (SQLException | DateTimeParseException e) {
+				throw new ExceptionDB("Error al insertar restaurante", e);
 			}
-			removeLastCharacter(ingredientesSQL); //He creado el metodo arriba para borrar el ultimo caracter
-			stmt.setString(3, ingredientesSQL);
-			
-			stmt.setString(4, producto.getDescripcion());
-			
-			int veganoInt = producto.isVegano() ? 1 : 0;
-			stmt.setInt(5, veganoInt);
-			
-			stmt.setString(6, producto.getTipo().toString()); //utilizamos el metodo toString por defecto de las enumeraciones
-			stmt.setInt(7, producto.getIdRestaurante()); //cogemos el int del restaurante al que esté asignado este producto
-			
-			stmt.executeUpdate();
-			 
-		} catch (SQLException | DateTimeParseException e) {
-			throw new ExceptionDB("Error al insertar restaurante", e);
-		}
 	}
 	
-
 	
+	//INSERTAR PRODUCTO EN MENU
+	public void insertarProductoEnMenu(Menu menu, Producto producto) throws ExceptionDB{
+		try (PreparedStatement stmt = conn.prepareStatement("UPDATE PRODUCTO SET ID_MENU ="
+				+ menu.getId() + "WHERE ID_PRODUCTO =" + producto.getId()+";")){
+				
+		} catch (SQLException e) {
+			throw new ExceptionDB("Error al insertar producto en menu", e);
+		}
+	}
+
+	//Borrar menu
 	public void borrarProducto(Producto producto) throws ExceptionDB {
 		try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PRODUCTO WHERE ID_PRODUCTO=?")) {
 			stmt.setInt(1, producto.getId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new ExceptionDB("No se pudo elimiar el producto con id " + producto.getId(), e);
+		}
+	}
+	//Borrar producto
+	public void borrarMenu(Menu menu) throws ExceptionDB {
+		try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM MENU WHERE ID_MENU=?")) {
+			stmt.setInt(1, menu.getId());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new ExceptionDB("No se pudo elimiar el menu con id " + menu.getId(), e);
 		}
 	}
 	
@@ -279,7 +359,7 @@ public class ManagerDB {
 				menu.setNombre(rs.getString("NOMBRE_MENU"));
 				menu.setPrecio(rs.getDouble("PRECIO_MENU"));
 				menu.setId(rs.getInt("ID_MENU"));
-				menu.setId(rs.getInt("ID_RESTAURANTE"));
+				menu.setIdRestaurante(rs.getInt("ID_RESTAURANTE"));
 				
 				
 				menus.add(menu);
@@ -305,6 +385,72 @@ public class ManagerDB {
 				}
 	 }
 	
+	 //INSERTAR PEDIDO
+	 public void insertarPedido(Pedido pedido) throws ExceptionDB {
+		 try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO PEDIDO (ID_RESTAURANTE, ID_USUARIO, ID_DIRECCION, "
+		 		+ "ESTADO_PEDIDO, PRECIOTOTAL_PEDIDO, METODOPAGO_PEDIDO, CUBIERTOS) VALUES(?,?,?,?,?,?,?);");
+				 Statement stmtForId = conn.createStatement()) {
+						
+						stmt.setInt(1, pedido.getRestaurante().getId());
+						stmt.setInt(2, pedido.getUsuario().getId());
+						stmt.setInt(3, pedido.getDireccion().getId());
+						stmt.setString(4, pedido.getEstado().toString());
+						stmt.setDouble(5, pedido.getPreciototal());
+						stmt.setString(6, pedido.getMetodopago());
+						int cubiertosInt = pedido.isCubiertos() ? 1 : 0;
+						stmt.setInt(7, cubiertosInt);
+						
+						stmt.executeUpdate();
+						 
+					} catch (SQLException | DateTimeParseException e) {
+						throw new ExceptionDB("Error al insertar menu", e);
+					}
+		
+	 
+	 }
+	 
+	 
+	 /*Insertar los productos en el envio correspondiente (ejecutar siempre despues del metodo insertar pedio, para que 
+	 el pedido obtenga sus productos en la tabla pedir)*/
+	 public void insertarProductosEnPedido(List<Producto> productosInsertar) throws ExceptionDB {
+		 String SQL="";
+		 int codigoPedido = 0;
+		 	
+			try (Statement stmt = conn.createStatement()) {
+				SQL="SELECT ID_PEDIDO FROM PEDIDO WHERE ID_PEDIDO=(SELECT max(ID_PEDIDO) FROM PEDIDO) "; //cogemos el id ultimo pedido, es decir el que acabamos de meteer
+				ResultSet rs = stmt.executeQuery(SQL);
+				log( Level.INFO, "Buscar menus\t" + SQL, null );
+				while (rs.next()) {
+					codigoPedido = rs.getInt("ID_PEDIDO");
+				}
+
+			} catch (SQLException | DateTimeParseException e) {
+				throw new ExceptionDB("Error obteniendo los pedidos", e);
+			}
+			
+			//Para cada producto lo metemos en la tabla pedir (la cual relaciona el pedido con los productos enviados)
+			for (Producto producto : productosInsertar) {
+				try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO PEDIR (ID_PRODUCTO, ID_PEDIDO) VALUES(?,?);");
+						 Statement stmtForId = conn.createStatement()) {
+								
+								stmt.setInt(1, producto.getId());
+								stmt.setInt(2, codigoPedido);
+								
+								stmt.executeUpdate();
+								
+								 
+							} catch (SQLException | DateTimeParseException e) {
+								throw new ExceptionDB("Error al insertar menu", e);
+							}
+			}
+			
+		 
+	 }
+	 
+	 
+	 
+	 
+	 
 	
 	private static Logger logger = null;
 

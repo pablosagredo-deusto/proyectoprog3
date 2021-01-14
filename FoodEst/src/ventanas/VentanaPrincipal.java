@@ -135,7 +135,7 @@ public class VentanaPrincipal extends JFrame {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						new VentanaRestaurante(thisFrame, restaurante);
+						new VentanaRestaurante(thisFrame, restaurante, usuario);
 						setVisible(false);
 						
 					}

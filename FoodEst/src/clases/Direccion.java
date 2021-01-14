@@ -3,6 +3,7 @@ package clases;
 import java.io.Serializable;
 
 public class Direccion implements Serializable{
+	protected int id;
 	protected String nombre;
 	protected String calle;
 	protected String municipio;
@@ -33,6 +34,14 @@ public class Direccion implements Serializable{
 	
 	public String getCalle() {
 		return calle;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setCalle(String calle) {
