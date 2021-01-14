@@ -26,7 +26,7 @@ public class ProductoTest {
 		Ingrediente ing2 = new Ingrediente("Bacon", 002, 150);
 		ingredientes.add(ing1);
 		ingredientes.add(ing2);
-		Producto producto = new Producto("Piza", 001, 15.5, "pizza", ingredientes, false,  TipoProducto.PIZZA, null);
+		Producto producto = new Producto("Piza", 001, 15.5, "pizza", null, false,  TipoProducto.PRINCIPAL, null);
 	}
 	
 	@Test

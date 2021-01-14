@@ -1,6 +1,7 @@
 package ventanas;
 
 import java.awt.*;
+
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,12 +15,13 @@ import javax.swing.*;
 
 import clases.ExceptionDB;
 import clases.ManagerDB;
+import clases.Producto;
 import clases.Restaurante;
 import clases.Usuario;
 
 public class VentanaPrincipal extends JFrame {
 	
-	public VentanaPrincipal(Usuario usuario) {
+	public VentanaPrincipal(Usuario usuario, List<Producto> productos) {
 		
 		
 		
@@ -30,7 +32,6 @@ public class VentanaPrincipal extends JFrame {
 		JButton pizzaHut =  new JButton("Pizza-Hut");
 		JTextField buscador = new JTextField("¿Qué estas buscando?");
 		JButton buscar =  new JButton("Buscar");
-		
 		
 		//PANEL ARRIBA
 		JPanel panelArriba = new JPanel();
@@ -135,7 +136,9 @@ public class VentanaPrincipal extends JFrame {
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
+
 						new VentanaRestaurante(thisFrame, restaurante, usuario);
+
 						setVisible(false);
 						
 					}
@@ -249,7 +252,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void run() {
 				Usuario usuario = new Usuario(); //Este ususario es para probar la ventana
-				new VentanaPrincipal(usuario);
+				new VentanaPrincipal(usuario,null);
 				
 				
 			}

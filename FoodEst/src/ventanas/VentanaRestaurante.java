@@ -1,44 +1,54 @@
 package ventanas;
 
 import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.StringTokenizer;
+
 
 import clases.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
+
+
 
 
 public class VentanaRestaurante extends JFrame {
+
 
 	Pedido p;
 	double precio=0.0;
 	
 
+
+
 	public VentanaRestaurante(JFrame ventanaAnterior, Restaurante restaurante, Usuario usuario) {
+
 		super("restaurante");
 		setSize(1150, 505);
 		setVisible(true);
-		
 
-		// PANEL GENERAL 
+		// PANEL GENERAL : parte izquierda y parte derecha
 		JSplitPane panelGeneral = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		panelGeneral.setBorder(null);
 		panelGeneral.setResizeWeight(0.66); // Esto es el porcentaje de la parte de la izquierda ---> ajustar
 		panelGeneral.setEnabled(false);
 		panelGeneral.setDividerSize(0);
+
 		
 		//--------------------------------Panel DERECHA-------------------------------------
 				JPanel panelDerecha = new JPanel();
 				panelDerecha.setLayout(new GridLayout(6, 2));
 				DefaultListModel modeloPedido = new DefaultListModel();
 				ArrayList<Producto> listaPedido = new ArrayList<Producto>();
+
+
 
 				
 				JList jlistaProductos = new JList();
@@ -97,6 +107,7 @@ public class VentanaRestaurante extends JFrame {
 		
 		//----------------------------------------Panel IZQUIERDA------------------------------------
 
+
 		JSplitPane panelIzquierda = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		panelIzquierda.setBorder(null);
 		panelIzquierda.setResizeWeight(0.15);
@@ -120,29 +131,42 @@ public class VentanaRestaurante extends JFrame {
 		panelIzquierdaArriba1.setLayout(new BorderLayout());
 		JLabel titulo = new JLabel(restaurante.getNombre());
 		titulo.setFont(font);
+
 		JButton atras = new JButton(new ImageIcon("src/imagenes/logoAtras2.png"));
 		
 		panelIzquierdaArriba1.add(titulo, BorderLayout.CENTER);
 		panelIzquierdaArriba1.add(atras, BorderLayout.WEST);
 
+
+
 			// nombre panelIzquierdaArriba2
 		JPanel panelIzquierdaArriba2 = new JPanel();
 		panelIzquierdaArriba2.setLayout(new GridLayout(1, 5));
+
 
 		JButton entrantes = new JButton("ENTRANTES");
 		JButton principales = new JButton("PRINCIPALES");
 		JButton segundos = new JButton("SEGUNDOS");
 		JButton postres = new JButton("POSTRES");
 		JButton bebidas = new JButton("BEBIDAS");
-
+		JButton buscar = new JButton();
 		ImageIcon fot = new ImageIcon("src/Imagenes/key .png");
-		
+		buscar.setSize(40, 40);
+		Icon icono = new ImageIcon(
+				fot.getImage().getScaledInstance(buscar.getWidth(), buscar.getHeight(), Image.SCALE_DEFAULT));
+		buscar.setIcon(icono);
+		buscar.repaint();
+		buscar.setOpaque(false);
+		buscar.setContentAreaFilled(false);
+		buscar.setBorderPainted(false);
+
 
 		panelIzquierdaArriba2.add(entrantes);
 		panelIzquierdaArriba2.add(principales);
 		panelIzquierdaArriba2.add(segundos);
 		panelIzquierdaArriba2.add(postres);
 		panelIzquierdaArriba2.add(bebidas);
+
 
 		
 		
@@ -156,6 +180,7 @@ public class VentanaRestaurante extends JFrame {
 		// Panel izquierdaAbajo
 		JPanel panelIzquierdaAbajo = new JPanel();
 		panelIzquierdaAbajo.setLayout(new GridLayout(2, 4, 30, 30)); // meter separacion entre espacios
+
 
 		// PRODUCTOS DEL RESTAURANTE EN PanelIzquierdaAbajo
 		ManagerDB db = new ManagerDB();
@@ -178,6 +203,8 @@ public class VentanaRestaurante extends JFrame {
 					
 					
 					bañadir.addActionListener(new ActionListener() {
+
+
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
@@ -214,7 +241,9 @@ public class VentanaRestaurante extends JFrame {
 					panelIzquierdaAbajo.add(panelProducto);
 				}
 				
+
 			}
+
 		} catch (Exception e) {
 		}	
 		
@@ -637,7 +666,9 @@ public class VentanaRestaurante extends JFrame {
 		
 		
 		atras.addActionListener(new ActionListener() {
+
 			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaAnterior.setVisible(true);
@@ -648,8 +679,11 @@ public class VentanaRestaurante extends JFrame {
 		});
 		
 
+
+
 		jlistaProductos.setModel(modeloPedido);
 		panelDerecha.add(jlistaProductos, 1, 0);
+
 		panelDerecha.add(eliminar, 2, 1);
 		panelDerecha.add(pagar, 2, 2);
 		panelDerecha.add(precioActual, 2, 3);
@@ -661,8 +695,10 @@ public class VentanaRestaurante extends JFrame {
 
 	}
 	
+
 		
 		
 	
 	
+
 }

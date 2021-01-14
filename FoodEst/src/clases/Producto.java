@@ -11,8 +11,6 @@ public class Producto {
 	protected String ingredientes;
 	protected boolean vegano; 
 	protected TipoProducto tipo;
-	
-
 	protected int idRestaurante;
 	protected int idMenu;
 	
