@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.StringTokenizer;
 
 
 import clases.*;
+import clases.Menu;
 
 import javax.swing.*;
 
@@ -47,6 +49,7 @@ public class VentanaRestaurante extends JFrame {
 				panelDerecha.setLayout(new GridLayout(6, 2));
 				DefaultListModel modeloPedido = new DefaultListModel();
 				ArrayList<Producto> listaPedido = new ArrayList<Producto>();
+				ArrayList<Menu> listaPedidoMenu = new ArrayList<Menu>();
 
 
 
@@ -141,7 +144,7 @@ public class VentanaRestaurante extends JFrame {
 
 			// nombre panelIzquierdaArriba2
 		JPanel panelIzquierdaArriba2 = new JPanel();
-		panelIzquierdaArriba2.setLayout(new GridLayout(1, 5));
+		panelIzquierdaArriba2.setLayout(new GridLayout(1, 6));
 
 
 		JButton entrantes = new JButton("ENTRANTES");
@@ -149,6 +152,8 @@ public class VentanaRestaurante extends JFrame {
 		JButton segundos = new JButton("SEGUNDOS");
 		JButton postres = new JButton("POSTRES");
 		JButton bebidas = new JButton("BEBIDAS");
+		JButton menus = new JButton("MENUS");
+
 		JButton buscar = new JButton();
 		ImageIcon fot = new ImageIcon("src/Imagenes/key .png");
 		buscar.setSize(40, 40);
@@ -166,6 +171,8 @@ public class VentanaRestaurante extends JFrame {
 		panelIzquierdaArriba2.add(segundos);
 		panelIzquierdaArriba2.add(postres);
 		panelIzquierdaArriba2.add(bebidas);
+		panelIzquierdaArriba2.add(menus);
+
 
 
 		
@@ -211,7 +218,8 @@ public class VentanaRestaurante extends JFrame {
 
 							listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
 							precio = precio+ producto.getPrecio();
-							precioActual.setText("Precio actual:" + String.valueOf(precio) + "€");
+							DecimalFormat df = new DecimalFormat("#.00");
+							precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
 							
 							modeloPedido.addElement(producto.toStringPrecio());
 
@@ -301,7 +309,9 @@ public class VentanaRestaurante extends JFrame {
 
 									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
 									precio = precio+ producto.getPrecio();
-									precioActual.setText("Precio actual:" + String.valueOf(precio) + "€");
+									DecimalFormat df = new DecimalFormat("#.00");
+									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
+									
 									
 									modeloPedido.addElement(producto.toStringPrecio());
 
@@ -377,7 +387,9 @@ public class VentanaRestaurante extends JFrame {
 
 									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
 									precio = precio+ producto.getPrecio();
-									precioActual.setText("Precio actual:" + String.valueOf(precio) + "€");
+									DecimalFormat df = new DecimalFormat("#.00");
+									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
+									
 									
 									modeloPedido.addElement(producto.toStringPrecio());
 
@@ -452,7 +464,9 @@ public class VentanaRestaurante extends JFrame {
 
 									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
 									precio = precio+ producto.getPrecio();
-									precioActual.setText("Precio actual:" + String.valueOf(precio) + "€");
+									DecimalFormat df = new DecimalFormat("#.00");
+									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
+									
 									
 									modeloPedido.addElement(producto.toStringPrecio());
 
@@ -527,7 +541,9 @@ public class VentanaRestaurante extends JFrame {
 
 									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
 									precio = precio+ producto.getPrecio();
-									precioActual.setText("Precio actual:" + String.valueOf(precio) + "€");
+									DecimalFormat df = new DecimalFormat("#.00");
+									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
+									
 									
 									modeloPedido.addElement(producto.toStringPrecio());
 
@@ -562,6 +578,84 @@ public class VentanaRestaurante extends JFrame {
 				
 			}
 		});
+		
+		//FILTRAR SOLO POR MENUS
+		menus.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//----Para quitar los productos que hay añadidos-----
+				Component[] components = panelIzquierdaAbajo.getComponents();
+				for (Component component : components) {
+					panelIzquierdaAbajo.remove(component);  
+				}
+				panelIzquierdaAbajo.revalidate();
+				panelIzquierdaAbajo.repaint();
+				//-----------------------------------------------
+				ManagerDB db = new ManagerDB();
+				List<Menu> todosMenus = null;
+				try {
+					
+					db.connect();
+					todosMenus = db.getTodosMenus();
+					db.disconnect();
+					
+					int numeroMenus = todosMenus.size(); //para el layout
+					
+					//Para cada producto se añade al panel de productos
+					for (Menu menu : todosMenus) {
+						if(restaurante.getId() == menu.getIdRestaurante()) {
+							JPanel panelMenu = new JPanel();
+							panelMenu.setLayout(new BorderLayout());
+							JLabel tnombreMenu = new JLabel(menu.getNombre());
+							JButton bañadir = new JButton("AÑADIR");
+							
+							
+							bañadir.addActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+
+									listaPedidoMenu.add(menu); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
+									precio = precio+ menu.getPrecio();
+									DecimalFormat df = new DecimalFormat("#.00");
+									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
+									
+									
+									modeloPedido.addElement(menu.toString());
+
+								}
+							});
+							
+							
+							//Los ingredientes del producto
+							JTextArea tproductosMenu = new JTextArea();
+							tproductosMenu.append("PRODUCTOS:" + "\n");
+							
+							for (Producto producto : menu.getProductos()) {
+								tproductosMenu.append(" - " + producto.toString() + "\n");
+							}
+							
+							tproductosMenu.setEditable(false);
+							
+							panelMenu.add(bañadir, BorderLayout.SOUTH);
+							panelMenu.add(tnombreMenu, BorderLayout.NORTH);
+							panelMenu.add(tproductosMenu, BorderLayout.CENTER);
+							
+
+							panelMenu.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+							//Y finalmente añadimos el panel
+							panelIzquierdaAbajo.add(panelMenu);
+						}
+						
+					}
+				} catch (Exception e1) {
+				}
+				
+			}
+		});
+		
+		
 		
 		//FILTRAR SOLO ENTRANTES
 		entrantes.addActionListener(new ActionListener() {
@@ -602,7 +696,9 @@ public class VentanaRestaurante extends JFrame {
 
 									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
 									precio = precio+ producto.getPrecio();
-									precioActual.setText("Precio actual:" + String.valueOf(precio) + "€");
+									DecimalFormat df = new DecimalFormat("#.00");
+									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
+									
 									
 									modeloPedido.addElement(producto.toStringPrecio());
 
@@ -657,9 +753,15 @@ public class VentanaRestaurante extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				Pedido pedido = new Pedido();
+				pedido.setRestaurante(restaurante);
 				pedido.setProductos(listaPedido);
 				pedido.setUsuario(usuario);
+				DecimalFormat df = new DecimalFormat("#.00");				
+				pedido.setPreciototal(Double.parseDouble(df.format(precio)));
+				new VentanaPago(pedido);
+				
 				
 			}
 		});

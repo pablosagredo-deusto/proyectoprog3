@@ -6,27 +6,28 @@ import java.util.List;
 
 
 public class Menu {
-	String nombre;
-	Double precio;
-	int id;
-	int idRestaurante;
+	protected String nombre;
+	protected Double precio;
+	protected int id;
+	protected int idRestaurante;
+	protected List<Producto> productos;
 	
-	public Menu(String nombre, Restaurante restaurante, Double precio, int idRestaurante) {
+	public Menu(String nombre, Restaurante restaurante, Double precio, int idRestaurante, List<Producto> productos) {
 		super();
 		this.nombre = nombre;
-
 		this.precio= precio;
 		this.id= id;
 		this.idRestaurante= idRestaurante;
+		this.productos = productos;
 		
 	}
 	public Menu() {
 		super();
 		this.nombre = "";
-
 		this.precio= 0.0;
 		this.id = 0;
 		this.idRestaurante= 0;
+		this.productos = null;
 
 	}
 	public int getIdRestaurante() {
@@ -34,6 +35,12 @@ public class Menu {
 	}
 	public void setIdRestaurante(int idRestaurante) {
 		this.idRestaurante = idRestaurante;
+	}
+	public List<Producto> getProductos() {
+		return productos;
+	}
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
 	}
 	public int getId() {
 		return id;
@@ -52,6 +59,20 @@ public class Menu {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	//calcula el precio para el menu, sumando el de todos sus productos
+	public void calcularPrecio() {
+		double precioMenu = 0;
+		for (Producto producto : productos) {
+			precioMenu = precioMenu + producto.getPrecio();
+		}
+		
+		this.precio = precioMenu;
+	}
+	@Override
+	public String toString() {
+		return "Menu: " + nombre + " (" +  precio + "€)";
 	}
 
 	

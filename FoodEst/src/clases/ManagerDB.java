@@ -27,7 +27,7 @@ public class ManagerDB {
 	// METODO PARA CONECTAR CON LA BASE DE DATOS
 	public void connect() throws ExceptionDB {
 		try {
-			String nombreDB = "jdbc:sqlite:C:\\Users\\Usuario\\git\\proyectoprog3\\FoodEst\\lib\\FoodEstDB";
+			String nombreDB = "jdbc:sqlite:/C:\\Users\\guill\\git\\proyectoprog3\\.classpath\\FoodEst\\lib\\FoodEstDB";
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(nombreDB);
 
@@ -146,22 +146,26 @@ public class ManagerDB {
 			throw new ExceptionDB("Error obteniendo los restaurantes", e);
 		}
 	}
-
+	
+	//devuelve una lista con todas las direcciones --> comprobar en la venatanaDireccion si son del usuario correspondiente
 	public List<Direccion> getTodasDirecciones() throws ExceptionDB {
 		List<Direccion> direcciones = new ArrayList<Direccion>();
 		String SQL="";
 		try (Statement stmt = conn.createStatement()) {
-			SQL="SELECT * FROM DIRECCION";
+			SQL="SELECT * FROM DIRECCION;";
 			ResultSet rs = stmt.executeQuery(SQL);
 			log( Level.INFO, "Buscar direcciones\t" + SQL, null );
 			while (rs.next()) {
 				Direccion direccion = new Direccion();
+				
+				direccion.setId(rs.getInt("ID_DIRECCION"));
 				direccion.setNombre(rs.getString("NOMBRE_DIRECCION"));
 				direccion.setCalle(rs.getString("CALLE_DIRECCION"));
-				direccion.setMunicipio(rs.getString("MUNICPIO_DIRECCION"));
+				direccion.setMunicipio(rs.getString("MUNICIPIO_DIRECCION"));
 				direccion.setPortal(rs.getInt("PORTAL_DIRECCION"));
 				direccion.setPisoPuerta(rs.getString("PISOPUERTA_DIRECCION"));
 				direccion.setCodigoPostal(rs.getInt("CODIGOPOSTAL_DIRECCION"));
+				direccion.setIdUsuario(rs.getInt("ID_USUARIO"));
 				
 				direcciones.add(direccion);
 
@@ -327,7 +331,7 @@ public class ManagerDB {
 		}
 	}
 
-	//Borrar menu
+	//Borrar producto
 	public void borrarProducto(Producto producto) throws ExceptionDB {
 		try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PRODUCTO WHERE ID_PRODUCTO=?")) {
 			stmt.setInt(1, producto.getId());
@@ -336,13 +340,22 @@ public class ManagerDB {
 			throw new ExceptionDB("No se pudo elimiar el producto con id " + producto.getId(), e);
 		}
 	}
-	//Borrar producto
+	//Borrar menu
 	public void borrarMenu(Menu menu) throws ExceptionDB {
 		try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM MENU WHERE ID_MENU=?")) {
 			stmt.setInt(1, menu.getId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new ExceptionDB("No se pudo elimiar el menu con id " + menu.getId(), e);
+		}
+	}
+	
+	public void borrarDireccion(Direccion direccion)throws ExceptionDB {
+		try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM DIRECCION WHERE ID_DIRECCION=?")) {
+			stmt.setInt(1, direccion.getId());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new ExceptionDB("No se pudo elimiar la direccion con id " + direccion.getId(), e);
 		}
 	}
 	
@@ -362,29 +375,93 @@ public class ManagerDB {
 				menu.setIdRestaurante(rs.getInt("ID_RESTAURANTE"));
 				
 				
-				menus.add(menu);
+				menus.add(menu); //añadimos el menu a una lista de menus( todavia no tienen sus productos en sus arraylist)
 			}
 
-			return menus;
+			
 		} catch (SQLException | DateTimeParseException e) {
 			throw new ExceptionDB("Error obteniendo los menus", e);
 		}
+		
+		
+		List<Producto> todosProductos = getTodosProductos(); //cogemos todos los productos de la base de datos
+		
+		for (Menu menu : menus) { //para cada menu añadido a la lista que vamos a devolver
+			String SQL2="";
+			try (Statement stmt = conn.createStatement()) {
+				SQL2="SELECT ID_PRODUCTO FROM CONTIENE WHERE ID_MENU=" + menu.getId() + ";"; //sacamos los id de productos que tienen guardados
+				ResultSet rs = stmt.executeQuery(SQL2);
+				log( Level.INFO, "Buscar menus\t" + SQL2, null );
+				List<Producto> productosMenu = new ArrayList<Producto>(); //creamos la lista donde van a ir sus productos
+				while (rs.next()) {
+					int idProductoBuscado = rs.getInt("ID_PRODUCTO"); //cogemos el id del producto
+					for (Producto producto : todosProductos) {
+						if (idProductoBuscado == producto.getId()) {
+							productosMenu.add(producto); //añdimos el producto a la lisya del menu
+						}
+					}
+					menu.setProductos(productosMenu); //asignamos la lista al menu
+				}
+
+				
+			} catch (SQLException | DateTimeParseException e) {
+				throw new ExceptionDB("Error obteniendo los menus", e);
+			}
+		}
+		
+		
+		return menus; //devolvemos la lista de menus con sus respectivos productos asignados !!
 	}
+	
+	
 	//METODO INSERTAR MENU
-	 public void insertarMenu(Menu menu) throws ExceptionDB{
+	public void insertarMenu(Menu menu) throws ExceptionDB{
+		 //Insertamos el menu --> coge el id en la base de datos
 		 try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO MENU (NOMBRE_MENU, PRECIO_MENU, ID_RESTAURANTE) VALUES (?,?,?);"); 
 					Statement stmtForId = conn.createStatement()) {
 					
 					stmt.setString(1, menu.getNombre());
 					stmt.setDouble(2, menu.getPrecio());
 					stmt.setInt(3, menu.getIdRestaurante());
+					
 					stmt.executeUpdate();
 					 
 				} catch (SQLException | DateTimeParseException e) {
 					throw new ExceptionDB("Error al insertar menu", e);
 				}
+		 
+		 //Cogemos el id del menu insertado
+		 int idBuscadoMenu;
+		 String SQL="";
+			try (Statement stmt = conn.createStatement()) {
+				SQL="SELECT MAX(ID_MENU) FROM MENU;";
+				ResultSet rs = stmt.executeQuery(SQL);
+				idBuscadoMenu = rs.getInt("MAX(ID_MENU)");
+
+			} catch (SQLException | DateTimeParseException e) {
+				throw new ExceptionDB("Error buscando el id del menu", e);
+			}
+		 //Para ese idmenu metemos los productos asociados a este menu en la tabla contiene
+			for (Producto producto : menu.getProductos()) {
+				try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO CONTIENE (ID_MENU, ID_PRODUCTO) VALUES (?,?);"); 
+						Statement stmtForId = conn.createStatement()) {
+						
+						stmt.setInt(1, idBuscadoMenu);
+						stmt.setInt(2, producto.getId());
+						
+						stmt.executeUpdate();
+						 
+					} catch (SQLException | DateTimeParseException e) {
+						throw new ExceptionDB("Error al insertar menu", e);
+					}
+			}
+
 	 }
-	
+
+	 
+	 
+	 
+	 
 	 //INSERTAR PEDIDO
 	 public void insertarPedido(Pedido pedido) throws ExceptionDB {
 		 try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO PEDIDO (ID_RESTAURANTE, ID_USUARIO, ID_DIRECCION, "
@@ -431,17 +508,17 @@ public class ManagerDB {
 			//Para cada producto lo metemos en la tabla pedir (la cual relaciona el pedido con los productos enviados)
 			for (Producto producto : productosInsertar) {
 				try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO PEDIR (ID_PRODUCTO, ID_PEDIDO) VALUES(?,?);");
-						 Statement stmtForId = conn.createStatement()) {
+					Statement stmtForId = conn.createStatement()) {
 								
-								stmt.setInt(1, producto.getId());
-								stmt.setInt(2, codigoPedido);
+						stmt.setInt(1, producto.getId());
+						stmt.setInt(2, codigoPedido);
 								
-								stmt.executeUpdate();
+						stmt.executeUpdate();
 								
 								 
-							} catch (SQLException | DateTimeParseException e) {
-								throw new ExceptionDB("Error al insertar menu", e);
-							}
+					} catch (SQLException | DateTimeParseException e) {
+						throw new ExceptionDB("Error al insertar menu", e);
+					}
 			}
 			
 		 
@@ -449,7 +526,25 @@ public class ManagerDB {
 	 
 	 
 	 
+	 public void insertarDireccion (Direccion direccion) throws ExceptionDB {
+		 try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO DIRECCION (NOMBRE_DIRECCION, CALLE_DIRECCION, "
+		 		+ "MUNICIPIO_DIRECCION, PORTAL_DIRECCION, PISOPUERTA_DIRECCION, CODIGOPOSTAL_DIRECCION, ID_USUARIO) VALUES(?,?,?,?,?,?,?);");
+			Statement stmtForId = conn.createStatement()) {
+				
+				stmt.setString(1, direccion.getNombre());
+				stmt.setString(2, direccion.getCalle());
+				stmt.setString(3, direccion.getMunicipio());
+				stmt.setInt(4, direccion.getPortal());
+				stmt.setString(5, direccion.getPisoPuerta());
+				stmt.setInt(6, direccion.getCodigoPostal());
+				stmt.setInt(7, direccion.getIdUsuario());
+				stmt.executeUpdate();
 	 
+			} catch (SQLException | DateTimeParseException e) {
+				throw new ExceptionDB("Error al insertar menu", e);
+			}
+				 
+	 }
 	 
 	
 	private static Logger logger = null;

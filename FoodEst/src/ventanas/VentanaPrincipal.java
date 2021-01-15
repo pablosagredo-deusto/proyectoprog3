@@ -21,7 +21,7 @@ import clases.Usuario;
 
 public class VentanaPrincipal extends JFrame {
 	
-	public VentanaPrincipal(Usuario usuario, List<Producto> productos) {
+	public VentanaPrincipal(Usuario usuario) {
 		
 		
 		
@@ -227,7 +227,6 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new VentanaDirecciones(thisFrame, usuario); //Esta ventana recibira un usuario
-				setVisible(false);
 			}
 		});
 		
@@ -252,7 +251,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void run() {
 				Usuario usuario = new Usuario(); //Este ususario es para probar la ventana
-				new VentanaPrincipal(usuario,null);
+				new VentanaPrincipal(usuario);
 				
 				
 			}

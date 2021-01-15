@@ -212,7 +212,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		List<Menu> menus;
 		try {
 			
-			//db.connect();
+			db.connect();
 			productos = db.getTodosProductos();
 			menus = db.getTodosMenus();
 			db.disconnect();
@@ -745,47 +745,23 @@ class VentanaAñadirMenu extends JFrame{
 				String nombreMenu = "";
 				Menu menu = null;
 				
-				//Creamos un menu con los datos de la ventana y lo insertamos en la base de datos( en la base de datos obtiene su idMenu)
 				try {
 					menu = new Menu();
 					menu.setNombre(tnombreMenu.getText());
 					menu.setIdRestaurante(restaurante.getId());
+					menu.setProductos(productosAñadirAlMenu);
+					menu.calcularPrecio(); //asigna el precio al menu
 					
-					
-					Double precio = 0.0;
-					for (Producto producto : productosAñadirAlMenu) {
-						precio = precio + producto.getPrecio();
-					}
-					menu.setPrecio(precio);
-					
-					nombreMenu = menu.getNombre();
-					
+
 					db.connect();
 					db.insertarMenu(menu);
 					db.disconnect();
 				} catch (Exception e2) {
-					// TODO: handle exception
+					
 				}
 				
-				//Emparejamos los productos elegidos con el menu que hemos creado y hemos metido en la base de datos
-				List<Menu> todosMenus;
-				try {
-					db.connect();
-					Menu menunbuscado = null;
-					todosMenus = db.getTodosMenus();
-					for (Menu menu3 : todosMenus) {
-						if (menu3.getNombre().equals(nombreMenu)) {
-							menunbuscado = menu3;
-						}
-					}
-					for (Producto producto2 : productosAñadirAlMenu) {
-						db.insertarProductoEnMenu(menunbuscado, producto2);
-					}
-					db.disconnect();
-					
-				} catch (Exception e2) {
-					// TODO: handle exception
-				}
+				
+				
 				
 				dispose();
 				ventanaAnterior.dispose();
