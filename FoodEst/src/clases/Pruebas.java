@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,38 +22,45 @@ import ventanas.VentanaRestaurante;
 
 public class Pruebas {
 	public static void main(String[] args) {
-		ManagerDB db =  new ManagerDB();
-		List<Producto> productos;
+		
+		
+		Menu menu = new  Menu();
+		menu.setNombre("menuPruba4");
+		Producto pr1 = new Producto();
+		pr1.setNombre("pr114");
+		Producto pr2 = new Producto();
+		pr2.setNombre("pr224");
+	
+		
+		
+		
+		
+		ManagerDB db = new ManagerDB();
+		
 		try {
 			
-			Producto producto = new  Producto();
-			
-			producto.setNombre("ndo");
-			producto.setPrecio(9.5);
-			List<String> ingr = new ArrayList<String>();
-			ingr.add("asf");
-			ingr.add("asf");
-			ingr.add("asf");
-			producto.setIngredientes(ingr);
-			producto.setVegano(true);
-			producto.setIdRestaurante(2);
-			producto.setTipo(TipoProducto.POSTRE);
-					
-			
 			db.connect();
-			db.insertarProducto(producto);
+			List<Menu> todosMenus = db.getTodosMenus();	
+			
+
+			Menu menuBuscado = null;
+			for (Menu menu2 : todosMenus) {
+				if (menu2.getNombre().equals("menuPruba4")) {
+					menuBuscado = menu2;
+
+				}
+			}
 			db.disconnect();
 			
-		
+			
+			for (Producto producto : menuBuscado.getProductos()) {
+				System.out.println(producto.getNombre());
+			}
+			
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
-		
-		
-		
-		
-		
 		
 	}
 

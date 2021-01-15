@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
+import java.util.List;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -121,28 +123,29 @@ public class VentanaDirecciones extends JFrame{
 		panelAbajo.add(panelAbajoBotones);
 		
 		
+
 		
+		//Añadir direcciones guardadas del usuario
 		ManagerDB db = new ManagerDB();
-		
-		/*
+		List<Direccion> direccionesGuardadas;
 		try {
 			db.connect();
-		} catch (Exception e) {
+			direccionesGuardadas = db.getTodasDirecciones();
+			db.disconnect();
 			
-		}
-		//List<Direccion> direcciones;
-		try {
-			direcciones = db.getTodasDirecciones();
-			for (Direccion d : direcciones) {
-				modeloListaDirecciones.addElement(d);
-				
+			
+			for (Direccion direccion : direccionesGuardadas) {
+				if (direccion.getIdUsuario() == (usuario.getId())) {
+					modeloListaDirecciones.addElement(direccion);
+					
+				}
 			}
 			
-			
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
-		*/
+	
+		
 		
 		
 		
@@ -212,7 +215,19 @@ public class VentanaDirecciones extends JFrame{
 				nueva.setCalle(calle.getText());
 				nueva.setPortal(Integer.parseInt(portal.getText()));
 				nueva.setPisoPuerta(pisoPuerta.getText());
+				nueva.setIdUsuario(usuario.getId());
+				
+				
 				modeloListaDirecciones.addElement(nueva);
+				
+				ManagerDB db = new ManagerDB();
+				try {
+					db.connect();
+					db.insertarDireccion(nueva);
+					db.disconnect();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
 				
 			}
 		});
@@ -235,7 +250,15 @@ public class VentanaDirecciones extends JFrame{
 				}else {
 					Direccion direccion = (Direccion) listaDirecciones.getSelectedValue();
 					modeloListaDirecciones.removeElement(direccion);
-					//ELIMINARLA del ususario
+					
+					ManagerDB db = new ManagerDB();
+					try {
+						db.connect();
+						db.borrarDireccion(direccion);
+						db.disconnect();
+					} catch (Exception e2) {
+						// TODO: handle exception
+					}
 				}
 				
 			}
@@ -258,7 +281,6 @@ public class VentanaDirecciones extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ventanaAnterior.setVisible(true);
 				dispose();
 				
 				
@@ -271,7 +293,7 @@ public class VentanaDirecciones extends JFrame{
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("FoodEst");
-		setSize(1150, 505);
+		setSize(730, 380);
 		setVisible(true);
 		
 	}

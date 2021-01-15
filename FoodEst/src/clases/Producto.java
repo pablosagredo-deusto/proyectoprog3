@@ -8,7 +8,7 @@ public class Producto {
 	protected int id;
 	protected double precio;
 	protected String descripcion;
-	protected List<String> ingredientes;
+	protected String ingredientes;
 	protected boolean vegano; 
 	protected TipoProducto tipo;
 	protected int idRestaurante;
@@ -17,7 +17,7 @@ public class Producto {
 	
 	
 	
-	public Producto(String nombre,int id, double precio, String descripcion, List<String> ingredientes,
+	public Producto(String nombre,int id, double precio, String descripcion, String ingredientes,
 			boolean vegano, TipoProducto tipo, int idRestaurante) {
 		super();
 		this.nombre = nombre;
@@ -38,7 +38,7 @@ public class Producto {
 		this.id = 0;
 		this.precio = 0;
 		this.descripcion = "";
-		this.ingredientes = new ArrayList<String>();
+		this.ingredientes = "";
 		this.vegano = false;
 		this.tipo = TipoProducto.PRINCIPAL;
 		this.idRestaurante = 0;
@@ -53,11 +53,11 @@ public class Producto {
 		this.idMenu = idMenu;
 	}
 
-	public List<String> getIngredientes() {
+	public String getIngredientes() {
 		return ingredientes;
 	}
 
-	public void setIngredientes(List<String> ingredientes) {
+	public void setIngredientes(String ingredientes) {
 		this.ingredientes = ingredientes;
 	}
 
@@ -122,5 +122,16 @@ public class Producto {
 	public String toStringPrecio() {
 		return nombre + " " + precio + "€";
 	}
+
+	@Override
+	public String toString() {
+		String resultado = nombre + "(" + precio + "€)" + "(" + getTipo().toString() + ")";
+		if (vegano) {
+			resultado = resultado + "(V)";
+		}
+		return resultado;
+	}
+	
+	
 
 }

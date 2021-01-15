@@ -9,19 +9,25 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
@@ -35,10 +41,12 @@ import javax.swing.table.DefaultTableModel;
 
 import clases.ManagerDB;
 import clases.Menu;
+import clases.Pedido;
 import clases.Producto;
 import clases.Restaurante;
 import clases.TipoProducto;
 import clases.Usuario;
+
 
 
 public class VentanaAdministracionRestaurante extends JFrame{
@@ -88,13 +96,14 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		
 		panelDerechaArriba1.add(ldireccionRestaurante);
 		panelDerechaArriba1.add(direccionRestaurante);	
-		panelDerechaArriba1.add(new JPanel());	
+		JButton bcerrarSesion = new JButton("Cerrar sesion");
+		panelDerechaArriba1.add(bcerrarSesion);	
 
 		
 		panelDerechaArriba1.add(lenvioGratisRestaurante);
 		panelDerechaArriba1.add(envioGratisRestaurante);
-		JButton guardarCambios = new JButton("Guardar cambios");
-		panelDerechaArriba1.add(guardarCambios);	
+		JButton bguardarCambios = new JButton("Guardar cambios");
+		panelDerechaArriba1.add(bguardarCambios);	
 
 		
 		
@@ -136,42 +145,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		
 		
 		
-		
-				//Inserccion de menus desde la basde de datos
-		ManagerDB db = new ManagerDB();
-		List<Menu> menus;
-		try {
-			
-			db.connect();
-			menus = db.getTodosMenus();
-			db.disconnect();
-			
-			
-			for (Menu menu : menus) {
-				if(restaurante.getId() == menu.getIdRestaurante()) {
-					
-					JPanel panel = new JPanel();
-					panel.setLayout(new BorderLayout());
-					panel.setBorder(BorderFactory.createLineBorder(Color.black));
-					
-					JLabel lnombre = new JLabel(menu.getNombre());
-					panel.add(lnombre, BorderLayout.NORTH);
-					
-					
-					JTextArea productosMenu = new JTextArea();
-					List<Producto> todosProductos = db.getTodosProductos();
-					
-					for (Producto producto : todosProductos) {
-						/*if (producto.getIdMenu() = menu.getId()) {
-							
-						}*/
-					}
-					
-				}
-				
-			}
-		} catch (Exception e) {
-		}	
+	
 		
 		
 		
@@ -219,25 +193,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		panelDerecha.add(panelDerechaArriba);
 		panelDerecha.add(panelDerechaAbajo);
 		
-		
-//		for (int i = 0; i < 80; i++) {
-//		JPanel panelPruba= new JPanel();
-//		panelPruba.setBorder(BorderFactory.createLineBorder(Color.black));
-//		panelPruba.setLayout(new BorderLayout());
-//		panelPruba.add(new JLabel("Prueba"), BorderLayout.NORTH);
-//		JPanel panelmedio = new JPanel();
-//		panelmedio.add(new JButton("pruba"));
-//		panelmedio.add(new JButton("pruba"));
-//		panelmedio.add(new JButton("pruba"));
-//		
-//		panelPruba.add(panelmedio, BorderLayout.CENTER);
-//
-//		panelPruba.add(new JButton("pruba"), BorderLayout.SOUTH);
-//		
-//		
-//			
-//		productosDisponiblesCenter.add(panelPruba);
-//		}
+	
 			
 			
 		
@@ -248,30 +204,45 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		
 		
 		
-		//Inserccion de productos desde la base de datos
-		//ManagerDB db = new ManagerDB();
+
+		
+		ManagerDB db = new ManagerDB();
+
 		List<Producto> productos;
+		List<Menu> menus;
+		List<Pedido> pedidos = null;
 		try {
 			
-			//db.connect();
+			db.connect();
 			productos = db.getTodosProductos();
+			menus = db.getTodosMenus();
+			pedidos = db.getTodosPedidos();
 			db.disconnect();
 			
-			
+			//Inserccion de productos disponibles en el retaurante desde la base de datos
 			for (Producto producto : productos) {
 				if(restaurante.getId() == producto.getIdRestaurante()) {
 					JPanel panel = new JPanel();
 					panel.setLayout(new BorderLayout());
 					panel.setBorder(BorderFactory.createLineBorder(Color.black));
 					
-					JLabel lnombre = new JLabel(producto.getNombre());
+					JLabel lnombre;
+					
+					lnombre = new JLabel(producto.toString());
+					
 					panel.add(lnombre, BorderLayout.NORTH);
 					
 					JTextArea textIngredientes = new JTextArea();
-					textIngredientes.setText("Ingredientes:");
-					for (String ingrediente : producto.getIngredientes()) {
-						textIngredientes.setText(ingrediente + "\n");
-					}
+					textIngredientes.append("INGREDIENTES:" + "\n");
+					StringTokenizer st = new StringTokenizer(producto.getIngredientes(), " ,");
+					 while (st.hasMoreTokens()) {
+						 String token = st.nextToken();
+						 textIngredientes.append(" - " + token + "\n");
+					 }
+					
+					
+					
+					
 					textIngredientes.setEditable(false);
 					panel.add(textIngredientes, BorderLayout.CENTER);
 					
@@ -301,11 +272,66 @@ public class VentanaAdministracionRestaurante extends JFrame{
 							
 						}
 					});
-	
 					
 				}
-				
 			}
+					
+					
+					
+					
+			//Inserccion de menus del restaurante en el panel de menus		
+			for (Menu menu : menus) {
+				if(restaurante.getId() == menu.getIdRestaurante()) {
+								
+					JPanel panelMenu = new JPanel();
+					panelMenu.setLayout(new BorderLayout());
+					panelMenu.setBorder(BorderFactory.createLineBorder(Color.black));
+								
+					JLabel lnombre = new JLabel(menu.getNombre());
+					panelMenu.add(lnombre, BorderLayout.NORTH);
+						
+								
+					JTextArea productosMenu = new JTextArea();
+					for (Producto producto : productos) {
+						if(producto.getIdMenu() == menu.getId()) {
+							productosMenu.setText(producto.getNombre() + "\n");
+						}
+					}
+					panelMenu.add(productosMenu, BorderLayout.CENTER);
+					
+					
+					JButton bEliminarMenu = new JButton("Eliminar");
+					panelMenu.add(bEliminarMenu, BorderLayout.SOUTH);
+					
+					menusDisponibles.add(panelMenu); //añadimos el panel
+					
+					bEliminarMenu.addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							
+							ManagerDB db = new ManagerDB();
+							try {
+								db.connect();
+								db.borrarMenu(menu);
+								db.disconnect();
+								
+								dispose();
+								new VentanaAdministracionRestaurante(restaurante);
+								
+							} catch (Exception e2) {
+								// TODO: handle exception
+							}
+							
+						}
+					});
+								
+				}
+							
+			}
+					
+			
+				
 		} catch (Exception e) {
 		}	
 		
@@ -378,7 +404,30 @@ public class VentanaAdministracionRestaurante extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
 				new VentanaAï¿½adirProducto(restaurante, thisFrame, productosDisponibles);
+=======
+				new VentanaAñadirProducto(restaurante, thisFrame);
+				
+			}
+		});
+	    
+	    bañadirMenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaAñadirMenu(restaurante, thisFrame);
+				
+			}
+		});
+	    
+	    bcerrarSesion.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new VentanaLogin();
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3.git
 				
 			}
 		});
@@ -387,12 +436,43 @@ public class VentanaAdministracionRestaurante extends JFrame{
 	    
 	    
 	    String data[][];   
+<<<<<<< HEAD
 	    String nombreColumnas[]={"ID","DIRECCION","PRODUCTOS", "PRECIO", "PAGO", "CUBIERTOS"};
 	    DefaultTableModel modeloTabla = new DefaultTableModel(data, nombreColumnas);
+=======
+	    String nombreColumnas[]={"ID","DIRECCION","PRODUCTOS", "MENUS", "PRECIO", "PAGO", "CUBIERTOS"};
+	    DefaultTableModel modeloTabla = new DefaultTableModel(null, nombreColumnas);
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3.git
 	    JTable tablaPedidos = new JTable(modeloTabla);
 	    
 	    JScrollPane scrollTablaPedidos =new JScrollPane(tablaPedidos);   
 	    
+	    
+	    
+	    for (Pedido pedido : pedidos) {
+			String stid = String.valueOf(pedido.getId());
+			String stdireccion = pedido.getDireccion().toString();
+			String stproductos = "";
+			for (Producto producto : pedido.getProductos()) {
+				stproductos = stproductos + producto.toString() + ",";
+			}
+			String stprecio = String.valueOf(pedido.getPreciototal());
+			String stpago = pedido.getMetodopago();
+			
+			String stmenus = "";
+			for (Menu menu : pedido.getMenus()) {
+				stmenus = stmenus + menu.toString() + ",";
+			}
+			
+			String stcubiertos = "";
+			if (pedido.isCubiertos()) {
+				stcubiertos = "SI";
+			} else {
+				stcubiertos = "NO";
+			}
+			modeloTabla.addRow(new Object[]{stid,stdireccion,stproductos,stmenus,stprecio,stpago,stcubiertos});
+		}
+	   
 	    
 	    
 	    
@@ -439,7 +519,11 @@ public class VentanaAdministracionRestaurante extends JFrame{
 //------------------------------------------------------------VENTANA PARA Aï¿½ADIR PRODUCTO----------------------------------------------------------------------------------------------------
 class VentanaAï¿½adirProducto extends JFrame{
 	
+<<<<<<< HEAD
 	public VentanaAï¿½adirProducto(Restaurante restaurante , JFrame ventanaAnterior, JPanel panelProductos) {
+=======
+	public VentanaAñadirProducto(Restaurante restaurante , JFrame ventanaAnterior) {
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3.git
 		
 		setSize(300, 350);
 
@@ -507,7 +591,8 @@ class VentanaAï¿½adirProducto extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Producto productoNuevo = new Producto(); 
+				
+				Producto productoNuevo = new Producto(); //creamos el producto
 				
 				productoNuevo.setNombre(tnombre.getText());
 				productoNuevo.setDescripcion(tdescripcion.getText());
@@ -516,19 +601,21 @@ class VentanaAï¿½adirProducto extends JFrame{
 				String tipoElegido = (String) comboTipoProducto.getSelectedItem();
 				productoNuevo.setTipo(TipoProducto.valueOf(tipoElegido));
 				productoNuevo.setIdRestaurante(restaurante.getId());
-				
-				
-				String ingredientes = tingredientes.getText();
-				List<String> ingredientesList = new ArrayList<String>();
-				StringTokenizer st = new StringTokenizer(ingredientes, ",");
-				while (st.hasMoreTokens()) {
-					 String token = st.nextToken();
-					 ingredientesList.add(token);
-				}
-				productoNuevo.setIngredientes(ingredientesList);
+				productoNuevo.setIngredientes(tingredientes.getText());
 				
 
 				
+				
+				//Insertamos el producto creado en la base de datos
+				ManagerDB db = new ManagerDB();
+				try {
+					db.connect();
+					db.insertarProducto(productoNuevo);
+					db.disconnect();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+
 				dispose();
 				ventanaAnterior.dispose();
 				new VentanaAdministracionRestaurante(restaurante);
@@ -540,3 +627,194 @@ class VentanaAï¿½adirProducto extends JFrame{
 
 	}
 }
+//-----------------------------------------------VentanaAñadirMenu----------------------------------------------
+class VentanaAñadirMenu extends JFrame{
+	
+	public VentanaAñadirMenu(Restaurante restaurante , JFrame ventanaAnterior) {
+		setSize(350, 300);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setTitle("Añadir menu a restaurante");
+		setVisible(true);
+		setLayout(new GridLayout(3,1));
+		
+		//panel1
+		JPanel panel1 = new JPanel();
+		panel1.setLayout(new GridLayout(2,2));
+		
+		JLabel lnombreMenu = new JLabel("Nombre de menu");
+		JTextField tnombreMenu = new JTextField();
+		panel1.add(lnombreMenu);
+		panel1.add(tnombreMenu);
+		
+		JLabel ltipoMenu = new JLabel("Tipo:");
+		JComboBox<String> combotipo = new JComboBox();
+		combotipo.addItem("Normal");
+		combotipo.addItem("Combinado");
+		combotipo.addItem("Vegano");
+		
+		
+		panel1.add(ltipoMenu);
+		panel1.add(combotipo);
+
+		
+		//panel2 
+		
+		JPanel panel2 = new JPanel();
+		panel2.setLayout(new GridLayout(1,2));
+		
+		JList listaProductos = new JList();
+		DefaultListModel modeloProductos= new DefaultListModel();
+		listaProductos.setModel(modeloProductos);
+		JScrollPane scrollLista = new JScrollPane(listaProductos);
+		
+		//Añadimos los productos de este restaurante a la lista
+		ManagerDB db = new ManagerDB();
+		
+		List<Producto> productos = null;
+		try {
+			db.connect();
+			productos = db.getTodosProductos();
+			db.disconnect();
+			
+			
+				
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		for (Producto producto : productos) {
+			if(producto.getIdRestaurante() == restaurante.getId()) {
+				modeloProductos.addElement(producto.toString());
+			}
+		}
+		
+		DefaultListModel modeloProductosAñadidos= new DefaultListModel();
+		JList productosAñadidos = new JList(modeloProductosAñadidos);
+		
+		
+		
+		productosAñadidos.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		
+		panel2.add(scrollLista);
+		panel2.add(productosAñadidos);
+
+		
+
+		
+		//panel3
+		JPanel panel3 = new JPanel();
+		panel3.setLayout(new GridLayout(2,1));
+		
+		
+		JPanel panelAñadirProducto = new JPanel();
+		panelAñadirProducto.setLayout(new BorderLayout());
+		JButton bañadirProducto = new JButton("Añadir producto");
+		panelAñadirProducto.add(new JPanel(), BorderLayout.EAST);
+		panelAñadirProducto.add(bañadirProducto, BorderLayout.CENTER);
+		panelAñadirProducto.add(new JPanel(), BorderLayout.WEST);
+		panelAñadirProducto.add(new JPanel(), BorderLayout.NORTH);
+		panelAñadirProducto.add(new JPanel(), BorderLayout.SOUTH);
+		
+		JPanel panelBotonesAbajo = new JPanel();
+		JButton botonAñadirMenu = new JButton("Añadir menu");
+		JButton botonCancelarAñadirMenu = new JButton("Cancelar");
+		panelBotonesAbajo.add(botonAñadirMenu);
+		panelBotonesAbajo.add(botonCancelarAñadirMenu);
+
+		
+		panel3.add(panelAñadirProducto);
+		panel3.add(panelBotonesAbajo);
+
+		
+		
+		
+		add(panel1);
+		add(panel2);
+		add(panel3);
+
+		botonCancelarAñadirMenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				
+			}
+		});
+		
+		List<Producto> productosAñadirAlMenu = new ArrayList<Producto>(); //vamos añadiendo a una lista los productos que se vana a añadir al menu
+		
+		bañadirProducto.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<Producto> productos = null;
+				try {
+					db.connect();
+					productos = db.getTodosProductos();
+					db.disconnect();
+
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+				
+				
+				Producto productoSeleccionado = null;
+				String productoString = (String) listaProductos.getSelectedValue();	
+				modeloProductos.removeElement(productoString);
+				for (Producto producto : productos) {
+					if(producto.toString().equals(productoString)) {
+						productoSeleccionado = producto;
+					}
+				}
+				
+	        	modeloProductosAñadidos.addElement(productoString);
+	        	
+	        	productosAñadirAlMenu.add(productoSeleccionado);
+	        	
+	        	
+	        	
+			}
+		});
+		
+		//Utilizar la lista de productos para añadir al menu que ya queda lista arriba
+		botonAñadirMenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ManagerDB db = new ManagerDB();
+				String nombreMenu = "";
+				Menu menu = null;
+				
+				try {
+					menu = new Menu();
+					menu.setNombre(tnombreMenu.getText());
+					menu.setIdRestaurante(restaurante.getId());
+					menu.setProductos(productosAñadirAlMenu);
+					menu.calcularPrecio(); //asigna el precio al menu
+					
+
+					db.connect();
+					db.insertarMenu(menu);
+					db.disconnect();
+				} catch (Exception e2) {
+					
+				}
+				
+				
+				
+				
+				dispose();
+				ventanaAnterior.dispose();
+				new VentanaAdministracionRestaurante(restaurante);
+				
+			}
+		});
+	
+		
+	
+	
+			
+	}
+}
+

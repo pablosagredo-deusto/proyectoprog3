@@ -3,6 +3,8 @@ package clases;
 import java.io.Serializable;
 
 public class Direccion implements Serializable{
+	protected int id;
+	protected int idUsuario;
 	protected String nombre;
 	protected String calle;
 	protected String municipio;
@@ -11,9 +13,10 @@ public class Direccion implements Serializable{
 	protected int codigoPostal;
 	
 	
-	public Direccion(String nombre, String calle, String municipio, int portal, String pisoPuerta, int codigoPostal) {
+	public Direccion(String nombre, int idUsuario, String calle, String municipio, int portal, String pisoPuerta, int codigoPostal) {
 		super();
 		this.nombre =  nombre;
+		this.idUsuario = idUsuario;
 		this.calle =  calle;
 		this.municipio =  municipio;
 		this.portal =  portal;
@@ -23,7 +26,8 @@ public class Direccion implements Serializable{
 	
 	public Direccion() {
 		super();
-		this.nombre =  "  ";
+		this.nombre =  "";
+		this.idUsuario = 0;
 		this.calle =  "";
 		this.municipio =  "";
 		this.portal =  0;
@@ -33,6 +37,14 @@ public class Direccion implements Serializable{
 	
 	public String getCalle() {
 		return calle;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setCalle(String calle) {
@@ -45,6 +57,16 @@ public class Direccion implements Serializable{
 
 	public void setMunicipio(String municipio) {
 		this.municipio = municipio;
+	}
+
+
+
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public int getPortal() {
@@ -80,7 +102,7 @@ public class Direccion implements Serializable{
 
 	@Override
 	public String toString() {
-		return nombre + ": " + municipio + " (" + codigoPostal + ") " + "/" + calle + "/" + portal + "/" + pisoPuerta;
+		return nombre + ": " + municipio + " (" + codigoPostal + ") " + " / " + calle + " / " + portal + " / " + pisoPuerta;
 	}
 
 	public Object getDireccion() {

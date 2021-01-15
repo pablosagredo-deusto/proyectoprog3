@@ -100,6 +100,11 @@ public class Usuario {
 	public void setPedidos(ArrayList<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [nombreUsuario=" + nombreUsuario + ", id=" + id + "]";
+	}
 	
 
 }
