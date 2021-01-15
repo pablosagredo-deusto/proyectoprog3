@@ -757,10 +757,21 @@ public class VentanaRestaurante extends JFrame {
 				Pedido pedido = new Pedido();
 				pedido.setRestaurante(restaurante);
 				pedido.setProductos(listaPedido);
+				pedido.setMenus(listaPedidoMenu);
 				pedido.setUsuario(usuario);
 				DecimalFormat df = new DecimalFormat("#.00");				
 				pedido.setPreciototal(Double.parseDouble(df.format(precio)));
-				new VentanaPago(pedido);
+
+
+				ManagerDB db = new ManagerDB();
+				
+				try {
+					db.connect();
+					db.insertarPedido(pedido);
+					db.disconnect();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
 				
 				
 			}

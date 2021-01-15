@@ -359,7 +359,7 @@ public class ManagerDB {
 		}
 	}
 	
-	//OBTENER TODOS LOS MENUD DE UN RESTAURANTE
+	//OBTENER TODOS LOS MENUS 
 	public List<Menu> getTodosMenus() throws ExceptionDB{
 		List<Menu> menus = new ArrayList<Menu>();
 		String SQL="";
@@ -464,6 +464,7 @@ public class ManagerDB {
 	 
 	 //INSERTAR PEDIDO
 	 public void insertarPedido(Pedido pedido) throws ExceptionDB {
+		 //Metemos el pedido en la tabla pedido
 		 try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO PEDIDO (ID_RESTAURANTE, ID_USUARIO, ID_DIRECCION, "
 		 		+ "ESTADO_PEDIDO, PRECIOTOTAL_PEDIDO, METODOPAGO_PEDIDO, CUBIERTOS) VALUES(?,?,?,?,?,?,?);");
 				 Statement stmtForId = conn.createStatement()) {
@@ -478,21 +479,15 @@ public class ManagerDB {
 						stmt.setInt(7, cubiertosInt);
 						
 						stmt.executeUpdate();
-						 
+						
 					} catch (SQLException | DateTimeParseException e) {
 						throw new ExceptionDB("Error al insertar menu", e);
 					}
-		
-	 
-	 }
-	 
-	 
-	 /*Insertar los productos en el envio correspondiente (ejecutar siempre despues del metodo insertar pedio, para que 
-	 el pedido obtenga sus productos en la tabla pedir)*/
-	 public void insertarProductosEnPedido(List<Producto> productosInsertar) throws ExceptionDB {
+		 
+		 // Buscamos el id del pedido que acabamos de meter
 		 String SQL="";
 		 int codigoPedido = 0;
-		 	
+		 
 			try (Statement stmt = conn.createStatement()) {
 				SQL="SELECT ID_PEDIDO FROM PEDIDO WHERE ID_PEDIDO=(SELECT max(ID_PEDIDO) FROM PEDIDO) "; //cogemos el id ultimo pedido, es decir el que acabamos de meteer
 				ResultSet rs = stmt.executeQuery(SQL);
@@ -505,13 +500,30 @@ public class ManagerDB {
 				throw new ExceptionDB("Error obteniendo los pedidos", e);
 			}
 			
-			//Para cada producto lo metemos en la tabla pedir (la cual relaciona el pedido con los productos enviados)
-			for (Producto producto : productosInsertar) {
+		//Para cada producto que tenga el pedido lo metemos en la tabla pedir
+			
+			for (Producto producto : pedido.getProductos()) {
 				try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO PEDIR (ID_PRODUCTO, ID_PEDIDO) VALUES(?,?);");
 					Statement stmtForId = conn.createStatement()) {
 								
-						stmt.setInt(1, producto.getId());
-						stmt.setInt(2, codigoPedido);
+						stmt.setInt(1, producto.getId()); /* <-- id del producto*/
+						stmt.setInt(2, codigoPedido);	/* <-- id del pedido*/
+								
+						stmt.executeUpdate();
+								
+								 
+					} catch (SQLException | DateTimeParseException e) {
+						throw new ExceptionDB("Error al insertar producto", e);
+					}
+			}
+			
+		//Por cada menu en el pedido lo metemos en la tabla pedirmenu
+			for (Menu menu : pedido.getMenus()) {
+				try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO PEDIRMENU (ID_MENU, ID_PEDIDO) VALUES(?,?);");
+					Statement stmtForId = conn.createStatement()) {
+								
+						stmt.setInt(1, menu.getId()); /* <-- id del producto*/
+						stmt.setInt(2, codigoPedido);	/* <-- id del pedido*/
 								
 						stmt.executeUpdate();
 								
@@ -520,12 +532,120 @@ public class ManagerDB {
 						throw new ExceptionDB("Error al insertar menu", e);
 					}
 			}
-			
+		
+	 
+	 }
+	 
+	 
+	 //OBTENER PEDIDOS
+	 public List<Pedido> getTodosPedidos()  throws ExceptionDB{
 		 
+		//Añadimos todos los pedidos a la lista a devolver (sin asignarles ni restaurantes) 
+		 List<Pedido> pedidos = new ArrayList<Pedido>();
+		 
+		 List<Usuario> todosUsuarios = getTodosUsuarios();
+		 List<Restaurante> todosRestaurantes = getTodosRestaurantes();
+		 List<Direccion> todosDirecciones = getTodasDirecciones();
+		 
+			String SQL="";
+			try (Statement stmt = conn.createStatement()) {
+				SQL="SELECT * FROM PEDIDO";
+				ResultSet rs = stmt.executeQuery(SQL);
+				log( Level.INFO, "Buscar menus\t" + SQL, null );
+				while (rs.next()) {
+					Pedido pedido = new Pedido();
+					pedido.setId(rs.getInt("ID_PEDIDO"));
+					pedido.setPreciototal(rs.getDouble("PRECIOTOTAL_PEDIDO"));
+					pedido.setMetodoPago(rs.getString("METODOPAGO_PEDIDO"));
+					if(rs.getInt("CUBIERTOS") == 1)  pedido.setCubiertos(true);	
+					
+					
+					//le asignamos su usuario
+					for (Usuario usuario : todosUsuarios) {
+						if (usuario.getId() == rs.getInt("ID_USUARIO")) {
+							pedido.setUsuario(usuario);
+						}
+					}
+					//le asignamos su restaurante
+					for (Restaurante restaurante : todosRestaurantes) {
+						if (restaurante.getId() == rs.getInt("ID_RESTAURANTE")) {
+							pedido.setRestaurante(restaurante);
+						}
+					}
+					//le asignamos su direccion
+					for (Direccion direccion : todosDirecciones) {
+						if (direccion.getId() == rs.getInt("ID_DIRECCION")) {
+							pedido.setDireccion(direccion);
+						}
+					}
+					pedidos.add(pedido);
+				}
+			} catch (SQLException | DateTimeParseException e) {
+				throw new ExceptionDB("Error obteniendo los menus", e);
+			}
+			
+			//añadimos los productos que pertenecen all peido desde la tabla PEDIR
+				List<Producto> todosProductos = getTodosProductos();
+				for (Pedido pedido : pedidos) { 
+					String SQL2="";
+					try (Statement stmt2 = conn.createStatement()) {
+						SQL2="SELECT ID_PRODUCTO FROM PEDIR WHERE ID_PEDIDO=" + pedido.getId() + ";"; 
+						ResultSet rs2 = stmt2.executeQuery(SQL2);
+						log( Level.INFO, "Buscar productos\t" + SQL2, null );
+						
+						List<Producto> productosPedido = new ArrayList<Producto>(); //creamos la lista donde van a ir sus productos
+						while (rs2.next()) {
+							int idProductoBuscado = rs2.getInt("ID_PRODUCTO"); //cogemos el id del producto
+							for (Producto producto : todosProductos) {
+								if (idProductoBuscado == producto.getId()) {
+									productosPedido.add(producto); //añdimos el producto a la lisya del menu
+								}
+							}
+							pedido.setProductos(productosPedido); //asignamos la lista al menu
+						}
+
+						
+					} catch (SQLException | DateTimeParseException e) {
+						throw new ExceptionDB("Error obteniendo los menus", e);
+					}
+				}
+				
+			//añadimos los menus que pertenecen al pedido desde la tabla PEDIRMENU
+				List<Menu> todosMenus = getTodosMenus();
+				for (Pedido pedido : pedidos) { 
+					String SQL3="";
+					try (Statement stmt2 = conn.createStatement()) {
+						SQL3="SELECT ID_MENU FROM PEDIRMENU WHERE ID_PEDIDO=" + pedido.getId() + ";"; 
+						ResultSet rs2 = stmt2.executeQuery(SQL3);
+						log( Level.INFO, "Buscar menus\t" + SQL3, null );
+						
+						List<Menu> menusPedido = new ArrayList<Menu>(); 
+						while (rs2.next()) {
+							int idMenuBuscado = rs2.getInt("ID_MENU"); 
+							for (Menu menu : todosMenus) {
+								if (idMenuBuscado == menu.getId()) {
+									menusPedido.add(menu); 
+								}
+							}
+							pedido.setMenus(menusPedido);
+						}
+
+					} catch (SQLException | DateTimeParseException e) {
+						throw new ExceptionDB("Error obteniendo los menus", e);
+					}
+				}
+			
+			
+			
+			
+			
+			return pedidos;
 	 }
 	 
 	 
 	 
+	 
+	 //INSERTAR UNA DIRECCION
 	 public void insertarDireccion (Direccion direccion) throws ExceptionDB {
 		 try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO DIRECCION (NOMBRE_DIRECCION, CALLE_DIRECCION, "
 		 		+ "MUNICIPIO_DIRECCION, PORTAL_DIRECCION, PISOPUERTA_DIRECCION, CODIGOPOSTAL_DIRECCION, ID_USUARIO) VALUES(?,?,?,?,?,?,?);");

@@ -41,7 +41,7 @@ import javax.swing.table.DefaultTableModel;
 
 import clases.ManagerDB;
 import clases.Menu;
-
+import clases.Pedido;
 import clases.Producto;
 import clases.Restaurante;
 import clases.TipoProducto;
@@ -210,11 +210,13 @@ public class VentanaAdministracionRestaurante extends JFrame{
 
 		List<Producto> productos;
 		List<Menu> menus;
+		List<Pedido> pedidos = null;
 		try {
 			
 			db.connect();
 			productos = db.getTodosProductos();
 			menus = db.getTodosMenus();
+			pedidos = db.getTodosPedidos();
 			db.disconnect();
 			
 			//Inserccion de productos disponibles en el retaurante desde la base de datos
@@ -430,12 +432,38 @@ public class VentanaAdministracionRestaurante extends JFrame{
 	    
 	    
 	    String data[][];   
-	    String nombreColumnas[]={"ID","DIRECCION","PRODUCTOS", "PRECIO", "PAGO", "CUBIERTOS"};
+	    String nombreColumnas[]={"ID","DIRECCION","PRODUCTOS", "MENUS", "PRECIO", "PAGO", "CUBIERTOS"};
 	    DefaultTableModel modeloTabla = new DefaultTableModel(null, nombreColumnas);
 	    JTable tablaPedidos = new JTable(modeloTabla);
 	    
 	    JScrollPane scrollTablaPedidos =new JScrollPane(tablaPedidos);   
 	    
+	    
+	    
+	    for (Pedido pedido : pedidos) {
+			String stid = String.valueOf(pedido.getId());
+			String stdireccion = pedido.getDireccion().toString();
+			String stproductos = "";
+			for (Producto producto : pedido.getProductos()) {
+				stproductos = stproductos + producto.toString() + ",";
+			}
+			String stprecio = String.valueOf(pedido.getPreciototal());
+			String stpago = pedido.getMetodopago();
+			
+			String stmenus = "";
+			for (Menu menu : pedido.getMenus()) {
+				stmenus = stmenus + menu.toString() + ",";
+			}
+			
+			String stcubiertos = "";
+			if (pedido.isCubiertos()) {
+				stcubiertos = "SI";
+			} else {
+				stcubiertos = "NO";
+			}
+			modeloTabla.addRow(new Object[]{stid,stdireccion,stproductos,stmenus,stprecio,stpago,stcubiertos});
+		}
+	   
 	    
 	    
 	    

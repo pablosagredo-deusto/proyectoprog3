@@ -9,11 +9,12 @@ public class Pedido {
 	Direccion direccion;
 	EstadoPedido estado;
 	List<Producto> productos;
+	List<Menu> menus;
 	double preciototal;
 	String metodoPago;
 	boolean cubiertos;
 
-	public Pedido(int id, Usuario usuario, Restaurante restaurante, Direccion direccion, EstadoPedido estado, List<Producto> productos ,double preciototal, String metodoPago, boolean cubiertos) {
+	public Pedido(int id, Usuario usuario, Restaurante restaurante, Direccion direccion, EstadoPedido estado, List<Producto> productos , List<Menu> menus, double preciototal, String metodoPago, boolean cubiertos) {
 		super();
 		this.id = id;
 		this.usuario = usuario;
@@ -21,10 +22,7 @@ public class Pedido {
 		this.direccion = direccion;
 		this.estado = estado;
 		this.productos = productos;
-
-		for (Producto producto : productos) {
-			preciototal=+producto.getPrecio();
-		}
+		this.menus = menus;
 		this.preciototal = preciototal;
 		this.metodoPago = metodoPago;
 		this.cubiertos = cubiertos;
@@ -38,6 +36,7 @@ public class Pedido {
 		this.direccion = new Direccion();
 		this.estado = EstadoPedido.OTRO;
 		this.productos = null;
+		this.menus = null;
 		this.preciototal = 0;
 		this.metodoPago = "";
 		this.cubiertos = false;
@@ -51,6 +50,14 @@ public class Pedido {
 
 	public void setCubiertos(boolean cubiertos) {
 		this.cubiertos = cubiertos;
+	}
+
+	public List<Menu> getMenus() {
+		return menus;
+	}
+
+	public void setMenus(List<Menu> menus) {
+		this.menus = menus;
 	}
 
 	public Usuario getUsuario() {
