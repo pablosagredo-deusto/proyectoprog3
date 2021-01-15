@@ -110,14 +110,20 @@ public class VentanaRestaurante extends JFrame {
 		//pruebas auto añadir jlabels
 		
 		List<JLabel> labelsNombres = new ArrayList<>();
+		List<JPanel> paneles= new ArrayList<>();
+
 		String descripcion="";
 		for (Producto p : lProductos) {
 			JLabel label = new JLabel(p.getNombre());
+			
+			JPanel panel = new JPanel();
+
 			labelsNombres.add(label);
 			for (String product : p.getIngredientes()) {
-				descripcion=descripcion+" "+product+" \n ";
+				descripcion=descripcion+" "+product+" \n- ";
 			}
-			JTextArea label2 = new JTextArea();
+			JTextArea label2 = new JTextArea(descripcion);
+			label2.setEditable(false);
 			
 
 		}
@@ -164,6 +170,7 @@ public class VentanaRestaurante extends JFrame {
 		panelDerecha.setLayout(new GridLayout(6, 2));
 		DefaultListModel modeloPedido = new DefaultListModel();
 		ArrayList<Producto> productos = new ArrayList<Producto>();
+
 
 		JList listaProductos = new JList();
 		JLabel nombrePedido = new JLabel("PEDIDO ACTUAL:");

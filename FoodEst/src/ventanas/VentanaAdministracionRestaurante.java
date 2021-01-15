@@ -123,9 +123,9 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		
 		JPanel panelMenusBarra = new JPanel();
 		JLabel lmenusRestaurante = new JLabel("MENUS DEL RESTAURANTE:    ");
-		JButton bañadirMenu = new JButton("Añadir menu");
+		JButton baï¿½adirMenu = new JButton("Aï¿½adir menu");
 		panelMenusBarra.add(lmenusRestaurante);
-		panelMenusBarra.add(bañadirMenu);
+		panelMenusBarra.add(baï¿½adirMenu);
 		
 		JPanel menusDisponibles = new JPanel();
 		menusDisponibles.setLayout(new FlowLayout());
@@ -189,9 +189,9 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		
 		JPanel panelProductosbarra = new JPanel();
 		JLabel lproductosRestaurante = new JLabel("PRODUCTOS DEL RESTAURANTE:    ");
-		JButton bañadirProducto = new JButton("Añadir producto");
+		JButton baï¿½adirProducto = new JButton("Aï¿½adir producto");
 		panelProductosbarra.add(lproductosRestaurante);
-		panelProductosbarra.add(bañadirProducto);
+		panelProductosbarra.add(baï¿½adirProducto);
 		
 		JPanel productosDisponibles = new JPanel();
 		JPanel productosDisponiblesCenter = new JPanel();
@@ -352,7 +352,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		panelIzquierdaAbajo.setEnabled(false);
 		panelIzquierdaAbajo.setDividerSize(0);
 		
-		JPanel panelAbajoPedidos = new JPanel(); //añadir la jtable a esteee!!!
+		JPanel panelAbajoPedidos = new JPanel(); //aï¿½adir la jtable a esteee!!!
 		TitledBorder border = new TitledBorder("Pedidos recibidos");
 	    border.setTitleJustification(TitledBorder.CENTER);
 	    border.setTitlePosition(TitledBorder.TOP);
@@ -374,11 +374,11 @@ public class VentanaAdministracionRestaurante extends JFrame{
 	    
 	    JFrame thisFrame = this;
 		
-	    bañadirProducto.addActionListener(new ActionListener() {
+	    baï¿½adirProducto.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new VentanaAñadirProducto(restaurante, thisFrame, productosDisponibles);
+				new VentanaAï¿½adirProducto(restaurante, thisFrame, productosDisponibles);
 				
 			}
 		});
@@ -388,7 +388,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 	    
 	    String data[][];   
 	    String nombreColumnas[]={"ID","DIRECCION","PRODUCTOS", "PRECIO", "PAGO", "CUBIERTOS"};
-	    DefaultTableModel modeloTabla = new DefaultTableModel(null, nombreColumnas);
+	    DefaultTableModel modeloTabla = new DefaultTableModel(data, nombreColumnas);
 	    JTable tablaPedidos = new JTable(modeloTabla);
 	    
 	    JScrollPane scrollTablaPedidos =new JScrollPane(tablaPedidos);   
@@ -436,22 +436,22 @@ public class VentanaAdministracionRestaurante extends JFrame{
 }
 
 
-//------------------------------------------------------------VENTANA PARA AÑADIR PRODUCTO----------------------------------------------------------------------------------------------------
-class VentanaAñadirProducto extends JFrame{
+//------------------------------------------------------------VENTANA PARA Aï¿½ADIR PRODUCTO----------------------------------------------------------------------------------------------------
+class VentanaAï¿½adirProducto extends JFrame{
 	
-	public VentanaAñadirProducto(Restaurante restaurante , JFrame ventanaAnterior, JPanel panelProductos) {
+	public VentanaAï¿½adirProducto(Restaurante restaurante , JFrame ventanaAnterior, JPanel panelProductos) {
 		
 		setSize(300, 350);
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle("Añadir producto a restaurante");
+		setTitle("Aï¿½adir producto a restaurante");
 		setVisible(true);
 		
 		setLayout(new GridLayout(7,2));
 	
 		
 		JButton bcancelar = new JButton("Cancelar");
-		JButton bañadir = new JButton("Añadir");
+		JButton baï¿½adir = new JButton("Aï¿½adir");
 		
 		JLabel lnombre = new JLabel("Nombre de producto");
 		JTextField tnombre = new JTextField();
@@ -500,10 +500,10 @@ class VentanaAñadirProducto extends JFrame{
 		add(lingredientes);
 		add(tingredientes);
 		
-		add(bañadir);
+		add(baï¿½adir);
 		add(bcancelar);
 		
-		bañadir.addActionListener(new ActionListener() {
+		baï¿½adir.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
