@@ -65,8 +65,10 @@ public class Factura {
 			contentStream.showText(texto2);
 			
 			System.out.println("id"+p.getId());
+			String id="";
+			id=String.valueOf(p.getId());
 			contentStream.newLineAtOffset(150, 300);
-			contentStream.showText("ORDER ID "+p.getId());
+			contentStream.showText(id);
 			
 			contentStream.endText();
 

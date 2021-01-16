@@ -1,8 +1,8 @@
 package clases;
 
-import java.io.Serializable;
 
-public class Direccion implements Serializable{
+
+public class Direccion {
 	protected int id;
 	protected int idUsuario;
 	protected String nombre;

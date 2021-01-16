@@ -98,9 +98,11 @@ public class VentanaLogin extends JFrame {
 	    JPanel panelAbajo1 = new JPanel();
 	    JButton bLogin = new JButton("Iniciar sesión");
 	    JButton bCerrar = new JButton("Cerrar FOODEST");
+	    JButton bContrasena= new JButton("Generar Contrasena");
 	    
 	    panelAbajo1.add(bLogin);
 	    panelAbajo1.add(bCerrar);
+	    panelAbajo1.add(bContrasena);
 	    
 	    
 	    
