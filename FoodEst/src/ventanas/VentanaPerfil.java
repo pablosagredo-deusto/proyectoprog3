@@ -24,10 +24,10 @@ public class VentanaPerfil extends JFrame{
 	JPanel pnlCentral;
 	JLabel fPerfil;
 	JTextField apellido;
-	JPasswordField contraseña;
+	JPasswordField contraseÃ±a;
 	JTextField email;
 	JLabel lapellido;
-	JLabel lcontraseña;
+	JLabel lcontraseÃ±a;
 	JLabel lid;
 	JLabel e;
 	JLabel editar;
@@ -63,11 +63,11 @@ public class VentanaPerfil extends JFrame{
 		lapellido.setFont(new Font("Arial", Font.PLAIN, 15)); 
 		pnlCentral.add(lapellido);
 		
-		lcontraseña = new JLabel();
-		lcontraseña.setText("Contraseña");
-		lcontraseña.setBounds(460, 150, 120, 120);
-		lcontraseña.setFont(new Font("Arial", Font.PLAIN, 15)); 
-		pnlCentral.add(lcontraseña);
+		lcontraseÃ±a = new JLabel();
+		lcontraseÃ±a.setText("ContraseÃ±a");
+		lcontraseÃ±a.setBounds(460, 150, 120, 120);
+		lcontraseÃ±a.setFont(new Font("Arial", Font.PLAIN, 15)); 
+		pnlCentral.add(lcontraseÃ±a);
 		
 		lid = new JLabel();
 		lid.setText("Id usuario");
@@ -91,9 +91,9 @@ public class VentanaPerfil extends JFrame{
 		apellido.setBounds(580, 150, 102, 30);
 		pnlCentral.add(apellido);
 		
-		contraseña = new JPasswordField(usuario.getContraseña());
-		contraseña.setBounds(580, 200, 102, 30);
-		pnlCentral.add(contraseña);
+		contraseÃ±a = new JPasswordField(usuario.getContraseÃ±a());
+		contraseÃ±a.setBounds(580, 200, 102, 30);
+		pnlCentral.add(contraseÃ±a);
 		
 		email = new JTextField(usuario.getEmail());
 		email.setBounds(580, 300, 180, 30);

@@ -3,6 +3,7 @@ package clases;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -14,9 +15,9 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 public class Factura {
 	double total = 0.0;
-	String texto="";
+	String texto = "";
 	List<Producto> productos;
-
+	ArrayList<String> palabras;
 
 	public void crearFacturaPdf(Pedido p) throws Exception {
 		try (PDDocument document = new PDDocument()) {
@@ -26,41 +27,58 @@ public class Factura {
 			PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
 			// Text
-			String texto = "Resumen Pedido";
 			String texto2 = "-----------------";
-			String texto3 = "";
+			String prueba = "";
 			String texto4 = "";
 
+			ArrayList<String> palabras = new ArrayList<String>();
 			List<Producto> productos;
 			productos = p.getProductos();
 			double total = 0.0;
-			for (Producto producto : productos) {
-				total = +producto.getPrecio();
-				texto3 =texto3+ producto.toStringPrecio();
-				System.out.println(texto3);
+			int i = 50;
 
-			}
-			texto4= String.valueOf(total);
-			
 			contentStream.beginText();
-			contentStream.setFont(PDType1Font.TIMES_BOLD, 22);
+			contentStream.setFont(PDType1Font.COURIER_BOLD, 22);
 			contentStream.newLineAtOffset(200, 500);
 			// linea4
-			contentStream.showText(texto4);
-			contentStream.newLineAtOffset(0, 70);
-			// linea3
-			contentStream.showText(texto3);
-			contentStream.newLineAtOffset(0, 50);
+
 			// linea2
 			contentStream.showText(texto2);
 			contentStream.newLineAtOffset(0, 30);
 			// linea1
+
+			for (Producto producto : productos) {
+				total = +producto.getPrecio();
+				prueba = producto.toStringPrecio();
+				contentStream.showText(prueba);
+				contentStream.newLineAtOffset(0, i);
+				i = +30;
+
+				palabras.add(prueba);
+			}
+
+			texto4 = String.valueOf(total);
+
 			contentStream.showText(texto);
+			contentStream.newLineAtOffset(0, 30);
+			// linea1
+			contentStream.showText(texto2);
+			
+			System.out.println("id"+p.getId());
+			contentStream.newLineAtOffset(150, 300);
+			contentStream.showText("ORDER ID "+p.getId());
+			
 			contentStream.endText();
 
 			// imagen prueba
-			PDImageXObject pdImage = PDImageXObject.createFromFile("src/imagenes/logo.png", document);
-			contentStream.drawImage(pdImage, 150, 700);
+			PDImageXObject pdImage = PDImageXObject.createFromFile("src/imagenes/resumen.png", document);
+			contentStream.drawImage(pdImage, 20, 700);
+			
+			
+
+			// imagen prueba
+			PDImageXObject pdImage2 = PDImageXObject.createFromFile("src/imagenes/logo.png", document);
+			contentStream.drawImage(pdImage2, 150, 100);
 
 			contentStream.close();
 
@@ -71,23 +89,23 @@ public class Factura {
 	}
 
 	public void crearFacturaTxt(Pedido ped) throws Exception {
-		
+
 		productos = ped.getProductos();
-		
+
 		for (Producto producto : productos) {
 			total = +producto.getPrecio();
-			texto =texto+ producto.toStringPrecio();
+			texto = texto + producto.toStringPrecio();
 			System.out.println(texto);
 
 		}
 		String ruta = "C:/Users/Usuario/Desktop";
 		File archivo = new File(ruta);
 		System.out.println("Texto" + texto);
-		
-		try {		
+
+		try {
 			FileWriter fw = new FileWriter(archivo);
 			BufferedWriter bw = new BufferedWriter(fw);
-			
+
 			System.out.println("bw write");
 			bw.write(texto);
 			bw.close();

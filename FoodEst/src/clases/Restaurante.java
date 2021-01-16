@@ -7,19 +7,19 @@ import java.util.List;
 public class Restaurante {
 	protected String nombre;
 	protected String categoria;
-	protected String contraseña;
+	protected String contraseÃ±a;
 	protected String direccion;
 	protected List<Producto> productos;
 	protected boolean enviogratis;
 
 	protected int id;
 
-	public Restaurante(String nombre, String categoria, String contraseña, String direccion, List<Producto> productos,
+	public Restaurante(String nombre, String categoria, String contraseÃ±a, String direccion, List<Producto> productos,
 			boolean enviogratis) {
 		super();
 		this.nombre = nombre;
 		this.categoria = categoria;
-		this.contraseña = contraseña;
+		this.contraseÃ±a = contraseÃ±a;
 		this.direccion = direccion;
 		this.productos = productos;
 		this.enviogratis = enviogratis;
@@ -29,19 +29,19 @@ public class Restaurante {
 		super();
 		this.nombre = "";
 		this.categoria = "";
-		this.contraseña = "";
+		this.contraseÃ±a = "";
 		this.id = 0;
 		this.direccion = null;
 		this.productos = new ArrayList<Producto>();
 		this.enviogratis = false;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getContraseÃ±a() {
+		return contraseÃ±a;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContraseÃ±a(String contraseÃ±a) {
+		this.contraseÃ±a = contraseÃ±a;
 	}
 
 	public List<Producto> getProductos() {

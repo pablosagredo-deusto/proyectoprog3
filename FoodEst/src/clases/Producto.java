@@ -120,12 +120,12 @@ public class Producto {
 	}
 
 	public String toStringPrecio() {
-		return nombre + " " + precio + "€";
+		return nombre + " " + precio + "e";
 	}
 
 	@Override
 	public String toString() {
-		String resultado = nombre + "(" + precio + "€)" + "(" + getTipo().toString() + ")";
+		String resultado = nombre + "(" + precio + "ï¿½)" + "(" + getTipo().toString() + ")";
 		if (vegano) {
 			resultado = resultado + "(V)";
 		}

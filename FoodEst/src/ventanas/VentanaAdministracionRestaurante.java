@@ -132,9 +132,9 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		
 		JPanel panelMenusBarra = new JPanel();
 		JLabel lmenusRestaurante = new JLabel("MENUS DEL RESTAURANTE:    ");
-		JButton baï¿½adirMenu = new JButton("Aï¿½adir menu");
+		JButton baÃ±adirMenu = new JButton("AÃ±adir menu");
 		panelMenusBarra.add(lmenusRestaurante);
-		panelMenusBarra.add(baï¿½adirMenu);
+		panelMenusBarra.add(baÃ±adirMenu);
 		
 		JPanel menusDisponibles = new JPanel();
 		menusDisponibles.setLayout(new FlowLayout());
@@ -163,9 +163,9 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		
 		JPanel panelProductosbarra = new JPanel();
 		JLabel lproductosRestaurante = new JLabel("PRODUCTOS DEL RESTAURANTE:    ");
-		JButton baï¿½adirProducto = new JButton("Aï¿½adir producto");
+		JButton baÃ±adirProducto = new JButton("AÃ±adir producto");
 		panelProductosbarra.add(lproductosRestaurante);
-		panelProductosbarra.add(baï¿½adirProducto);
+		panelProductosbarra.add(baÃ±adirProducto);
 		
 		JPanel productosDisponibles = new JPanel();
 		JPanel productosDisponiblesCenter = new JPanel();
@@ -303,7 +303,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 					JButton bEliminarMenu = new JButton("Eliminar");
 					panelMenu.add(bEliminarMenu, BorderLayout.SOUTH);
 					
-					menusDisponibles.add(panelMenu); //añadimos el panel
+					menusDisponibles.add(panelMenu); //aÃ±adimos el panel
 					
 					bEliminarMenu.addActionListener(new ActionListener() {
 						
@@ -378,7 +378,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		panelIzquierdaAbajo.setEnabled(false);
 		panelIzquierdaAbajo.setDividerSize(0);
 		
-		JPanel panelAbajoPedidos = new JPanel(); //aï¿½adir la jtable a esteee!!!
+		JPanel panelAbajoPedidos = new JPanel(); //aÃ±adir la jtable a esteee!!!
 		TitledBorder border = new TitledBorder("Pedidos recibidos");
 	    border.setTitleJustification(TitledBorder.CENTER);
 	    border.setTitlePosition(TitledBorder.TOP);
@@ -400,23 +400,20 @@ public class VentanaAdministracionRestaurante extends JFrame{
 	    
 	    JFrame thisFrame = this;
 		
-	    baï¿½adirProducto.addActionListener(new ActionListener() {
+	    baÃ±adirProducto.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-				new VentanaAï¿½adirProducto(restaurante, thisFrame, productosDisponibles);
-=======
-				new VentanaAñadirProducto(restaurante, thisFrame);
+				new VentanaAÃ±adirProducto(restaurante, thisFrame);
 				
 			}
 		});
 	    
-	    bañadirMenu.addActionListener(new ActionListener() {
+	    baÃ±adirMenu.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new VentanaAñadirMenu(restaurante, thisFrame);
+				new VentanaAÃ±adirMenu(restaurante, thisFrame);
 				
 			}
 		});
@@ -427,7 +424,6 @@ public class VentanaAdministracionRestaurante extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				new VentanaLogin();
->>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3.git
 				
 			}
 		});
@@ -436,13 +432,8 @@ public class VentanaAdministracionRestaurante extends JFrame{
 	    
 	    
 	    String data[][];   
-<<<<<<< HEAD
-	    String nombreColumnas[]={"ID","DIRECCION","PRODUCTOS", "PRECIO", "PAGO", "CUBIERTOS"};
-	    DefaultTableModel modeloTabla = new DefaultTableModel(data, nombreColumnas);
-=======
 	    String nombreColumnas[]={"ID","DIRECCION","PRODUCTOS", "MENUS", "PRECIO", "PAGO", "CUBIERTOS"};
 	    DefaultTableModel modeloTabla = new DefaultTableModel(null, nombreColumnas);
->>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3.git
 	    JTable tablaPedidos = new JTable(modeloTabla);
 	    
 	    JScrollPane scrollTablaPedidos =new JScrollPane(tablaPedidos);   
@@ -516,26 +507,22 @@ public class VentanaAdministracionRestaurante extends JFrame{
 }
 
 
-//------------------------------------------------------------VENTANA PARA Aï¿½ADIR PRODUCTO----------------------------------------------------------------------------------------------------
-class VentanaAï¿½adirProducto extends JFrame{
+//------------------------------------------------------------VENTANA PARA AÃ‘ADIR PRODUCTO----------------------------------------------------------------------------------------------------
+class VentanaAÃ±adirProducto extends JFrame{
 	
-<<<<<<< HEAD
-	public VentanaAï¿½adirProducto(Restaurante restaurante , JFrame ventanaAnterior, JPanel panelProductos) {
-=======
-	public VentanaAñadirProducto(Restaurante restaurante , JFrame ventanaAnterior) {
->>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3.git
+	public VentanaAÃ±adirProducto(Restaurante restaurante , JFrame ventanaAnterior) {
 		
 		setSize(300, 350);
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle("Aï¿½adir producto a restaurante");
+		setTitle("AÃ±adir producto a restaurante");
 		setVisible(true);
 		
 		setLayout(new GridLayout(7,2));
 	
 		
 		JButton bcancelar = new JButton("Cancelar");
-		JButton baï¿½adir = new JButton("Aï¿½adir");
+		JButton baÃ±adir = new JButton("AÃ±adir");
 		
 		JLabel lnombre = new JLabel("Nombre de producto");
 		JTextField tnombre = new JTextField();
@@ -584,10 +571,10 @@ class VentanaAï¿½adirProducto extends JFrame{
 		add(lingredientes);
 		add(tingredientes);
 		
-		add(baï¿½adir);
+		add(baÃ±adir);
 		add(bcancelar);
 		
-		baï¿½adir.addActionListener(new ActionListener() {
+		baÃ±adir.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -627,13 +614,13 @@ class VentanaAï¿½adirProducto extends JFrame{
 
 	}
 }
-//-----------------------------------------------VentanaAñadirMenu----------------------------------------------
-class VentanaAñadirMenu extends JFrame{
+//-----------------------------------------------VentanaAÃ±adirMenu----------------------------------------------
+class VentanaAÃ±adirMenu extends JFrame{
 	
-	public VentanaAñadirMenu(Restaurante restaurante , JFrame ventanaAnterior) {
+	public VentanaAÃ±adirMenu(Restaurante restaurante , JFrame ventanaAnterior) {
 		setSize(350, 300);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle("Añadir menu a restaurante");
+		setTitle("AÃ±adir menu a restaurante");
 		setVisible(true);
 		setLayout(new GridLayout(3,1));
 		
@@ -667,7 +654,7 @@ class VentanaAñadirMenu extends JFrame{
 		listaProductos.setModel(modeloProductos);
 		JScrollPane scrollLista = new JScrollPane(listaProductos);
 		
-		//Añadimos los productos de este restaurante a la lista
+		//AÃ±adimos los productos de este restaurante a la lista
 		ManagerDB db = new ManagerDB();
 		
 		List<Producto> productos = null;
@@ -688,16 +675,16 @@ class VentanaAñadirMenu extends JFrame{
 			}
 		}
 		
-		DefaultListModel modeloProductosAñadidos= new DefaultListModel();
-		JList productosAñadidos = new JList(modeloProductosAñadidos);
+		DefaultListModel modeloProductosAÃ±adidos= new DefaultListModel();
+		JList productosAÃ±adidos = new JList(modeloProductosAÃ±adidos);
 		
 		
 		
-		productosAñadidos.setBorder(BorderFactory.createLineBorder(Color.black));
+		productosAÃ±adidos.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		
 		panel2.add(scrollLista);
-		panel2.add(productosAñadidos);
+		panel2.add(productosAÃ±adidos);
 
 		
 
@@ -707,23 +694,23 @@ class VentanaAñadirMenu extends JFrame{
 		panel3.setLayout(new GridLayout(2,1));
 		
 		
-		JPanel panelAñadirProducto = new JPanel();
-		panelAñadirProducto.setLayout(new BorderLayout());
-		JButton bañadirProducto = new JButton("Añadir producto");
-		panelAñadirProducto.add(new JPanel(), BorderLayout.EAST);
-		panelAñadirProducto.add(bañadirProducto, BorderLayout.CENTER);
-		panelAñadirProducto.add(new JPanel(), BorderLayout.WEST);
-		panelAñadirProducto.add(new JPanel(), BorderLayout.NORTH);
-		panelAñadirProducto.add(new JPanel(), BorderLayout.SOUTH);
+		JPanel panelAÃ±adirProducto = new JPanel();
+		panelAÃ±adirProducto.setLayout(new BorderLayout());
+		JButton baÃ±adirProducto = new JButton("AÃ±adir producto");
+		panelAÃ±adirProducto.add(new JPanel(), BorderLayout.EAST);
+		panelAÃ±adirProducto.add(baÃ±adirProducto, BorderLayout.CENTER);
+		panelAÃ±adirProducto.add(new JPanel(), BorderLayout.WEST);
+		panelAÃ±adirProducto.add(new JPanel(), BorderLayout.NORTH);
+		panelAÃ±adirProducto.add(new JPanel(), BorderLayout.SOUTH);
 		
 		JPanel panelBotonesAbajo = new JPanel();
-		JButton botonAñadirMenu = new JButton("Añadir menu");
-		JButton botonCancelarAñadirMenu = new JButton("Cancelar");
-		panelBotonesAbajo.add(botonAñadirMenu);
-		panelBotonesAbajo.add(botonCancelarAñadirMenu);
+		JButton botonAÃ±adirMenu = new JButton("AÃ±adir menu");
+		JButton botonCancelarAÃ±adirMenu = new JButton("Cancelar");
+		panelBotonesAbajo.add(botonAÃ±adirMenu);
+		panelBotonesAbajo.add(botonCancelarAÃ±adirMenu);
 
 		
-		panel3.add(panelAñadirProducto);
+		panel3.add(panelAÃ±adirProducto);
 		panel3.add(panelBotonesAbajo);
 
 		
@@ -733,7 +720,7 @@ class VentanaAñadirMenu extends JFrame{
 		add(panel2);
 		add(panel3);
 
-		botonCancelarAñadirMenu.addActionListener(new ActionListener() {
+		botonCancelarAÃ±adirMenu.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -742,9 +729,9 @@ class VentanaAñadirMenu extends JFrame{
 			}
 		});
 		
-		List<Producto> productosAñadirAlMenu = new ArrayList<Producto>(); //vamos añadiendo a una lista los productos que se vana a añadir al menu
+		List<Producto> productosAÃ±adirAlMenu = new ArrayList<Producto>(); //vamos aÃ±adiendo a una lista los productos que se vana a aÃ±adir al menu
 		
-		bañadirProducto.addActionListener(new ActionListener() {
+		baÃ±adirProducto.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -768,17 +755,17 @@ class VentanaAñadirMenu extends JFrame{
 					}
 				}
 				
-	        	modeloProductosAñadidos.addElement(productoString);
+	        	modeloProductosAÃ±adidos.addElement(productoString);
 	        	
-	        	productosAñadirAlMenu.add(productoSeleccionado);
+	        	productosAÃ±adirAlMenu.add(productoSeleccionado);
 	        	
 	        	
 	        	
 			}
 		});
 		
-		//Utilizar la lista de productos para añadir al menu que ya queda lista arriba
-		botonAñadirMenu.addActionListener(new ActionListener() {
+		//Utilizar la lista de productos para aÃ±adir al menu que ya queda lista arriba
+		botonAÃ±adirMenu.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -790,7 +777,7 @@ class VentanaAñadirMenu extends JFrame{
 					menu = new Menu();
 					menu.setNombre(tnombreMenu.getText());
 					menu.setIdRestaurante(restaurante.getId());
-					menu.setProductos(productosAñadirAlMenu);
+					menu.setProductos(productosAÃ±adirAlMenu);
 					menu.calcularPrecio(); //asigna el precio al menu
 					
 

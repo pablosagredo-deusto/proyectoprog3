@@ -66,12 +66,12 @@ public class VentanaLogin extends JFrame {
 	    
 	    
 	    		//Para reducir los logos
-	    ImageIcon imagenContraseña = new ImageIcon("src/imagenes/key.png"); 
-	    Image image2 = imagenContraseña.getImage(); 
+	    ImageIcon imagenContraseÃ±a = new ImageIcon("src/imagenes/key.png"); 
+	    Image image2 = imagenContraseÃ±a.getImage(); 
 	    Image newImg2 = image2.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH); 
-	    imagenContraseña = new ImageIcon(newImg2);
-	    JLabel logoContraseña = new JLabel();
-	    logoContraseña.setIcon(imagenContraseña);
+	    imagenContraseÃ±a = new ImageIcon(newImg2);
+	    JLabel logoContraseÃ±a = new JLabel();
+	    logoContraseÃ±a.setIcon(imagenContraseÃ±a);
 	    
 	    
 	    JPanel panel1 = new JPanel();
@@ -82,10 +82,10 @@ public class VentanaLogin extends JFrame {
 	    
 	    JPanel panel2 = new JPanel();
 	    panel2.setLayout(new BorderLayout());
-	    panel2.add(logoContraseña, BorderLayout.WEST);
-	    JPasswordField tcontraseña = new JPasswordField("Contraseña");
-	    tcontraseña.setEchoChar((char) 0);
-	    panel2.add(tcontraseña, BorderLayout.CENTER);
+	    panel2.add(logoContraseÃ±a, BorderLayout.WEST);
+	    JPasswordField tcontraseÃ±a = new JPasswordField("ContraseÃ±a");
+	    tcontraseÃ±a.setEchoChar((char) 0);
+	    panel2.add(tcontraseÃ±a, BorderLayout.CENTER);
 	    
 	    panelMedio.add(panel1);
 	    panelMedio.add(panel2);
@@ -96,7 +96,7 @@ public class VentanaLogin extends JFrame {
 	    JPanel panelAbajo = new JPanel();
 	    
 	    JPanel panelAbajo1 = new JPanel();
-	    JButton bLogin = new JButton("Iniciar sesión");
+	    JButton bLogin = new JButton("Iniciar sesiÃ³n");
 	    JButton bCerrar = new JButton("Cerrar FOODEST");
 	    
 	    panelAbajo1.add(bLogin);
@@ -140,10 +140,10 @@ public class VentanaLogin extends JFrame {
 		
 		//ACTIONLISTENERS
 
-		tcontraseña.addMouseListener(new MouseAdapter() {
+		tcontraseÃ±a.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-            	tcontraseña.setEchoChar('*'); 
-            	tcontraseña.setText("");
+            	tcontraseÃ±a.setEchoChar('*'); 
+            	tcontraseÃ±a.setText("");
             }
         });
 		tnombre.addMouseListener(new MouseAdapter() {
@@ -267,10 +267,10 @@ public class VentanaLogin extends JFrame {
 						int numeroUsuarios = usuarios.size();
 						int usuariosComprobados = 0;
 						String nombreUsuarioRecibido = tnombre.getText();
-						String contraseñaRecibido = String.valueOf(tcontraseña.getPassword());
+						String contraseÃ±aRecibido = String.valueOf(tcontraseÃ±a.getPassword());
 						
 						for (Usuario usuario : usuarios) {
-							if (usuario.getNombreUsuario().equals(nombreUsuarioRecibido) && usuario.getContraseña().equals(contraseñaRecibido)) {
+							if (usuario.getNombreUsuario().equals(nombreUsuarioRecibido) && usuario.getContraseÃ±a().equals(contraseÃ±aRecibido)) {
 								new VentanaPrincipal(usuario);
 								dispose();					
 							}else {
@@ -299,10 +299,10 @@ public class VentanaLogin extends JFrame {
 						int numeroRestaurantes = restaurantes.size();
 						int restaurantesComprobados = 0;
 						String nombreRecibido = tnombre.getText();
-						String contraseñaRecibido = String.valueOf(tcontraseña.getPassword());
+						String contraseÃ±aRecibido = String.valueOf(tcontraseÃ±a.getPassword());
 						
 						for (Restaurante restaurante : restaurantes) {
-							if (restaurante.getNombre().equals(nombreRecibido) && restaurante.getContraseña().equals(contraseñaRecibido)) {
+							if (restaurante.getNombre().equals(nombreRecibido) && restaurante.getContraseÃ±a().equals(contraseÃ±aRecibido)) {
 								System.out.println("hola");
 								new VentanaAdministracionRestaurante(restaurante);
 								
@@ -325,7 +325,7 @@ public class VentanaLogin extends JFrame {
 					}
 					
 				}else {
-					JOptionPane.showMessageDialog(null, "Seleccione restaurante o usuario para iniciar sesión");		
+					JOptionPane.showMessageDialog(null, "Seleccione restaurante o usuario para iniciar sesiÃ³n");		
 				}
 
 			}

@@ -12,10 +12,10 @@ public class VentanaBorrarCuenta extends JFrame{
 	
 	public VentanaBorrarCuenta(Usuario usuario) {
 		JLabel ltitulo = new JLabel("Borrar tu cuenta");
-		JLabel lcontraseña = new JLabel("Itroduce tu contraseña");
-		JTextField tcontraseña = new JTextField();
-		JLabel lrepetirContraseña = new JLabel("Repite tu contraseña");
-		JTextField trepetirContraseña = new JTextField();
+		JLabel lcontraseÃ±a = new JLabel("Itroduce tu contraseÃ±a");
+		JTextField tcontraseÃ±a = new JTextField();
+		JLabel lrepetirContraseÃ±a = new JLabel("Repite tu contraseÃ±a");
+		JTextField trepetirContraseÃ±a = new JTextField();
 		JButton bborrar = new JButton("Borrar cuenta");		
 		JButton bcancelar = new JButton("Canelar");
 		JLabel lopinion = new JLabel("Dinos en que podriamos mejorar:");
@@ -28,16 +28,16 @@ public class VentanaBorrarCuenta extends JFrame{
 		panelArriba.setLayout(new GridLayout(4, 0));
 		panelArriba.add(ltitulo);
 		panelArriba.add(new JPanel());
-		JPanel panelContraseña =  new JPanel();
-		panelContraseña.setLayout(new GridLayout(0, 2));
-		panelContraseña.add(lcontraseña);
-		panelContraseña.add(tcontraseña);
-		panelArriba.add(panelContraseña);
-		JPanel panelRepetirContraseña =  new JPanel();
-		panelRepetirContraseña.setLayout(new GridLayout(0, 2));
-		panelRepetirContraseña.add(lrepetirContraseña);
-		panelRepetirContraseña.add(trepetirContraseña);
-		panelArriba.add(panelRepetirContraseña);
+		JPanel panelContraseÃ±a =  new JPanel();
+		panelContraseÃ±a.setLayout(new GridLayout(0, 2));
+		panelContraseÃ±a.add(lcontraseÃ±a);
+		panelContraseÃ±a.add(tcontraseÃ±a);
+		panelArriba.add(panelContraseÃ±a);
+		JPanel panelRepetirContraseÃ±a =  new JPanel();
+		panelRepetirContraseÃ±a.setLayout(new GridLayout(0, 2));
+		panelRepetirContraseÃ±a.add(lrepetirContraseÃ±a);
+		panelRepetirContraseÃ±a.add(trepetirContraseÃ±a);
+		panelArriba.add(panelRepetirContraseÃ±a);
 		
 		//PANEL ABAJO
 		
@@ -93,7 +93,7 @@ public class VentanaBorrarCuenta extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int returnValue = 0;
-		    	returnValue = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres borrar tu cuenta de FoodEst?", "Borrar cuenta", JOptionPane.YES_NO_OPTION);
+		    	returnValue = JOptionPane.showConfirmDialog(null, "Â¿Seguro que quieres borrar tu cuenta de FoodEst?", "Borrar cuenta", JOptionPane.YES_NO_OPTION);
 		    		
 		    	if (returnValue == JOptionPane.YES_OPTION) {
 		    		//BORRAR CUENTA DE LA BASE DE DATOS
