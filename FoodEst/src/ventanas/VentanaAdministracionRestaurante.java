@@ -432,10 +432,11 @@ public class VentanaAdministracionRestaurante extends JFrame{
 	    JScrollPane scrollTablaPedidos =new JScrollPane(tablaPedidos);   
 	    
 	    //Ejemplo de inserccion de fila
-	    modeloTabla.addRow(new Object[]{"hola","hola","hola","hola","hola","hola","hola"});
+	    modeloTabla.addRow(new Object[]{"1","calle tego 12 6s","Pollo, Pizza","Menu1","20.3","false","NO"});
+	    modeloTabla.addRow(new Object[]{"2","plaza wolly  6","Tofu,Ensalada, Pasta","Menu3","35.4","true","SI"});
 	    
 	    //Anadimos los pedidos realizados correspondientes a este restaurante
-	    for (Pedido pedido : pedidos) {
+	   for (Pedido pedido : pedidos) {
 	    	if (pedido.getRestaurante().getId() == restaurante.getId()) {
 	    		
 				String stid = String.valueOf(pedido.getId());
@@ -452,12 +453,14 @@ public class VentanaAdministracionRestaurante extends JFrame{
 				
 				
 				
-				String stcubiertos = "";
+				String stcubiertos = "NO";
 				if (pedido.isCubiertos()) {
 					stcubiertos = "SI";
 				} else {
 					stcubiertos = "NO";
 				}
+
+				
 				modeloTabla.addRow(new Object[]{stid,stdireccion,stproductos,stmenus,stprecio,stpago,stcubiertos});
 				
 			}
@@ -759,7 +762,7 @@ class VentanaAnadirMenu extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				List<Producto> productos = null;
+				List<Producto> productos=null;
 				try {
 					db.connect();
 					productos = db.getTodosProductos();

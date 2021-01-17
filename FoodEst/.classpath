@@ -9,17 +9,11 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.32.3.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/pdfbox-tools-2.0.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/xmpbox-2.0.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/preflight-2.0.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/fontbox-2.0.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/pdfbox-app-2.0.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/pdfbox-2.0.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/guill/OneDrive/Escritorio/Librerias/libs/fontbox-2.0.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/guill/OneDrive/Escritorio/Librerias/libs/pdfbox-2.0.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/guill/OneDrive/Escritorio/Librerias/libs/pdfbox-app-2.0.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/guill/OneDrive/Escritorio/Librerias/libs/pdfbox-tools-2.0.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/guill/OneDrive/Escritorio/Librerias/libs/preflight-2.0.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/guill/OneDrive/Escritorio/Librerias/libs/xmpbox-2.0.22.jar"/>
+	<classpathentry kind="lib" path="lib/fontbox-2.0.22.jar"/>
+	<classpathentry kind="lib" path="lib/pdfbox-2.0.22.jar"/>
+	<classpathentry kind="lib" path="lib/pdfbox-app-2.0.22.jar"/>
+	<classpathentry kind="lib" path="lib/pdfbox-tools-2.0.22.jar"/>
+	<classpathentry kind="lib" path="lib/preflight-2.0.22.jar"/>
+	<classpathentry kind="lib" path="lib/xmpbox-2.0.22.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

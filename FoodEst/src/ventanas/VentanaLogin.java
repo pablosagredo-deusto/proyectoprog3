@@ -292,6 +292,7 @@ public class VentanaLogin extends JFrame {
 							if (restaurante.getNombre().equals(nombreRecibido)
 									&& restaurante.getContrasena().equals(contrasenaRecibido)) {
 								System.out.println("hola");
+								
 								new VentanaAdministracionRestaurante(restaurante);
 
 								dispose();

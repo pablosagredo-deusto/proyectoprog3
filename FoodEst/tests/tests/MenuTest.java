@@ -37,7 +37,7 @@ public class MenuTest {
 	}
 	@Test
 	public void testGetPrecio() {
-		assertEquals(16.5, menu.getPrecio());	
+		assertEquals(16.5, menu.getPrecio(),0.05);	
 	}
 	@Test
 	public void testGetId() {
