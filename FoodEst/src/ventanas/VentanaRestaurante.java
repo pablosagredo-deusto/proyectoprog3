@@ -87,14 +87,20 @@ public class VentanaRestaurante extends JFrame {
 							JOptionPane.showMessageDialog(null, "Selecciona un producto para eliminar");
 
 						} else {
-							System.out.println("entrando en eliminar");
-							System.out.println(jlistaProductos.getSelectedValue());
-							Object producto = (Object) jlistaProductos.getSelectedValue();
+							String stringProductoOrMenu = (String) jlistaProductos.getSelectedValue();
 							int i=(int) jlistaProductos.getSelectedIndex();
-							listaPedido.remove(i);
 							modeloPedido.remove(i);
-
-
+							
+							for (Menu menu : listaPedidoMenu) {
+								if(menu.toString().equals(stringProductoOrMenu)) {
+									listaPedidoMenu.remove(menu);
+								}
+							}
+							for (Producto producto : listaPedido) {
+								if(producto.toString().equals(stringProductoOrMenu)) {
+									listaPedido.remove(producto);
+								}
+							}
 						}
 
 					}
@@ -221,7 +227,7 @@ public class VentanaRestaurante extends JFrame {
 							DecimalFormat df = new DecimalFormat("#.00");
 							precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
 							
-							modeloPedido.addElement(producto.toStringPrecio());
+							modeloPedido.addElement(producto.toString());
 
 						}
 					});
@@ -313,7 +319,7 @@ public class VentanaRestaurante extends JFrame {
 									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
 									
 									
-									modeloPedido.addElement(producto.toStringPrecio());
+									modeloPedido.addElement(producto.toString());
 
 								}
 							});
@@ -391,7 +397,7 @@ public class VentanaRestaurante extends JFrame {
 									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
 									
 									
-									modeloPedido.addElement(producto.toStringPrecio());
+									modeloPedido.addElement(producto.toString());
 
 								}
 							});
@@ -468,7 +474,7 @@ public class VentanaRestaurante extends JFrame {
 									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
 									
 									
-									modeloPedido.addElement(producto.toStringPrecio());
+									modeloPedido.addElement(producto.toString());
 
 								}
 							});
@@ -545,7 +551,7 @@ public class VentanaRestaurante extends JFrame {
 									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
 									
 									
-									modeloPedido.addElement(producto.toStringPrecio());
+									modeloPedido.addElement(producto.toString());
 
 								}
 							});
@@ -700,7 +706,7 @@ public class VentanaRestaurante extends JFrame {
 									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
 									
 									
-									modeloPedido.addElement(producto.toStringPrecio());
+									modeloPedido.addElement(producto.toString());
 
 								}
 							});
@@ -759,12 +765,15 @@ public class VentanaRestaurante extends JFrame {
 				pedido.setProductos(listaPedido);
 				pedido.setMenus(listaPedidoMenu);
 				pedido.setUsuario(usuario);
+				
+				
 				DecimalFormat df = new DecimalFormat("#.00");				
-				pedido.setPreciototal(Double.parseDouble(df.format(precio)));
-
+				pedido.setPreciototal(precio);
 				
+				new VentanaPago(pedido, usuario);
+				dispose();
+				/*
 				ManagerDB db = new ManagerDB();
-				
 				try {
 					db.connect();
 					db.insertarPedido(pedido);
@@ -772,8 +781,7 @@ public class VentanaRestaurante extends JFrame {
 				} catch (Exception e2) {
 					// TODO: handle exception
 				}
-				VentanaPago n= new VentanaPago(pedido);
-				
+				*/
 				
 			}
 		});

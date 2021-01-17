@@ -87,12 +87,14 @@ class VentanaRegistroUsuario extends JPanel{
 		
 		add(bRegistrar);
 		add(bCancelar);
+
+		add(new JPanel());
 		add(bContrasena);
 		
 		
 		
 		setSize(400, 500);
-		setLayout(new GridLayout(8,2));
+		setLayout(new GridLayout(9,2));
 		
 		
 		
@@ -116,6 +118,10 @@ class VentanaRegistroUsuario extends JPanel{
 				int largo=10;
 				
 				String password=g.generarContrasenha(rand, "", 0, largo);
+				JOptionPane.showMessageDialog(null, "Contraseña generada -- "+password);
+
+				tcontraseña.setText(password);
+				trepetirContraseña.setText(password);
 				
 				
 
