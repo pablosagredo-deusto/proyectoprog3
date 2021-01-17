@@ -64,12 +64,12 @@ public class VentanaLogin extends JFrame {
 		logoUsuario.setIcon(imagenUsuario);
 
 		// Para reducir los logos
-		ImageIcon imagenContraseña = new ImageIcon("src/imagenes/key.png");
-		Image image2 = imagenContraseña.getImage();
+		ImageIcon imagenContrasena = new ImageIcon("src/imagenes/key.png");
+		Image image2 = imagenContrasena.getImage();
 		Image newImg2 = image2.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
-		imagenContraseña = new ImageIcon(newImg2);
-		JLabel logoContraseña = new JLabel();
-		logoContraseña.setIcon(imagenContraseña);
+		imagenContrasena = new ImageIcon(newImg2);
+		JLabel logoContrasena = new JLabel();
+		logoContrasena.setIcon(imagenContrasena);
 
 		JPanel panel1 = new JPanel();
 		panel1.setLayout(new BorderLayout());
@@ -79,10 +79,10 @@ public class VentanaLogin extends JFrame {
 
 		JPanel panel2 = new JPanel();
 		panel2.setLayout(new BorderLayout());
-		panel2.add(logoContraseña, BorderLayout.WEST);
-		JPasswordField tcontraseña = new JPasswordField("Contraseña");
-		tcontraseña.setEchoChar((char) 0);
-		panel2.add(tcontraseña, BorderLayout.CENTER);
+		panel2.add(logoContrasena, BorderLayout.WEST);
+		JPasswordField tcontrasena = new JPasswordField("Contrasena");
+		tcontrasena.setEchoChar((char) 0);
+		panel2.add(tcontrasena, BorderLayout.CENTER);
 
 		panelMedio.add(panel1);
 		panelMedio.add(panel2);
@@ -91,7 +91,7 @@ public class VentanaLogin extends JFrame {
 		JPanel panelAbajo = new JPanel();
 
 		JPanel panelAbajo1 = new JPanel();
-		JButton bLogin = new JButton("Iniciar sesión");
+		JButton bLogin = new JButton("Iniciar sesi�n");
 		JButton bCerrar = new JButton("Cerrar FOODEST");
 		
 
@@ -127,10 +127,10 @@ public class VentanaLogin extends JFrame {
 
 		// ACTIONLISTENERS
 
-		tcontraseña.addMouseListener(new MouseAdapter() {
+		tcontrasena.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				tcontraseña.setEchoChar('*');
-				tcontraseña.setText("");
+				tcontrasena.setEchoChar('*');
+				tcontrasena.setText("");
 			}
 		});
 		tnombre.addMouseListener(new MouseAdapter() {
@@ -253,11 +253,11 @@ public class VentanaLogin extends JFrame {
 						int numeroUsuarios = usuarios.size();
 						int usuariosComprobados = 0;
 						String nombreUsuarioRecibido = tnombre.getText();
-						String contraseñaRecibido = String.valueOf(tcontraseña.getPassword());
+						String contrasenaRecibido = String.valueOf(tcontrasena.getPassword());
 
 						for (Usuario usuario : usuarios) {
 							if (usuario.getNombreUsuario().equals(nombreUsuarioRecibido)
-									&& usuario.getContraseña().equals(contraseñaRecibido)) {
+									&& usuario.getContrasena().equals(contrasenaRecibido)) {
 								new VentanaPrincipal(usuario);
 								dispose();
 							} else {
@@ -283,11 +283,11 @@ public class VentanaLogin extends JFrame {
 						int numeroRestaurantes = restaurantes.size();
 						int restaurantesComprobados = 0;
 						String nombreRecibido = tnombre.getText();
-						String contraseñaRecibido = String.valueOf(tcontraseña.getPassword());
+						String contrasenaRecibido = String.valueOf(tcontrasena.getPassword());
 
 						for (Restaurante restaurante : restaurantes) {
 							if (restaurante.getNombre().equals(nombreRecibido)
-									&& restaurante.getContraseña().equals(contraseñaRecibido)) {
+									&& restaurante.getContrasena().equals(contrasenaRecibido)) {
 								System.out.println("hola");
 								new VentanaAdministracionRestaurante(restaurante);
 
@@ -308,7 +308,7 @@ public class VentanaLogin extends JFrame {
 					}
 
 				} else {
-					JOptionPane.showMessageDialog(null, "Seleccione restaurante o usuario para iniciar sesión");
+					JOptionPane.showMessageDialog(null, "Seleccione restaurante o usuario para iniciar sesi�n");
 				}
 
 			}

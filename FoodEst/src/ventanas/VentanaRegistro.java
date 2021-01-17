@@ -42,8 +42,8 @@ class VentanaRegistroUsuario extends JPanel{
 		JLabel lnombre = new JLabel("Nombre");
 		JLabel lapellido = new JLabel("Apellido");
 		JLabel lemail = new JLabel("Email");
-		JLabel lcontraseña = new JLabel("Contraseña");
-		JLabel lrepetirContraseña = new JLabel("Repetir contraseña");
+		JLabel lcontrasena = new JLabel("Contrasena");
+		JLabel lrepetirContrasena = new JLabel("Repetir contrasena");
 		JLabel ltitulo1 = new JLabel("      Registrate");
 		JLabel ltitulo2 = new JLabel("en Foodest");
 		ltitulo1.setFont(new Font("Cooper Black", Font.BOLD, 25));
@@ -53,8 +53,8 @@ class VentanaRegistroUsuario extends JPanel{
 		JTextField tnombre = new JTextField();
 		JTextField tapellido = new JTextField();
 		JTextField temail = new JTextField();
-		JPasswordField tcontraseña = new JPasswordField();
-		JPasswordField trepetirContraseña = new JPasswordField();
+		JPasswordField tcontrasena = new JPasswordField();
+		JPasswordField trepetirContrasena = new JPasswordField();
 		
 		
 		JButton bRegistrar = new JButton("Registrar"); 
@@ -78,11 +78,11 @@ class VentanaRegistroUsuario extends JPanel{
 		add(lemail);
 		add(temail);
 		
-		add(lcontraseña);
-		add(tcontraseña);
+		add(lcontrasena);
+		add(tcontrasena);
 		
-		add(lrepetirContraseña);
-		add(trepetirContraseña);
+		add(lrepetirContrasena);
+		add(trepetirContrasena);
 		
 		
 		add(bRegistrar);
@@ -150,22 +150,22 @@ class VentanaRegistroUsuario extends JPanel{
 							
 					if(usuariosComprobados == numeroUsuarios) {
 						//NO EXISTE ---> LO REGISTRAMOS
-						String contraseña = String.valueOf(tcontraseña.getPassword());
-						String confirmacionContraseña = String.valueOf(trepetirContraseña.getPassword());
+						String contrasena = String.valueOf(tcontrasena.getPassword());
+						String confirmacionContrasena = String.valueOf(trepetirContrasena.getPassword());
 							
 							
-						if (contraseña.equals(confirmacionContraseña)) { //Que la contraseña esté bien confirmada
+						if (contrasena.equals(confirmacionContrasena)) { //Que la contrasena esté bien confirmada
 							Usuario usuarioNuevo = new Usuario();
 							usuarioNuevo.setNombreUsuario(tnombreUsuario.getText());
 							usuarioNuevo.setNombre(tnombre.getText());
 							usuarioNuevo.setApellido(tapellido.getText());
-							usuarioNuevo.setContraseña(contraseña); //la hemos guardado en un string arriba
+							usuarioNuevo.setContrasena(contrasena); //la hemos guardado en un string arriba
 							usuarioNuevo.setEmail(temail.getText());
 								
 							db.insertarUsuario(usuarioNuevo); 
 							JOptionPane.showMessageDialog(null, "Usuario registrado con éxito");	
 						}else { //Que no lo esté
-							JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");					
+							JOptionPane.showMessageDialog(null, "Las contrasenas no coinciden");					
 						}
 					}
 						
@@ -203,11 +203,11 @@ class VentanRegistroRestaurante extends JPanel{
 		JLabel lcategoriaRestaurante = new JLabel("Categoria de restaurante:");
 		JTextField tcategoriaRestaurante = new JTextField();
 		
-		JLabel lcontraseñaRestaurante = new JLabel("Contraseña:");
-		JPasswordField tcontraseñaRestaurante = new JPasswordField();
+		JLabel lcontrasenaRestaurante = new JLabel("Contrasena:");
+		JPasswordField tcontrasenaRestaurante = new JPasswordField();
 		
-		JLabel lrepetirContraseña = new JLabel("Repetir contraseña:");
-		JPasswordField trepetirContraseñaRestaurante = new JPasswordField();
+		JLabel lrepetirContrasena = new JLabel("Repetir contrasena:");
+		JPasswordField trepetirContrasenaRestaurante = new JPasswordField();
 		
 		JLabel ldireccion = new JLabel("Direccion:");
 		JTextField tdireccion = new JPasswordField();
@@ -224,11 +224,11 @@ class VentanRegistroRestaurante extends JPanel{
 		add(lcategoriaRestaurante);
 		add(tcategoriaRestaurante);
 		
-		add(lcontraseñaRestaurante);
-		add(tcontraseñaRestaurante);
+		add(lcontrasenaRestaurante);
+		add(tcontrasenaRestaurante);
 		
-		add(lrepetirContraseña);
-		add(trepetirContraseñaRestaurante);
+		add(lrepetirContrasena);
+		add(trepetirContrasenaRestaurante);
 		
 		add(ldireccion);
 		add(tdireccion);
@@ -272,24 +272,24 @@ class VentanRegistroRestaurante extends JPanel{
 					}
 					
 					if(restaurantesComprobados == numeroRestaurantes ) { //si se han comprobado todos los restaurantes y no coincide ninguno (es decir, no esta)
-						String contraseña = String.valueOf(tcontraseñaRestaurante.getPassword());
-						String confirmacionContraseña = String.valueOf(trepetirContraseñaRestaurante.getPassword());
+						String contrasena = String.valueOf(tcontrasenaRestaurante.getPassword());
+						String confirmacionContrasena = String.valueOf(trepetirContrasenaRestaurante.getPassword());
 						
 						
-						if (contraseña.equals(confirmacionContraseña)) { //Que la contraseña esté bien confirmada
+						if (contrasena.equals(confirmacionContrasena)) { //Que la contrasena esté bien confirmada
 							Restaurante restauranteNuevo = new Restaurante();
 							restauranteNuevo.setNombre(tnombreRestaurante.getText());
 							restauranteNuevo.setCategoria(tcategoriaRestaurante.getText());
-							restauranteNuevo.setContraseña(contraseña); //ya la hemos guardado en un string arriba
+							restauranteNuevo.setContrasena(contrasena); //ya la hemos guardado en un string arriba
 							restauranteNuevo.setDireccion(tdireccion.getText());
 							restauranteNuevo.setEnviogratis(false); //esto luego se podra cambiar en ventanAdministracion
 							
 							
 							db.insertarRestaurante(restauranteNuevo);
 							
-							JOptionPane.showMessageDialog(null, "Restaurante registrado con éxito");	
-						}else { //Que no lo estén
-							JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");					
+							JOptionPane.showMessageDialog(null, "Restaurante registrado con �xito");	
+						}else { //Que no lo est�n
+							JOptionPane.showMessageDialog(null, "Las contrasenas no coinciden");					
 						}
 					}
 					
@@ -319,19 +319,19 @@ class VentanRegistroRestaurante extends JPanel{
 public class VentanaRegistro extends JFrame{
 	
 	public VentanaRegistro(JFrame ventanaAnterior, int indiceVentanaPorDefecto) {
-		JTabbedPane panelPestañas = new JTabbedPane(); //contenedor de pestañas
+		JTabbedPane panelPestanas = new JTabbedPane(); //contenedor de pestanas
 		
 		
 		JFrame ventanaActual = this;
-		panelPestañas.add("Registro Usuario", new VentanaRegistroUsuario(ventanaAnterior, ventanaActual));
-		panelPestañas.add("Registro Restaurante", new VentanRegistroRestaurante(ventanaAnterior, ventanaActual));
+		panelPestanas.add("Registro Usuario", new VentanaRegistroUsuario(ventanaAnterior, ventanaActual));
+		panelPestanas.add("Registro Restaurante", new VentanRegistroRestaurante(ventanaAnterior, ventanaActual));
 		
 		
-		panelPestañas.setSelectedIndex(indiceVentanaPorDefecto);
+		panelPestanas.setSelectedIndex(indiceVentanaPorDefecto);
 		
 		
 		
-		add(panelPestañas);
+		add(panelPestanas);
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("FoodEst");

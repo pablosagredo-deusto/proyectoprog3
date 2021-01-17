@@ -118,6 +118,7 @@ public class VentanaFinal extends JFrame implements ActionListener {
 		imagenMapa = new ImageIcon(newImg4);
 		mapa1.setIcon(imagenMapa);
 
+
 		// imahen gracias
 		ImageIcon imagenGracias = new ImageIcon("src/imagenes/gracias.png");
 		Image image5 = imagenGracias.getImage();
@@ -166,7 +167,8 @@ public class VentanaFinal extends JFrame implements ActionListener {
 		pnlCentralDerecha.add(flecha3);
 		pnlCentralDerecha.add(entregado);
 
-		// añadir central
+
+		// anadir central
 		add(pnlCentral);
 		if (iniciaVentana)
 			setVisible(true);
@@ -210,5 +212,6 @@ public class VentanaFinal extends JFrame implements ActionListener {
 		}
 
 	}
+
 
 }

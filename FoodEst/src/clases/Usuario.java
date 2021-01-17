@@ -6,19 +6,19 @@ public class Usuario {
 	protected String nombreUsuario;
 	protected String nombre;
 	protected String apellido;
-	protected String contraseña;
+	protected String contrasena;
 	protected String email;
 	protected int id;
 	protected ArrayList<Restaurante> restaurantesGuardados;
 	protected ArrayList<Pedido> pedidos;
 
-	public Usuario(String nombreUsuario, String nombre, String apellido, String contraseña, String email,  int id, ArrayList<Pedido> pedidos,
+	public Usuario(String nombreUsuario, String nombre, String apellido, String contrasena, String email,  int id, ArrayList<Pedido> pedidos,
 			ArrayList<Restaurante> restaurantesGuardados) {
 		super();
 		this.nombreUsuario = nombreUsuario;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.contraseña = contraseña;
+		this.contrasena = contrasena;
 		this.email = email;
 		this.id = id;
 		this.pedidos = pedidos;
@@ -30,7 +30,7 @@ public class Usuario {
 		this.nombreUsuario = "";
 		this.nombre = "";
 		this.apellido = "";
-		this.contraseña = "";
+		this.contrasena = "";
 		this.email = "";
 		this.id = 0;
 		this.pedidos = new ArrayList<Pedido>();
@@ -53,12 +53,12 @@ public class Usuario {
 		this.nombreUsuario = nombreUsuario;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getContrasena() {
+		return contrasena;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
 	}
 
 	public String getNombre() {

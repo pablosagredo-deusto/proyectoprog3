@@ -47,13 +47,13 @@ public class VentanaPrincipal extends JFrame {
 		panelArribaMedio.add(panelLogo);
 		JPanel panelArribaMedioAbajo =  new JPanel();
 		panelArribaMedioAbajo.setLayout(new GridLayout(2,1));
-		panelArribaMedioAbajo.add(buscador);
+		panelArribaMedioAbajo.add(new JPanel());
 		
 		JPanel panelBotonBuscar = new JPanel();
 		panelBotonBuscar.setLayout(new GridLayout(1,3));
 		panelBotonBuscar.add(new JPanel());
 		panelBotonBuscar.add(new JPanel());
-		panelBotonBuscar.add(buscar);
+		panelBotonBuscar.add(new JPanel());
 		panelArribaMedioAbajo.add(panelBotonBuscar);
 		panelArribaMedio.add(panelArribaMedioAbajo);
 		
@@ -131,7 +131,7 @@ public class VentanaPrincipal extends JFrame {
 			panelAbajo.setLayout(new GridLayout(1,numeroRestaurantes*2));
 			for (Restaurante restaurante : restaurantes) {
 				JButton boton = new JButton(restaurante.getNombre());
-				//Para cada boton añadimos el action listener, lanzando la VentanaRestaurante con el restaurante asociado
+				//Para cada boton anadimos el action listener, lanzando la VentanaRestaurante con el restaurante asociado
 				boton.addActionListener(new ActionListener() {
 					
 					@Override

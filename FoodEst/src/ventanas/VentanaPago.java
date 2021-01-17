@@ -207,7 +207,7 @@ public class VentanaPago extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//añadir forma de pago al pedido
+
 				
 				
 				ManagerDB db = new ManagerDB();
