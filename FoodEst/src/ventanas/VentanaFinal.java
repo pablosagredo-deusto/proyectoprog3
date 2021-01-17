@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import clases.Hilo;
@@ -26,28 +27,32 @@ public class VentanaFinal extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JPanel pnlCentral;
-	JPanel pnlCentralDerecha;
+	public static JPanel pnlCentral;
+	public static JPanel pnlCentralDerecha;
 	JPanel pnlCentralIzquierda;
-	private JLabel flecha;
+	public static JPanel pnlCentralIzquierda2;
+
+	JLabel flecha;
 	JLabel flecha1;
 	JLabel flecha2;
 	JLabel flecha3;
+	public static JLabel gracias;
 	JButton botonIniciar;
 	JButton botonAcabar;
 	ImageIcon imagenFlechaVerde;
 	Image image3;
 	Image newImg3;
 	public static boolean iniciaHilo = true;
-	boolean corriendo= false;
+	public static boolean iniciaVentana = true;
 
+	boolean corriendo = false;
 
 	public VentanaFinal(Pedido ped) {
 
 		GridLayout gridLayout1 = new GridLayout();
 
 		gridLayout1.setRows(1);
-		gridLayout1.setColumns(2);
+		gridLayout1.setColumns(3);
 
 		setTitle("Perfil");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -58,67 +63,86 @@ public class VentanaFinal extends JFrame implements ActionListener {
 		pnlCentral = new JPanel();
 		pnlCentralDerecha = new JPanel();
 		pnlCentralIzquierda = new JPanel();
-		// 5 estados del pedido
+		pnlCentralIzquierda2 = new JPanel();
 
 		JLabel recibido = new JLabel();
 		recibido.setText("   " + "RECIBIDO");
 		recibido.setFont(new Font("Arial", Font.BOLD, 15));
+		recibido.setVisible(false);
 
 		JLabel preparando = new JLabel();
 		preparando.setText("PREPARANDO");
 		preparando.setFont(new Font("Arial", Font.BOLD, 15));
+		preparando.setVisible(false);
 
 		JLabel enviado = new JLabel();
 		enviado.setText("ENVIADO");
 		enviado.setFont(new Font("Arial", Font.BOLD, 15));
+		enviado.setVisible(false);
 
 		JLabel encamino = new JLabel();
 		encamino.setText("EN CAMINO");
 		encamino.setFont(new Font("Arial", Font.BOLD, 15));
+		encamino.setVisible(false);
 
 		JLabel entregado = new JLabel();
 		entregado.setText("ENTREGADO");
 		entregado.setFont(new Font("Arial", Font.BOLD, 15));
+		entregado.setVisible(false);
 
 		JLabel flecha = new JLabel();
+		flecha.setVisible(false);
 		JLabel flecha1 = new JLabel();
+		flecha1.setVisible(false);
 		JLabel flecha2 = new JLabel();
+		flecha2.setVisible(false);
 		JLabel flecha3 = new JLabel();
+		flecha3.setVisible(false);
 		JLabel mapa1 = new JLabel();
-		
+		JLabel gracias = new JLabel();
 
-		ImageIcon imagenFlecha = new ImageIcon("src/imagenes/flecha.png");
+		ImageIcon imagenFlecha = new ImageIcon("src/imagenes/flechaverde.png");
 		Image image2 = imagenFlecha.getImage();
-		Image newImg2 = image2.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+		Image newImg2 = image2.getScaledInstance(80, 80, java.awt.Image.SCALE_SMOOTH);
 		imagenFlecha = new ImageIcon(newImg2);
 
-		ImageIcon imagenFlechaVerde = new ImageIcon("src/imagenes/flechaverde.png");
-		Image image3 = imagenFlechaVerde.getImage();
-		Image newImg3 = image3.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
-		imagenFlechaVerde = new ImageIcon(newImg3);
-
 		flecha.setIcon(imagenFlecha);
-		flecha1.setIcon(imagenFlechaVerde);
+		flecha1.setIcon(imagenFlecha);
 		flecha2.setIcon(imagenFlecha);
 		flecha3.setIcon(imagenFlecha);
 
+		// imahen mapa
 		ImageIcon imagenMapa = new ImageIcon("src/imagenes/mapa1.png");
 		Image image4 = imagenMapa.getImage();
 		Image newImg4 = image4.getScaledInstance(500, 400, java.awt.Image.SCALE_SMOOTH);
 		imagenMapa = new ImageIcon(newImg4);
-
 		mapa1.setIcon(imagenMapa);
 
-		// añadir panels
+		// imahen gracias
+		ImageIcon imagenGracias = new ImageIcon("src/imagenes/gracias.png");
+		Image image5 = imagenGracias.getImage();
+		Image newImg5 = image5.getScaledInstance(500, 400, java.awt.Image.SCALE_SMOOTH);
+		imagenGracias = new ImageIcon(newImg5);
+
+		gracias.setIcon(imagenGracias);
+		gracias.setVisible(false);
+		// 5 estados del pedido
+
+		// aï¿½adir panels
 		pnlCentral.setLayout(gridLayout1);
+
 		pnlCentral.add(pnlCentralIzquierda);
 		pnlCentral.add(pnlCentralDerecha);
+		pnlCentral.add(pnlCentralIzquierda2);
 
-		
 		botonIniciar = new JButton("Comenzar pedido");
 		botonIniciar.addActionListener(this);
 		botonAcabar = new JButton("Cancelar pedido");
 		botonAcabar.addActionListener(this);
+
+		// panelizquierdo2
+		pnlCentralIzquierda2.setBackground(Color.WHITE);
+		pnlCentralIzquierda2.add(gracias);
 
 		// panelizquierdo
 		pnlCentralIzquierda.setBackground(Color.WHITE);
@@ -127,13 +151,13 @@ public class VentanaFinal extends JFrame implements ActionListener {
 		pnlCentralIzquierda.add(botonAcabar);
 
 		// panelderecho
-		// añadir labels
+		// aï¿½adir labels
 		BoxLayout b = new BoxLayout(pnlCentralDerecha, BoxLayout.Y_AXIS);
 		pnlCentralDerecha.setLayout(b);
 		pnlCentralDerecha.setBackground(Color.WHITE);
+
 		pnlCentralDerecha.add(recibido);
 		pnlCentralDerecha.add(flecha);
-
 		pnlCentralDerecha.add(preparando);
 		pnlCentralDerecha.add(flecha1);
 		pnlCentralDerecha.add(enviado);
@@ -141,12 +165,13 @@ public class VentanaFinal extends JFrame implements ActionListener {
 		pnlCentralDerecha.add(encamino);
 		pnlCentralDerecha.add(flecha3);
 		pnlCentralDerecha.add(entregado);
-		// botones
-		
 
-		// añadir central
+		// aÃ±adir central
 		add(pnlCentral);
-		setVisible(true);
+		if (iniciaVentana)
+			setVisible(true);
+		else
+			setVisible(false);
 
 	}
 
@@ -157,37 +182,33 @@ public class VentanaFinal extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==botonIniciar) {
+		if (e.getSource() == botonIniciar) {
 			System.out.println("iniciar pulsado");
-			if(corriendo==false) {
-				iniciaHilo=true;
-				corriendo=true;
+			if (corriendo == false) {
+				iniciaHilo = true;
+				corriendo = true;
+				JOptionPane.showMessageDialog(null, "PEDIDO COMENZADO");
 				iniciarHilo();
 			}
-			
+
 		}
-		if(e.getSource()==botonAcabar) {
+		if (e.getSource() == botonAcabar) {
 			System.out.println("acabar pulsado");
-			corriendo=false;
-			iniciaHilo=false;
-			
+			corriendo = false;
+			iniciaHilo = false;
+
 		}
-		
+
 	}
-	
-	
-	//para usar el thread
+
+	// para usar el thread
 	public void iniciarHilo() {
 		if (iniciaHilo == true) {
 			System.out.println("Empieza el hilo");
-			Hilo miHilo = new Hilo(flecha);
+			Hilo miHilo = new Hilo();
 			miHilo.start();
 		}
 
-	}
-
-	public JLabel getFlecha() {
-		return flecha;
 	}
 
 }

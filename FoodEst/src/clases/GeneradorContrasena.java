@@ -7,9 +7,9 @@ public class GeneradorContrasena {
 	public static void main(String[] args) {
 
 		Random rand = new Random();
-		int randomSize=numeroRandom(6, 12);
+		int largo=numeroRandom(6, 12);
 
-		String password=generarContrasenha(rand, "", 0, randomSize);
+		String password=generarContrasenha(rand, "", 0, largo);
 		System.out.println("password-->  "+password);
 	}
 
@@ -22,7 +22,7 @@ public class GeneradorContrasena {
 
 	public static String generarContrasenha(Random rand, String password, int posicion, int largo) {
 
-		boolean isLowerCase = rand.nextBoolean();
+		boolean esMinuscula = rand.nextBoolean();
 
 		int randomChar = rand.nextInt(chars.length);
 
@@ -32,7 +32,7 @@ public class GeneradorContrasena {
 			return password;
 		}
 
-		if (isLowerCase) {
+		if (esMinuscula) {
 
 			return generarContrasenha(rand, password + chars[randomChar], posicion + 1, largo);
 			

@@ -1,13 +1,17 @@
 package clases;
 
+import java.awt.Dialog;
 import java.awt.Image;
+
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import ventanas.VentanaFinal;
 
@@ -15,31 +19,30 @@ public class Hilo extends Thread {
 	static int limite = 0;
 	int min = 5;
 	int max = 15;
-	
-	
-	JLabel eti=new JLabel();
 
+	JLabel eti = new JLabel();
+	JOptionPane pane = new JOptionPane();
 
-	public Hilo(JLabel flecha) {
-		this.eti =flecha;
+	public Hilo() {
 	}
 
 	public void run() {
 		try {
-			limite = numeroRandom(5, 10);
-			int x=0;
+			limite = numeroRandom(13, 15);
+			int x = 0;
 			System.out.println("Tiempo de pedido--> " + limite);
-			
+
 			while (VentanaFinal.iniciaHilo) {
 				Thread.sleep(1000);
-				if(x!=limite) {
-					if(x==3) {
-						ejecutarHilo(x);
-					}
+				if (x != limite) {
+					ejecutarHilo(x);
 					System.out.println("x --> " + x);
-					x++;			
-				}else {
-					VentanaFinal.iniciaHilo=false;
+					x++;
+				} else {
+					pane.showMessageDialog(null, "ENTREGADO", "Actualizacion del pedido", JOptionPane.WARNING_MESSAGE);
+					VentanaFinal.iniciaHilo = false;
+					
+					VentanaFinal.pnlCentralIzquierda2.getComponent(0).setVisible(true);
 				}
 			}
 
@@ -49,12 +52,38 @@ public class Hilo extends Thread {
 
 		}
 	}
-	
+
 	private void ejecutarHilo(int x) {
-		System.out.println(x+ " --- "+Thread.currentThread().getName());
-		
-		eti.setVisible(false);
-		
+		System.out.println(x + " --- ");
+		int a = numeroRandom(2, 5);
+		switch (x) {
+		case 5:
+			
+			VentanaFinal.pnlCentralDerecha.getComponent(0).setVisible(true);
+			VentanaFinal.pnlCentralDerecha.getComponent(1).setVisible(true);
+			break;
+		case 8:
+			
+			VentanaFinal.pnlCentralDerecha.getComponent(2).setVisible(true);
+			VentanaFinal.pnlCentralDerecha.getComponent(3).setVisible(true);
+
+			break;
+		case 10:
+			
+			VentanaFinal.pnlCentralDerecha.getComponent(4).setVisible(true);
+			VentanaFinal.pnlCentralDerecha.getComponent(5).setVisible(true);
+			break;
+		case 12:
+			
+			VentanaFinal.pnlCentralDerecha.getComponent(6).setVisible(true);
+			
+			break;
+		case 14:
+			VentanaFinal.pnlCentralDerecha.getComponent(7).setVisible(true);
+			VentanaFinal.pnlCentralDerecha.getComponent(8).setVisible(true);
+			break;
+		}
+
 	}
 
 	private static int numeroRandom(int min, int max) {

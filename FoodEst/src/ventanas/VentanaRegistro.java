@@ -20,9 +20,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Random;
 
 import clases.ExceptionDB;
+import clases.GeneradorContrasena;
 import clases.ManagerDB;
 import clases.Restaurante;
 import clases.Usuario;
@@ -55,8 +56,10 @@ class VentanaRegistroUsuario extends JPanel{
 		JPasswordField tcontraseña = new JPasswordField();
 		JPasswordField trepetirContraseña = new JPasswordField();
 		
+		
 		JButton bRegistrar = new JButton("Registrar"); 
 		JButton bCancelar = new JButton("Cancelar"); 
+		JButton bContrasena = new JButton("Generar Contrasena");
 
 		 
 		
@@ -81,8 +84,10 @@ class VentanaRegistroUsuario extends JPanel{
 		add(lrepetirContraseña);
 		add(trepetirContraseña);
 		
+		
 		add(bRegistrar);
 		add(bCancelar);
+		add(bContrasena);
 		
 		
 		
@@ -98,6 +103,22 @@ class VentanaRegistroUsuario extends JPanel{
 				ventanaActual.dispose();
 				ventanaAnterior.setVisible(true);
 				
+			}
+		});
+
+		bContrasena.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GeneradorContrasena g=new GeneradorContrasena();
+				System.out.println("pulsado");
+				Random rand = new Random();
+				int largo=10;
+				
+				String password=g.generarContrasenha(rand, "", 0, largo);
+				
+				
+
 			}
 		});
 		
@@ -186,6 +207,8 @@ class VentanRegistroRestaurante extends JPanel{
 		JTextField tdireccion = new JPasswordField();
 		
 		
+		
+		
 		add(ltitulo1);
 		add(ltitulo2);
 		
@@ -206,6 +229,7 @@ class VentanRegistroRestaurante extends JPanel{
 		
 		add(bregistrar);
 		add(bcancelar);
+
 		
 		
 		

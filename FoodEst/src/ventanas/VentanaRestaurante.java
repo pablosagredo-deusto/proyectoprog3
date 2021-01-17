@@ -760,9 +760,9 @@ public class VentanaRestaurante extends JFrame {
 				pedido.setMenus(listaPedidoMenu);
 				pedido.setUsuario(usuario);
 				DecimalFormat df = new DecimalFormat("#.00");				
-				//pedido.setPreciototal(Double.parseDouble(df.format(precio)));
+				pedido.setPreciototal(Double.parseDouble(df.format(precio)));
 
-
+				
 				ManagerDB db = new ManagerDB();
 				
 				try {
