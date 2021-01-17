@@ -119,10 +119,24 @@ public class Producto {
 		this.tipo = tipo;
 	}
 
+<<<<<<< HEAD
+=======
+	public String toStringPrecio() {
+		return nombre + " " + precio + "e";
+	}
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		return nombre + " " + "(" + precio + "€)" ;
+=======
+		String resultado = nombre + "(" + precio + "ï¿½)" + "(" + getTipo().toString() + ")";
+		if (vegano) {
+			resultado = resultado + "(V)";
+		}
+		return resultado;
+>>>>>>> branch 'master' of https://github.com/pablosagredo-deusto/proyectoprog3
 	}
 	
 	

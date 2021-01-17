@@ -31,11 +31,11 @@ public class VentanaRestaurante extends JFrame {
 
 
 	public VentanaRestaurante(JFrame ventanaAnterior, Restaurante restaurante, Usuario usuario) {
-
 		super("restaurante");
 		setSize(1150, 505);
 		setVisible(true);
-
+		
+		DecimalFormat df = new DecimalFormat("#.00");
 		// PANEL GENERAL : parte izquierda y parte derecha
 		JSplitPane panelGeneral = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		panelGeneral.setBorder(null);
@@ -206,16 +206,16 @@ public class VentanaRestaurante extends JFrame {
 			
 			int numeroProductos = todosProductos.size(); //para el layout
 			
-			//Para cada producto se añade al panel de productos
+			//Para cada producto se anade al panel de productos
 			for (Producto producto : todosProductos) {
 				if(restaurante.getId() == producto.getIdRestaurante()) {
 					JPanel panelProducto = new JPanel();
 					panelProducto.setLayout(new BorderLayout());
 					JLabel tnombreProducto = new JLabel(producto.getNombre());
-					JButton bañadir = new JButton("AÑADIR");
+					JButton banadir = new JButton("AnADIR");
 					
 					
-					bañadir.addActionListener(new ActionListener() {
+					banadir.addActionListener(new ActionListener() {
 
 
 
@@ -224,7 +224,7 @@ public class VentanaRestaurante extends JFrame {
 
 							listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
 							precio = precio+ producto.getPrecio();
-							DecimalFormat df = new DecimalFormat("#.00");
+							
 							precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
 							
 							modeloPedido.addElement(producto.toString());
@@ -245,13 +245,13 @@ public class VentanaRestaurante extends JFrame {
 					
 					
 					
-					panelProducto.add(bañadir, BorderLayout.SOUTH);
+					panelProducto.add(banadir, BorderLayout.SOUTH);
 					panelProducto.add(tnombreProducto, BorderLayout.NORTH);
 					panelProducto.add(tingredientes, BorderLayout.CENTER);
 					
 
 					panelProducto.setBorder(BorderFactory.createLineBorder(Color.black, 5));
-					//Y finalmente añadimos el panel
+					//Y finalmente anadimos el panel
 					panelIzquierdaAbajo.add(panelProducto);
 				}
 				
@@ -279,7 +279,7 @@ public class VentanaRestaurante extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//----Para quitar los productos que hay añadidos-----
+				//----Para quitar los productos que hay anadidos-----
 				Component[] components = panelIzquierdaAbajo.getComponents();
 				for (Component component : components) {
 					panelIzquierdaAbajo.remove(component);  
@@ -299,23 +299,23 @@ public class VentanaRestaurante extends JFrame {
 					
 					int numeroProductos = todosProductos.size(); //para el layout
 					
-					//Para cada producto se añade al panel de productos
+					//Para cada producto se anade al panel de productos
 					for (Producto producto : todosProductos) {
 						if(restaurante.getId() == producto.getIdRestaurante()) {
 							JPanel panelProducto = new JPanel();
 							panelProducto.setLayout(new BorderLayout());
 							JLabel tnombreProducto = new JLabel(producto.getNombre());
-							JButton bañadir = new JButton("AÑADIR");
+							JButton banadir = new JButton("Añadir");
 							
 							
-							bañadir.addActionListener(new ActionListener() {
+							banadir.addActionListener(new ActionListener() {
 
 								@Override
 								public void actionPerformed(ActionEvent e) {
 
 									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
 									precio = precio+ producto.getPrecio();
-									DecimalFormat df = new DecimalFormat("#.00");
+									
 									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
 									
 									
@@ -336,13 +336,13 @@ public class VentanaRestaurante extends JFrame {
 							
 							tingredientes.setEditable(false);
 							
-							panelProducto.add(bañadir, BorderLayout.SOUTH);
+							panelProducto.add(banadir, BorderLayout.SOUTH);
 							panelProducto.add(tnombreProducto, BorderLayout.NORTH);
 							panelProducto.add(tingredientes, BorderLayout.CENTER);
 							
 
 							panelProducto.setBorder(BorderFactory.createLineBorder(Color.black, 5));
-							//Y finalmente añadimos el panel
+							//Y finalmente anadimos el panel
 							panelIzquierdaAbajo.add(panelProducto);
 						}
 						
@@ -359,7 +359,7 @@ public class VentanaRestaurante extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				//----Para quitar los productos que hay añadidos-----
+				//----Para quitar los productos que hay anadidos-----
 				Component[] components = panelIzquierdaAbajo.getComponents();
 				for (Component component : components) {
 					panelIzquierdaAbajo.remove(component);  
@@ -377,23 +377,23 @@ public class VentanaRestaurante extends JFrame {
 					
 					int numeroProductos = todosProductos.size(); //para el layout
 					
-					//Para cada producto se añade al panel de productos
+					//Para cada producto se anade al panel de productos
 					for (Producto producto : todosProductos) {
 						if(restaurante.getId() == producto.getIdRestaurante()) {
 							JPanel panelProducto = new JPanel();
 							panelProducto.setLayout(new BorderLayout());
 							JLabel tnombreProducto = new JLabel(producto.getNombre());
-							JButton bañadir = new JButton("AÑADIR");
+							JButton banadir = new JButton("AnADIR");
 							
 							
-							bañadir.addActionListener(new ActionListener() {
+							banadir.addActionListener(new ActionListener() {
 
 								@Override
 								public void actionPerformed(ActionEvent e) {
 
 									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
 									precio = precio+ producto.getPrecio();
-									DecimalFormat df = new DecimalFormat("#.00");
+									
 									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
 									
 									
@@ -414,13 +414,13 @@ public class VentanaRestaurante extends JFrame {
 							
 							tingredientes.setEditable(false);
 							
-							panelProducto.add(bañadir, BorderLayout.SOUTH);
+							panelProducto.add(banadir, BorderLayout.SOUTH);
 							panelProducto.add(tnombreProducto, BorderLayout.NORTH);
 							panelProducto.add(tingredientes, BorderLayout.CENTER);
 							
 
 							panelProducto.setBorder(BorderFactory.createLineBorder(Color.black, 5));
-							//Y finalmente añadimos el panel
+							//Y finalmente anadimos el panel
 							panelIzquierdaAbajo.add(panelProducto);
 						}
 						
@@ -436,7 +436,7 @@ public class VentanaRestaurante extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//----Para quitar los productos que hay añadidos-----
+				//----Para quitar los productos que hay anadidos-----
 				Component[] components = panelIzquierdaAbajo.getComponents();
 				for (Component component : components) {
 					panelIzquierdaAbajo.remove(component);  
@@ -454,23 +454,23 @@ public class VentanaRestaurante extends JFrame {
 					
 					int numeroProductos = todosProductos.size(); //para el layout
 					
-					//Para cada producto se añade al panel de productos
+					//Para cada producto se anade al panel de productos
 					for (Producto producto : todosProductos) {
 						if(restaurante.getId() == producto.getIdRestaurante()) {
 							JPanel panelProducto = new JPanel();
 							panelProducto.setLayout(new BorderLayout());
 							JLabel tnombreProducto = new JLabel(producto.getNombre());
-							JButton bañadir = new JButton("AÑADIR");
+							JButton banadir = new JButton("Añadir");
 							
 							
-							bañadir.addActionListener(new ActionListener() {
+							banadir.addActionListener(new ActionListener() {
 
 								@Override
 								public void actionPerformed(ActionEvent e) {
 
 									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
 									precio = precio+ producto.getPrecio();
-									DecimalFormat df = new DecimalFormat("#.00");
+									
 									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
 									
 									
@@ -491,13 +491,13 @@ public class VentanaRestaurante extends JFrame {
 							
 							tingredientes.setEditable(false);
 							
-							panelProducto.add(bañadir, BorderLayout.SOUTH);
+							panelProducto.add(banadir, BorderLayout.SOUTH);
 							panelProducto.add(tnombreProducto, BorderLayout.NORTH);
 							panelProducto.add(tingredientes, BorderLayout.CENTER);
 							
 
 							panelProducto.setBorder(BorderFactory.createLineBorder(Color.black, 5));
-							//Y finalmente añadimos el panel
+							//Y finalmente anadimos el panel
 							panelIzquierdaAbajo.add(panelProducto);
 						}
 						
@@ -513,7 +513,7 @@ public class VentanaRestaurante extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//----Para quitar los productos que hay añadidos-----
+				//----Para quitar los productos que hay anadidos-----
 				Component[] components = panelIzquierdaAbajo.getComponents();
 				for (Component component : components) {
 					panelIzquierdaAbajo.remove(component);  
@@ -531,23 +531,23 @@ public class VentanaRestaurante extends JFrame {
 					
 					int numeroProductos = todosProductos.size(); //para el layout
 					
-					//Para cada producto se añade al panel de productos
+					//Para cada producto se anade al panel de productos
 					for (Producto producto : todosProductos) {
 						if(restaurante.getId() == producto.getIdRestaurante()) {
 							JPanel panelProducto = new JPanel();
 							panelProducto.setLayout(new BorderLayout());
 							JLabel tnombreProducto = new JLabel(producto.getNombre());
-							JButton bañadir = new JButton("AÑADIR");
+							JButton banadir = new JButton("AnADIR");
 							
 							
-							bañadir.addActionListener(new ActionListener() {
+							banadir.addActionListener(new ActionListener() {
 
 								@Override
 								public void actionPerformed(ActionEvent e) {
 
 									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
 									precio = precio+ producto.getPrecio();
-									DecimalFormat df = new DecimalFormat("#.00");
+									DecimalFormat df = new DecimalFormat("#.##");
 									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
 									
 									
@@ -568,13 +568,13 @@ public class VentanaRestaurante extends JFrame {
 							
 							tingredientes.setEditable(false);
 							
-							panelProducto.add(bañadir, BorderLayout.SOUTH);
+							panelProducto.add(banadir, BorderLayout.SOUTH);
 							panelProducto.add(tnombreProducto, BorderLayout.NORTH);
 							panelProducto.add(tingredientes, BorderLayout.CENTER);
 							
 
 							panelProducto.setBorder(BorderFactory.createLineBorder(Color.black, 5));
-							//Y finalmente añadimos el panel
+							//Y finalmente anadimos el panel
 							panelIzquierdaAbajo.add(panelProducto);
 						}
 						
@@ -590,7 +590,7 @@ public class VentanaRestaurante extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//----Para quitar los productos que hay añadidos-----
+				//----Para quitar los productos que hay anadidos-----
 				Component[] components = panelIzquierdaAbajo.getComponents();
 				for (Component component : components) {
 					panelIzquierdaAbajo.remove(component);  
@@ -608,16 +608,16 @@ public class VentanaRestaurante extends JFrame {
 					
 					int numeroMenus = todosMenus.size(); //para el layout
 					
-					//Para cada producto se añade al panel de productos
+					//Para cada producto se anade al panel de productos
 					for (Menu menu : todosMenus) {
 						if(restaurante.getId() == menu.getIdRestaurante()) {
 							JPanel panelMenu = new JPanel();
 							panelMenu.setLayout(new BorderLayout());
 							JLabel tnombreMenu = new JLabel(menu.getNombre());
-							JButton bañadir = new JButton("AÑADIR");
+							JButton banadir = new JButton("AnADIR");
 							
 							
-							bañadir.addActionListener(new ActionListener() {
+							banadir.addActionListener(new ActionListener() {
 
 								@Override
 								public void actionPerformed(ActionEvent e) {
@@ -644,13 +644,13 @@ public class VentanaRestaurante extends JFrame {
 							
 							tproductosMenu.setEditable(false);
 							
-							panelMenu.add(bañadir, BorderLayout.SOUTH);
+							panelMenu.add(banadir, BorderLayout.SOUTH);
 							panelMenu.add(tnombreMenu, BorderLayout.NORTH);
 							panelMenu.add(tproductosMenu, BorderLayout.CENTER);
 							
 
 							panelMenu.setBorder(BorderFactory.createLineBorder(Color.black, 5));
-							//Y finalmente añadimos el panel
+							//Y finalmente anadimos el panel
 							panelIzquierdaAbajo.add(panelMenu);
 						}
 						
@@ -668,7 +668,7 @@ public class VentanaRestaurante extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//----Para quitar los productos que hay añadidos-----
+				//----Para quitar los productos que hay anadidos-----
 				Component[] components = panelIzquierdaAbajo.getComponents();
 				for (Component component : components) {
 					panelIzquierdaAbajo.remove(component);  
@@ -686,16 +686,16 @@ public class VentanaRestaurante extends JFrame {
 					
 					int numeroProductos = todosProductos.size(); //para el layout
 					
-					//Para cada producto se añade al panel de productos
+					//Para cada producto se anade al panel de productos
 					for (Producto producto : todosProductos) {
 						if(restaurante.getId() == producto.getIdRestaurante()) {
 							JPanel panelProducto = new JPanel();
 							panelProducto.setLayout(new BorderLayout());
 							JLabel tnombreProducto = new JLabel(producto.getNombre());
-							JButton bañadir = new JButton("AÑADIR");
+							JButton banadir = new JButton("AnADIR");
 							
 							
-							bañadir.addActionListener(new ActionListener() {
+							banadir.addActionListener(new ActionListener() {
 
 								@Override
 								public void actionPerformed(ActionEvent e) {
@@ -723,13 +723,13 @@ public class VentanaRestaurante extends JFrame {
 							
 							tingredientes.setEditable(false);
 							
-							panelProducto.add(bañadir, BorderLayout.SOUTH);
+							panelProducto.add(banadir, BorderLayout.SOUTH);
 							panelProducto.add(tnombreProducto, BorderLayout.NORTH);
 							panelProducto.add(tingredientes, BorderLayout.CENTER);
 							
 
 							panelProducto.setBorder(BorderFactory.createLineBorder(Color.black, 5));
-							//Y finalmente añadimos el panel
+							//Y finalmente anadimos el panel
 							panelIzquierdaAbajo.add(panelProducto);
 						}
 						
@@ -749,7 +749,7 @@ public class VentanaRestaurante extends JFrame {
 		JScrollPane scroll = new JScrollPane(panelIzquierdaAbajo, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
-		panelIzquierda.add(scroll); //aqui se añade panelIzquierdaAbajo (el de los productos) metido en el scroll
+		panelIzquierda.add(scroll); //aqui se anade panelIzquierdaAbajo (el de los productos) metido en el scroll
 		panelIzquierdaAbajo.setBackground(Color.red);
 		panelGeneral.add(panelIzquierda);
 
@@ -759,15 +759,20 @@ public class VentanaRestaurante extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				Pedido pedido = new Pedido();
 				pedido.setRestaurante(restaurante);
 				pedido.setProductos(listaPedido);
 				pedido.setMenus(listaPedidoMenu);
 				pedido.setUsuario(usuario);
+
+								
+				pedido.setPreciototal(Double.parseDouble(df.format(precio)));
+
+				
+				ManagerDB db = new ManagerDB();
 				
 				
-				DecimalFormat df = new DecimalFormat("#.00");				
+								
 				pedido.setPreciototal(precio);
 				
 				new VentanaPago(pedido, usuario);
@@ -782,7 +787,6 @@ public class VentanaRestaurante extends JFrame {
 					// TODO: handle exception
 				}
 				*/
-				
 			}
 		});
 		

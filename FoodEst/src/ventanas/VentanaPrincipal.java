@@ -131,7 +131,7 @@ public class VentanaPrincipal extends JFrame {
 			panelAbajo.setLayout(new GridLayout(1,numeroRestaurantes*2));
 			for (Restaurante restaurante : restaurantes) {
 				JButton boton = new JButton(restaurante.getNombre());
-				//Para cada boton añadimos el action listener, lanzando la VentanaRestaurante con el restaurante asociado
+				//Para cada boton anadimos el action listener, lanzando la VentanaRestaurante con el restaurante asociado
 				boton.addActionListener(new ActionListener() {
 					
 					@Override

@@ -58,13 +58,13 @@ public class VentanaDirecciones extends JFrame{
 		
 		panelArriba.add(panelTitulo);
 		
-			//panel Añadir direcciones
-		JPanel panelAñadir = new JPanel();
-		JButton añadir = new JButton("AÑADIR");
+			//panel Anadir direcciones
+		JPanel panelAnadir = new JPanel();
+		JButton anadir = new JButton("AÃ‘ADIR");
 		
 		
-		JTextField nombreDireccion = new JTextField("Nombre de dirección");
-		JTextField codigoPostal = new JTextField("Código postal");
+		JTextField nombreDireccion = new JTextField("Nombre de direcciÃ³n");
+		JTextField codigoPostal = new JTextField("CÃ³digo postal");
 		JTextField calle = new JTextField("Calle");
 		JTextField municipio = new JTextField("Municipio");
 		JTextField portal = new JTextField("Portal");
@@ -75,17 +75,17 @@ public class VentanaDirecciones extends JFrame{
 		labelLogo.setIcon(new ImageIcon("src/Imagenes/ubicacion.png"));
 		
 		
-		panelAñadir.add(labelLogo);
-		panelAñadir.add(nombreDireccion);
-		panelAñadir.add(codigoPostal);
-		panelAñadir.add(municipio);
-		panelAñadir.add(calle);
-		panelAñadir.add(portal);
-		panelAñadir.add(pisoPuerta);
-		panelAñadir.add(añadir);
+		panelAnadir.add(labelLogo);
+		panelAnadir.add(nombreDireccion);
+		panelAnadir.add(codigoPostal);
+		panelAnadir.add(municipio);
+		panelAnadir.add(calle);
+		panelAnadir.add(portal);
+		panelAnadir.add(pisoPuerta);
+		panelAnadir.add(anadir);
 		
 		
-		panelArriba.add(panelAñadir);
+		panelArriba.add(panelAnadir);
 		
 		
 		
@@ -105,7 +105,7 @@ public class VentanaDirecciones extends JFrame{
 		panelAbajo.setEnabled(false); 
 		panelAbajo.setDividerSize(0); 
 		
-		//Panel direcciones (donde se van a añadir las direcciones)
+		//Panel direcciones (donde se van a anadir las direcciones)
 		JPanel panelDirecciones = new JPanel();
 		JScrollPane scrollPanelDirecciones = new JScrollPane(panelDirecciones);
 		panelAbajo.add(panelDirecciones);
@@ -125,7 +125,7 @@ public class VentanaDirecciones extends JFrame{
 		
 
 		
-		//Añadir direcciones guardadas del usuario
+		//Anadir direcciones guardadas del usuario
 		ManagerDB db = new ManagerDB();
 		List<Direccion> direccionesGuardadas;
 		try {
@@ -204,7 +204,7 @@ public class VentanaDirecciones extends JFrame{
             }
         });
 		
-		añadir.addActionListener(new ActionListener() {
+		anadir.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
