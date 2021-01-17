@@ -5,61 +5,45 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import clases.TipoProducto;
-import clases.Ingrediente;
 import clases.Producto;
-
-import java.util.ArrayList;
-import java.util.List;
+import clases.TipoProducto;
 
 public class ProductoTest {
 	
-	Producto producto;
-	List<Ingrediente> ingredientes = new ArrayList<Ingrediente>();
 	
-	
+	Producto pr;
 	@Before
 	public void setUp() {
+		pr = new Producto("Producto1", 1, 10.9, "Descripcion producto1", "ingrediente1, ingrediente1", true, TipoProducto.ENTRANTE, 2);
 		
-		ingredientes= new ArrayList<Ingrediente>();
-		Ingrediente ing1 = new Ingrediente("Pepinillo", 001, 20);
-		Ingrediente ing2 = new Ingrediente("Bacon", 002, 150);
-		ingredientes.add(ing1);
-		ingredientes.add(ing2);
-		Producto producto = new Producto("Piza", 001, 15.5, "pizza", null, false,  TipoProducto.PRINCIPAL, null);
 	}
-	
 	@Test
 	public void testGetNombre() {
-		assertEquals("Piza", producto.getNombre());
-
+		assertEquals("Producto1", pr.getNombre());	
 	}
-	/*
-	  al ser un doble hay que poner un
-	  valor de error (valor delta) que permita seguir
-	  considerando iguales a los dos valores
-	 */
-	
 	@Test
-	public void testGetPrecio() {
-		assertEquals(15.5, producto.getPrecio(), 0.001); 
+	public void testGetId() {
+		assertEquals(1, pr.getId());	
 	}
-
-	
-
+	@Test
+	public void testGetDescripcion() {
+		assertEquals("Descripcion producto1", pr.getDescripcion());	
+	}
 	@Test
 	public void testGetIngredientes() {
-		assertEquals(ingredientes, producto.getIngredientes());
+		assertEquals("ingrediente1, ingrediente1", pr.getIngredientes());	
 	}
-
 	@Test
 	public void testIsVegano() {
-		assertEquals(false, producto.isVegano());
+		assertEquals(true, pr.isVegano());	
 	}
-
 	@Test
-	public void testGetTipo() {
-		assertEquals(TipoProducto.PIZZA, producto.getTipo());
+	public void testGetTipoProducto() {
+		assertEquals(TipoProducto.ENTRANTE, pr.getTipo());	
+	}
+	@Test
+	public void testGetIdRestaurante() {
+		assertEquals(2, pr.getIdRestaurante());	
 	}
 
 }

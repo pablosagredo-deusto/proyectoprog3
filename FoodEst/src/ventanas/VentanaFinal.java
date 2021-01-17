@@ -133,7 +133,7 @@ public class VentanaFinal extends JFrame implements ActionListener {
 		gracias.setVisible(false);
 		// 5 estados del pedido
 
-		// a�adir panels
+		// añadir panels
 		pnlCentral.setLayout(gridLayout1);
 
 		pnlCentral.add(pnlCentralIzquierda);

@@ -29,7 +29,9 @@ public class VentanaRestaurante extends JFrame {
 		setSize(1150, 505);
 		setVisible(true);
 
+
 		DecimalFormat df = new DecimalFormat("#.00");
+
 		// PANEL GENERAL : parte izquierda y parte derecha
 		JSplitPane panelGeneral = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		panelGeneral.setBorder(null);
@@ -675,6 +677,7 @@ public class VentanaRestaurante extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (!modeloPedido.isEmpty()) {
 
+
 					Pedido pedido = new Pedido();
 					pedido.setRestaurante(restaurante);
 					pedido.setProductos(listaPedido);
@@ -693,6 +696,7 @@ public class VentanaRestaurante extends JFrame {
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecciona 1 producto o más");
+
 
 				}
 

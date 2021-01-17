@@ -15,5 +15,11 @@
 	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/fontbox-2.0.22.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/pdfbox-app-2.0.22.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Usuario/Downloads/pdfbox-2.0.22.jar"/>
+	<classpathentry kind="lib" path="C:/Users/guill/OneDrive/Escritorio/Librerias/libs/fontbox-2.0.22.jar"/>
+	<classpathentry kind="lib" path="C:/Users/guill/OneDrive/Escritorio/Librerias/libs/pdfbox-2.0.22.jar"/>
+	<classpathentry kind="lib" path="C:/Users/guill/OneDrive/Escritorio/Librerias/libs/pdfbox-app-2.0.22.jar"/>
+	<classpathentry kind="lib" path="C:/Users/guill/OneDrive/Escritorio/Librerias/libs/pdfbox-tools-2.0.22.jar"/>
+	<classpathentry kind="lib" path="C:/Users/guill/OneDrive/Escritorio/Librerias/libs/preflight-2.0.22.jar"/>
+	<classpathentry kind="lib" path="C:/Users/guill/OneDrive/Escritorio/Librerias/libs/xmpbox-2.0.22.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

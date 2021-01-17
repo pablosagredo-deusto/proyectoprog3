@@ -9,8 +9,6 @@ import org.junit.Test;
 
 
 import clases.Direccion;
-import clases.Ingrediente;
-import clases.TipoProducto;
 
 public class DireccionTest {
 
@@ -18,22 +16,39 @@ public class DireccionTest {
 	
 	@Before
 	public void setUp() {
-		
-		direccion = new Direccion("CASA", "C/Deusto/Calle Mayor/3/1A", null, 48760, null, 0);
+		Direccion direccion = new Direccion("Direccion1", 1, "C GRAN VIA", "Bilbao", 3, "1A", 48910);
 	}
 	
 	@Test
 	public void testGetNombre() {
-		assertEquals("CASA", direccion.getNombre());
+		assertEquals("Direccion1", direccion.getNombre());
 	}
 	
 	@Test
 	public void testGetDireccion() {
-		assertEquals("C/Deusto/Calle Mayor/3/1A", direccion.getDireccion());
+		assertEquals(1, direccion.getIdUsuario());
 	}
 	
 	@Test
-	public void testGetCodigoPostal() {
-		assertEquals("C/Deusto/Calle Mayor/3/1A", direccion.getDireccion());
+	public void testGetCalle() {
+		assertEquals("C GRAN VIA", direccion.getCalle());
+	}
+	
+	@Test
+	public void testGetMunicipio() {
+		assertEquals("Bilbao", direccion.getMunicipio());
+	}
+	
+	@Test
+	public void testGetPostal() {
+		assertEquals(3, direccion.getPortal());
+	}
+	@Test
+	public void testGetPisoPuerta() {
+		assertEquals("1A", direccion.getPisoPuerta());
+	}
+	@Test
+	public void testCodigoPostal() {
+		assertEquals(48950, direccion.getCodigoPostal());
 	}
 }

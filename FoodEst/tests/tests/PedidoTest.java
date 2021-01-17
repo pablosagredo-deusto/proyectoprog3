@@ -8,113 +8,116 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import clases.*;
+import clases.Direccion;
+import clases.EstadoPedido;
+import clases.Menu;
+import clases.Pedido;
+import clases.Producto;
+import clases.Restaurante;
+import clases.Usuario;
 
 public class PedidoTest {
-	Producto Pizza1;
-	Producto Hamburguesa1;
-	List<Producto> productosBurgerKing;
-	
-	Restaurante restaurante;
-	Direccion direccionPedido;
-	List<Producto> productosPedido;
-	Pedido pedido1;
-	
 
+	
+	Pedido pedido;
+	List<Menu> menus;
+	List<Producto> productos;
+	Usuario us ;
+	Direccion dir ;
+	Restaurante res;
+	
 	@Before
 	public void setUp() {
+		
+		pedido = new Pedido();
+		
+		//Lista de productos
+		productos = new ArrayList<Producto>();
+		
+		Producto pr1 = new Producto();
+		Producto pr2 = new Producto();
+		productos.add(pr1);
+		productos.add(pr2);
+		
+		
+		//Lista de menus
+		menus = new ArrayList<Menu>();
+		
+		
+		Menu menu1 = new Menu();
+		List<Producto> productosMenu1 = new ArrayList<Producto>();
+		Producto pr11 = new Producto();
+		Producto pr12 = new Producto();
+		productosMenu1.add(pr11);
+		productosMenu1.add(pr12);
+		menu1.setProductos(productosMenu1);
+		
+		
+		Menu menu2 = new Menu();
+		List<Producto> productosMenu2 = new ArrayList<Producto>();
+		Producto pr21 = new Producto();
+		Producto pr22 = new Producto();
+		productosMenu1.add(pr21);
+		productosMenu1.add(pr22);
+		menu2.setProductos(productosMenu2);
+		
+		
+		menus.add(menu1);
+		menus.add(menu2);
 
-		Direccion direccionRestaurante = new Direccion("BurguerKingDir", "C/Leioa/Calle Menor/8/00", "Bilbao", 12, "3a",
-				45006);
-		List<Producto> productosBurgerKing = new ArrayList<Producto>();
 
 		
-		/*
-		List<Ingrediente> ingredientesPizza = new ArrayList<Ingrediente>();
-		List<Ingrediente> ingredientesHamburguesa = new ArrayList<Ingrediente>();
-		ingredientesPizza.add(ing1);
-		ingredientesPizza.add(ing2);
+		Usuario us = new Usuario();
+		Direccion dir = new Direccion();
+		Restaurante res = new Restaurante();
+		
 
-		Ingrediente ing3 = new Ingrediente("Carne", 001, 20);
-		Ingrediente ing4 = new Ingrediente("Pepinillo", 002, 150);
-		ingredientesHamburguesa.add(ing3);
-		ingredientesHamburguesa.add(ing4);*/
-
-		Restaurante restaurante = new Restaurante("BurguerKing", "Comida rapida", "password", "C/Leioa/Calle Menor/8/00",
-				productosBurgerKing, false);
-
-		Producto Pizza1 = new Producto("Piza", 001, 15.5, "pizza", false, TipoProducto.PIZZA, null);
-		Producto Hamburguesa1 = new Producto("Hamburguesa", 002, 15.5, "Hamburguesa prueba",
-				false, TipoProducto.HAMBURGUESA, null);
-
-		productosBurgerKing.add(Pizza1);
-		productosBurgerKing.add(Hamburguesa1);
-
-		Direccion direccionPedido = new Direccion("BurguerKingDir", "C/Leioa/Calle Menor/8/00", "Bilbao", 12, "3a",
-				45006);
-		List<Producto> productosPedido = new ArrayList<Producto>();
-		productosPedido.add(Pizza1);
-
-		// list de pedidos problemos null1 direccion obj
-		Pedido pedido1 = new Pedido(1, restaurante, null, EstadoPedido.RECIBIDO, null, 50.5, "Efectivo", false);
+		
+		pedido = new Pedido(1, us, res, dir, EstadoPedido.ENTREGADO, productos, menus, 20.4, "Tarjeta", false);
 	}
-
-	@Test
-	public void testGetCalle() {
-		assertEquals("C/Deusto/Calle Mayor/3/1A", pedido1.getDireccion().getCalle());
-	}
-
-	
 	@Test
 	public void testGetId() {
-		assertEquals(1, pedido1.getId());
+		assertEquals(1, pedido.getId());	
 	}
-
+	@Test
+	public void testGetUsuario() {
+		assertEquals(us, pedido.getUsuario());	
+	}
+	
 	@Test
 	public void testGetRestaurante() {
-		assertEquals(restaurante, pedido1.getRestaurante());
+		assertEquals(res, pedido.getRestaurante());	
 	}
 	
 	@Test
 	public void testGetDireccion() {
-		assertEquals(direccionPedido, pedido1.getDireccion());
+		assertEquals(dir, pedido.getDireccion());	
 	}
-	
+
 	@Test
-	public void testGetEstado() {
-		assertEquals(EstadoPedido.RECIBIDO, pedido1.getEstado());
+	public void testGetEstadoPedido() {
+		assertEquals(EstadoPedido.ENTREGADO, pedido.getEstado());	
 	}
-	
 	
 	@Test
 	public void testGetProductos() {
-		assertEquals(null, pedido1.getProductos());
+		assertEquals(productos, pedido.getProductos());	
 	}
-	
-	
+
 	@Test
 	public void testGetPrecioTotal() {
-		assertEquals(50.5, pedido1.getPreciototal(),0.001);
+		assertEquals(20.4, pedido.getPreciototal(), 0.05);	
 	}
-	
-	
 	@Test
 	public void testGetMetodoPago() {
-		assertEquals("Efectivo", pedido1.getMetodopago());
+		assertEquals("Tarjeta", pedido.getMetodopago());	
+		
 	}
-	
-	
 	@Test
-	public void testGetCubiertos() {
-		assertEquals(false,pedido1.getCubiertos());
+	public void testisCubiertos() {
+		assertEquals(false, pedido.isCubiertos());	
+		
 	}
 	
 	
-	@Test
-	public void testToString() {
-		assertEquals("",pedido1.toString());
-	}
-	
-	
-
 }
