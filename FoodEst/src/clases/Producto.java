@@ -119,17 +119,10 @@ public class Producto {
 		this.tipo = tipo;
 	}
 
-	public String toStringPrecio() {
-		return nombre + " " + precio + "€";
-	}
 
 	@Override
 	public String toString() {
-		String resultado = nombre + "(" + precio + "€)" + "(" + getTipo().toString() + ")";
-		if (vegano) {
-			resultado = resultado + "(V)";
-		}
-		return resultado;
+		return nombre + " " + "(" + precio + "€)" ;
 	}
 	
 	

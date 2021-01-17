@@ -431,39 +431,59 @@ public class VentanaAdministracionRestaurante extends JFrame{
 	    
 	    
 	    
-	    String data[][];   
+	    String data[][];  
+	   
 	    String nombreColumnas[]={"ID","DIRECCION","PRODUCTOS", "MENUS", "PRECIO", "PAGO", "CUBIERTOS"};
-	    DefaultTableModel modeloTabla = new DefaultTableModel(null, nombreColumnas);
+	    //Para no poder editar la tabla
+	    DefaultTableModel modeloTabla = new DefaultTableModel(null, nombreColumnas){
+
+	        @Override
+	        public boolean isCellEditable(int row, int column) {
+	           //all cells false
+	           return false;
+	        }
+	    };
 	    JTable tablaPedidos = new JTable(modeloTabla);
 	    
 	    JScrollPane scrollTablaPedidos =new JScrollPane(tablaPedidos);   
 	    
+	    //Ejemplo de inserccion de fila
+	    modeloTabla.addRow(new Object[]{"hola","hola","hola","hola","hola","hola","hola"});
 	    
-	    
+	    //Añadimos los pedidos realizados correspondientes a este restaurante
 	    for (Pedido pedido : pedidos) {
-			String stid = String.valueOf(pedido.getId());
-			String stdireccion = pedido.getDireccion().toString();
-			String stproductos = "";
-			for (Producto producto : pedido.getProductos()) {
-				stproductos = stproductos + producto.toString() + ",";
+	    	if (pedido.getRestaurante().getId() == restaurante.getId()) {
+	    		
+				String stid = String.valueOf(pedido.getId());
+				String stdireccion = pedido.getDireccion().toString();
+				String stproductos = "";
+				for (Producto producto : pedido.getProductos()) {
+					stproductos = stproductos + producto.toString() + ",";
+				}
+				String stprecio = String.valueOf(pedido.getPreciototal());
+				String stpago = pedido.getMetodopago();
+				
+				String stmenus = "hola";
+				
+				
+				
+				/*
+				for (Menu menu : pedido.getMenus()) {
+					stmenus = stmenus + menu.toString() + ",";
+				}
+				*/
+				
+				String stcubiertos = "";
+				if (pedido.isCubiertos()) {
+					stcubiertos = "SI";
+				} else {
+					stcubiertos = "NO";
+				}
+				modeloTabla.addRow(new Object[]{stid,stdireccion,stproductos,stmenus,stprecio,stpago,stcubiertos});
+				
 			}
-			String stprecio = String.valueOf(pedido.getPreciototal());
-			String stpago = pedido.getMetodopago();
-			
-			String stmenus = "";
-			for (Menu menu : pedido.getMenus()) {
-				stmenus = stmenus + menu.toString() + ",";
-			}
-			
-			String stcubiertos = "";
-			if (pedido.isCubiertos()) {
-				stcubiertos = "SI";
-			} else {
-				stcubiertos = "NO";
-			}
-			modeloTabla.addRow(new Object[]{stid,stdireccion,stproductos,stmenus,stprecio,stpago,stcubiertos});
 		}
-	   
+	    
 	    
 	    
 	    

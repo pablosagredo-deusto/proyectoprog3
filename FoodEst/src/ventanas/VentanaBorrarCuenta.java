@@ -10,7 +10,7 @@ import clases.Usuario;
 public class VentanaBorrarCuenta extends JFrame{
 	
 	
-	public VentanaBorrarCuenta(Usuario usuario) {
+	public VentanaBorrarCuenta( ) {
 		JLabel ltitulo = new JLabel("Borrar tu cuenta");
 		JLabel lcontraseña = new JLabel("Itroduce tu contraseña");
 		JTextField tcontraseña = new JTextField();
@@ -104,7 +104,7 @@ public class VentanaBorrarCuenta extends JFrame{
 			}
 		});
 	}
-	/*
+	
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -116,6 +116,6 @@ public class VentanaBorrarCuenta extends JFrame{
 		});
 
 	}
-	*/
+	
 
 }

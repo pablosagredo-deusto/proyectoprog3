@@ -26,7 +26,9 @@ import clases.EstadoPedido;
 import clases.Pedido;
 import clases.Producto;
 import clases.TipoProducto;
+import clases.Usuario;
 import clases.Factura;
+import clases.ManagerDB;
 
 public class VentanaPago extends JFrame {
 	JPanel pnlCentral;
@@ -53,13 +55,13 @@ public class VentanaPago extends JFrame {
 	String contenido = "pruebaa";
 	File file = new File(ruta);
 
-	public VentanaPago(Pedido ped) {
+	public VentanaPago(Pedido ped, Usuario us) {
 
 		// para test de ventana
 		List<Producto> productosBurgerKing = new ArrayList<Producto>();
 
 		Pizza1 = new Producto();
-		//añadir datos con sets a este producto
+		//aï¿½adir datos con sets a este producto
 
 		productosBurgerKing.add(Pizza1);
 		//Pedido ped2 = new Pedido(, null, null, EstadoPedido.RECIBIDO, productosBurgerKing, 12, "", false);
@@ -94,7 +96,7 @@ public class VentanaPago extends JFrame {
 		double precio = ped.getPreciototal();
 		String cadena = "";
 		for (Producto producto : ped.getProductos()) {
-			cadena = "\n" + producto.toStringPrecio();
+			cadena = "\n" + producto.toString();
 		}
 		p = new JLabel();
 		p.setText("TOTAL A PAGAR\n" + "  " + "---" + " " + cadena);
@@ -149,6 +151,9 @@ public class VentanaPago extends JFrame {
 		pnlCentralIzq.add(checkTxt);
 		pnlCentralIzq.add(checkPdf);
 		pnlCentralIzq.add(factura);
+		JButton finalizar = new JButton("PAGAR Y FINALIZAR");
+		pnlCentralIzq.add(finalizar);
+		
 
 		pnlCentral.add(pnlCentralIzq);
 		pnlCentral.add(efectivo);
@@ -180,7 +185,7 @@ public class VentanaPago extends JFrame {
 				// setVisible(false);
 				ped.setMetodoPago("Efectivo");
 				for (Producto producto : ped.getProductos()) {
-					producto.toStringPrecio();
+					producto.toString();
 				}
 				
 				//VentanaFinal vent =new VentanaFinal(ped);
@@ -199,7 +204,28 @@ public class VentanaPago extends JFrame {
 
 			}
 		});
-
+		finalizar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//aÃ±adir forma de pago al pedido
+				
+				
+				ManagerDB db = new ManagerDB();
+				try {
+					db.connect();
+					db.insertarPedido(ped);
+					db.disconnect();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+				
+				
+			}
+		});
+		
+		
+		
 		factura.addActionListener(new ActionListener() {
 
 			@Override
@@ -232,7 +258,15 @@ public class VentanaPago extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		VentanaPago vpago = new VentanaPago(null);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				Pedido pd = new Pedido();
+				Usuario us = new Usuario();
+				new VentanaPago(pd, us);
+				
+			}
+		});
 	}
 
 }

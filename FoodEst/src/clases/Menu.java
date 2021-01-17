@@ -63,7 +63,7 @@ public class Menu {
 	
 	//calcula el precio para el menu, sumando el de todos sus productos
 	public void calcularPrecio() {
-		double precioMenu = 0;
+		double precioMenu = 0.0;
 		for (Producto producto : productos) {
 			precioMenu = precioMenu + producto.getPrecio();
 		}

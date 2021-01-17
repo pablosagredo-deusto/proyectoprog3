@@ -109,7 +109,7 @@ public class VentanaFinal extends JFrame implements ActionListener {
 
 		mapa1.setIcon(imagenMapa);
 
-		// añadir panels
+		// aï¿½adir panels
 		pnlCentral.setLayout(gridLayout1);
 		pnlCentral.add(pnlCentralIzquierda);
 		pnlCentral.add(pnlCentralDerecha);
@@ -127,7 +127,7 @@ public class VentanaFinal extends JFrame implements ActionListener {
 		pnlCentralIzquierda.add(botonAcabar);
 
 		// panelderecho
-		// añadir labels
+		// aï¿½adir labels
 		BoxLayout b = new BoxLayout(pnlCentralDerecha, BoxLayout.Y_AXIS);
 		pnlCentralDerecha.setLayout(b);
 		pnlCentralDerecha.setBackground(Color.WHITE);
@@ -144,7 +144,7 @@ public class VentanaFinal extends JFrame implements ActionListener {
 		// botones
 		
 
-		// añadir central
+		// aï¿½adir central
 		add(pnlCentral);
 		setVisible(true);
 

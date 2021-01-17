@@ -27,7 +27,7 @@ public class ManagerDB {
 	// METODO PARA CONECTAR CON LA BASE DE DATOS
 	public void connect() throws ExceptionDB {
 		try {
-			String nombreDB = "jdbc:sqlite:/C:\\Users\\guill\\git\\proyectoprog3\\.classpath\\FoodEst\\lib\\FoodEstDB";
+			String nombreDB = "jdbc:sqlite:FoodEstDB";
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(nombreDB);
 
@@ -333,7 +333,7 @@ public class ManagerDB {
 
 	//Borrar producto
 	public void borrarProducto(Producto producto) throws ExceptionDB {
-		try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PRODUCTO WHERE ID_PRODUCTO=?")) {
+		try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PRODUCTO WHERE ID_PRODUCTO=?;")) {
 			stmt.setInt(1, producto.getId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -342,7 +342,7 @@ public class ManagerDB {
 	}
 	//Borrar menu
 	public void borrarMenu(Menu menu) throws ExceptionDB {
-		try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM MENU WHERE ID_MENU=?")) {
+		try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM MENU WHERE ID_MENU=?;")) {
 			stmt.setInt(1, menu.getId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -351,7 +351,7 @@ public class ManagerDB {
 	}
 	
 	public void borrarDireccion(Direccion direccion)throws ExceptionDB {
-		try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM DIRECCION WHERE ID_DIRECCION=?")) {
+		try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM DIRECCION WHERE ID_DIRECCION=?;")) {
 			stmt.setInt(1, direccion.getId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -364,7 +364,7 @@ public class ManagerDB {
 		List<Menu> menus = new ArrayList<Menu>();
 		String SQL="";
 		try (Statement stmt = conn.createStatement()) {
-			SQL="SELECT NOMBRE_MENU, PRECIO_MENU, ID_MENU, ID_RESTAURANTE FROM MENU";
+			SQL="SELECT NOMBRE_MENU, PRECIO_MENU, ID_MENU, ID_RESTAURANTE FROM MENU;";
 			ResultSet rs = stmt.executeQuery(SQL);
 			log( Level.INFO, "Buscar menus\t" + SQL, null );
 			while (rs.next()) {
@@ -481,19 +481,21 @@ public class ManagerDB {
 						stmt.executeUpdate();
 						
 					} catch (SQLException | DateTimeParseException e) {
-						throw new ExceptionDB("Error al insertar menu", e);
+						throw new ExceptionDB("Error al insertar pedido", e);
 					}
+		 
+		 
 		 
 		 // Buscamos el id del pedido que acabamos de meter
 		 String SQL="";
 		 int codigoPedido = 0;
 		 
 			try (Statement stmt = conn.createStatement()) {
-				SQL="SELECT ID_PEDIDO FROM PEDIDO WHERE ID_PEDIDO=(SELECT max(ID_PEDIDO) FROM PEDIDO) "; //cogemos el id ultimo pedido, es decir el que acabamos de meteer
+				SQL="SELECT MAX(ID_PEDIDO) FROM PEDIDO;"; //cogemos el id ultimo pedido, es decir el que acabamos de meteer
 				ResultSet rs = stmt.executeQuery(SQL);
 				log( Level.INFO, "Buscar menus\t" + SQL, null );
 				while (rs.next()) {
-					codigoPedido = rs.getInt("ID_PEDIDO");
+					codigoPedido = rs.getInt("MAX(ID_PEDIDO)");
 				}
 
 			} catch (SQLException | DateTimeParseException e) {
@@ -503,7 +505,7 @@ public class ManagerDB {
 		//Para cada producto que tenga el pedido lo metemos en la tabla pedir
 			
 			for (Producto producto : pedido.getProductos()) {
-				try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO PEDIR (ID_PRODUCTO, ID_PEDIDO) VALUES(?,?);");
+				try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO PEDIR(ID_PRODUCTO, ID_PEDIDO) VALUES(?,?);");
 					Statement stmtForId = conn.createStatement()) {
 								
 						stmt.setInt(1, producto.getId()); /* <-- id del producto*/
@@ -519,7 +521,7 @@ public class ManagerDB {
 			
 		//Por cada menu en el pedido lo metemos en la tabla pedirmenu
 			for (Menu menu : pedido.getMenus()) {
-				try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO PEDIRMENU (ID_MENU, ID_PEDIDO) VALUES(?,?);");
+				try(PreparedStatement stmt = conn.prepareStatement("INSERT INTO PEDIRMENU(ID_MENU, ID_PEDIDO) VALUES(?,?);");
 					Statement stmtForId = conn.createStatement()) {
 								
 						stmt.setInt(1, menu.getId()); /* <-- id del producto*/
@@ -532,7 +534,7 @@ public class ManagerDB {
 						throw new ExceptionDB("Error al insertar menu", e);
 					}
 			}
-		
+			
 	 
 	 }
 	 
@@ -540,16 +542,17 @@ public class ManagerDB {
 	 //OBTENER PEDIDOS
 	 public List<Pedido> getTodosPedidos()  throws ExceptionDB{
 		 
-		//Añadimos todos los pedidos a la lista a devolver (sin asignarles ni restaurantes) 
+		//Añadimos todos los pedidos a la lista a devolver  
 		 List<Pedido> pedidos = new ArrayList<Pedido>();
 		 
 		 List<Usuario> todosUsuarios = getTodosUsuarios();
 		 List<Restaurante> todosRestaurantes = getTodosRestaurantes();
 		 List<Direccion> todosDirecciones = getTodasDirecciones();
+		 List<Producto> todosProductos = getTodosProductos();
 		 
 			String SQL="";
 			try (Statement stmt = conn.createStatement()) {
-				SQL="SELECT * FROM PEDIDO";
+				SQL="SELECT * FROM PEDIDO;";
 				ResultSet rs = stmt.executeQuery(SQL);
 				log( Level.INFO, "Buscar menus\t" + SQL, null );
 				while (rs.next()) {
@@ -584,14 +587,17 @@ public class ManagerDB {
 				throw new ExceptionDB("Error obteniendo los menus", e);
 			}
 			
-			//añadimos los productos que pertenecen all peido desde la tabla PEDIR
-				List<Producto> todosProductos = getTodosProductos();
+			//añadimos los productos que pertenecen al pedido desde la tabla PEDIR
+			
 				for (Pedido pedido : pedidos) { 
 					String SQL2="";
+					
 					try (Statement stmt2 = conn.createStatement()) {
 						SQL2="SELECT ID_PRODUCTO FROM PEDIR WHERE ID_PEDIDO=" + pedido.getId() + ";"; 
 						ResultSet rs2 = stmt2.executeQuery(SQL2);
 						log( Level.INFO, "Buscar productos\t" + SQL2, null );
+						
+						
 						
 						List<Producto> productosPedido = new ArrayList<Producto>(); //creamos la lista donde van a ir sus productos
 						while (rs2.next()) {
@@ -609,19 +615,19 @@ public class ManagerDB {
 						throw new ExceptionDB("Error obteniendo los menus", e);
 					}
 				}
-				
+			
 			//añadimos los menus que pertenecen al pedido desde la tabla PEDIRMENU
 				List<Menu> todosMenus = getTodosMenus();
 				for (Pedido pedido : pedidos) { 
 					String SQL3="";
 					try (Statement stmt2 = conn.createStatement()) {
 						SQL3="SELECT ID_MENU FROM PEDIRMENU WHERE ID_PEDIDO=" + pedido.getId() + ";"; 
-						ResultSet rs2 = stmt2.executeQuery(SQL3);
+						ResultSet rs3 = stmt2.executeQuery(SQL3);
 						log( Level.INFO, "Buscar menus\t" + SQL3, null );
 						
 						List<Menu> menusPedido = new ArrayList<Menu>(); 
-						while (rs2.next()) {
-							int idMenuBuscado = rs2.getInt("ID_MENU"); 
+						while (rs3.next()) {
+							int idMenuBuscado = rs3.getInt("ID_MENU"); 
 							for (Menu menu : todosMenus) {
 								if (idMenuBuscado == menu.getId()) {
 									menusPedido.add(menu); 
@@ -642,7 +648,27 @@ public class ManagerDB {
 			return pedidos;
 	 }
 	 
-	 
+	 public void borrarPedido(Pedido pedido)throws ExceptionDB {
+		 try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PEDIDO WHERE ID_PEDIDO=?;")) {
+				stmt.setInt(1, pedido.getId());
+				stmt.executeUpdate();
+			} catch (SQLException e) {
+				throw new ExceptionDB("No se pudo elimiar el producto con id " + pedido.getId(), e);
+			}
+		 try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PEDIR WHERE ID_PEDIDO=?;")) {
+				stmt.setInt(1, pedido.getId());
+				stmt.executeUpdate();
+			} catch (SQLException e1) {
+				throw new ExceptionDB("No se pudo elimiar el producto con id " + pedido.getId(), e1);
+			}
+		 
+		 try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM PEDIRMENU WHERE ID_PEDIDO=?;")) {
+				stmt.setInt(1, pedido.getId());
+				stmt.executeUpdate();
+			} catch (SQLException e2) {
+				throw new ExceptionDB("No se pudo elimiar el producto con id " + pedido.getId(), e2);
+			}
+	 }
 	 
 	 
 	 //INSERTAR UNA DIRECCION
