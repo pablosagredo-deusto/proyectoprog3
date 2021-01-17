@@ -670,6 +670,35 @@ public class ManagerDB {
 			}
 	 }
 	 
+	//borrar pedidos 
+	 
+	 public void borrarPedidosRestaurante(Restaurante restaurante)throws ExceptionDB, SQLException {
+		 String SQL = "";
+			try (Statement stmt = conn.createStatement()) {
+				SQL="SELECT ID_PEDIDO FROM PEDIDO WHERE ID_RESTAURANTE=" + restaurante.getId() + ";";
+				ResultSet rs = stmt.executeQuery(SQL);
+				log( Level.INFO, "Borrar pedidos\t" + SQL, null );
+				while (rs.next()) {
+					try (PreparedStatement stmt1 = conn.prepareStatement("DELETE FROM PEDIR WHERE ID_PEDIDO=?;")) {
+						stmt1.setInt(1, rs.getInt("ID_PEDIDO"));
+						stmt1.executeUpdate();
+					} catch (SQLException e1) {
+						throw new ExceptionDB("No se pudo elimiar el producto con id " , e1);
+					}
+				 
+					 try (PreparedStatement stmt2 = conn.prepareStatement("DELETE FROM PEDIRMENU WHERE ID_PEDIDO=?;")) {
+						 stmt2.setInt(1, rs.getInt("ID_PEDIDO"));
+						 stmt2.executeUpdate();
+					} catch (SQLException e2) {
+						throw new ExceptionDB("No se pudo elimiar el producto con id " , e2);
+					}
+					
+				}
+			}
+		 
+		 
+	 }
+	 
 	 
 	 //INSERTAR UNA DIRECCION
 	 public void insertarDireccion (Direccion direccion) throws ExceptionDB {

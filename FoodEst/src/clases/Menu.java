@@ -12,7 +12,7 @@ public class Menu {
 	protected int idRestaurante;
 	protected List<Producto> productos;
 	
-	public Menu(String nombre, Restaurante restaurante, Double precio, int idRestaurante, List<Producto> productos) {
+	public Menu(String nombre, Double precio, int id, int idRestaurante, List<Producto> productos) {
 		super();
 		this.nombre = nombre;
 		this.precio= precio;

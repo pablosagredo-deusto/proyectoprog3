@@ -339,23 +339,7 @@ public class VentanaAdministracionRestaurante extends JFrame{
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		
 		//PANEL IZQUIERDA
 		
@@ -467,11 +451,6 @@ public class VentanaAdministracionRestaurante extends JFrame{
 				
 				
 				
-				/*
-				for (Menu menu : pedido.getMenus()) {
-					stmenus = stmenus + menu.toString() + ",";
-				}
-				*/
 				
 				String stcubiertos = "";
 				if (pedido.isCubiertos()) {
@@ -491,11 +470,36 @@ public class VentanaAdministracionRestaurante extends JFrame{
 	    
 	    
 	    
+	    /*
+	    botonMarcarPedido.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel dtm = (DefaultTableModel) tablaPedidos.getModel(); 
+				dtm.removeRow(tablaPedidos.getSelectedRow());
+				
+				
+			}
+		});
 	    
-	    
-	    
-	    
-	    
+	    botonMarcarTodosPedidos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ManagerDB db = new ManagerDB();
+				
+				try {
+					db.connect();
+					db.borrarPedidosRestaurante(restaurante);
+					db.disconnect();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+				dispose();
+				new VentanaAdministracionRestaurante(restaurante);
+			}
+		});
+	    */
 	    
 	    
 	    
@@ -817,7 +821,9 @@ class VentanaAnadirMenu extends JFrame{
 				
 			}
 		});
-	
+		
+		
+		
 		
 	
 	

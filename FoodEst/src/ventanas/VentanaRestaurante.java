@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,7 @@ public class VentanaRestaurante extends JFrame {
 		setSize(1150, 505);
 		setVisible(true);
 		
-		DecimalFormat df = new DecimalFormat("#.00");
+		DecimalFormat df = new DecimalFormat("#.##");
 		// PANEL GENERAL : parte izquierda y parte derecha
 		JSplitPane panelGeneral = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		panelGeneral.setBorder(null);
@@ -765,10 +767,13 @@ public class VentanaRestaurante extends JFrame {
 				pedido.setMenus(listaPedidoMenu);
 				pedido.setUsuario(usuario);
 
-				DecimalFormat df2 = new DecimalFormat("#.##");
-				pedido.setPreciototal(Double.valueOf(df2.format(precio)));
+				
 								
-								
+				BigDecimal bd = new BigDecimal(precio);
+				bd = bd.setScale(2, RoundingMode.HALF_UP);	// Ponemos 2 decimales
+				pedido.setPreciototal(bd.doubleValue());	
+				
+				
 				new VentanaPago(pedido, usuario);
 				dispose();
 				
