@@ -702,7 +702,7 @@ public class VentanaRestaurante extends JFrame {
 
 									listaPedido.add(producto); //LISTA QUE UTILIZAREMOS PARA EL PEDIDO 
 									precio = precio+ producto.getPrecio();
-									DecimalFormat df = new DecimalFormat("#.00");
+		
 									precioActual.setText("Precio actual:" + String.valueOf(df.format(precio)) + "€");
 									
 									
@@ -765,18 +765,13 @@ public class VentanaRestaurante extends JFrame {
 				pedido.setMenus(listaPedidoMenu);
 				pedido.setUsuario(usuario);
 
+				DecimalFormat df2 = new DecimalFormat("#.##");
+				pedido.setPreciototal(Double.valueOf(df2.format(precio)));
 								
-				pedido.setPreciototal(Double.parseDouble(df.format(precio)));
-
-				
-				ManagerDB db = new ManagerDB();
-				
-				
 								
-				pedido.setPreciototal(precio);
-				
 				new VentanaPago(pedido, usuario);
 				dispose();
+				
 				/*
 				ManagerDB db = new ManagerDB();
 				try {

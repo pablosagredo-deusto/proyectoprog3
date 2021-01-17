@@ -47,13 +47,13 @@ public class VentanaPrincipal extends JFrame {
 		panelArribaMedio.add(panelLogo);
 		JPanel panelArribaMedioAbajo =  new JPanel();
 		panelArribaMedioAbajo.setLayout(new GridLayout(2,1));
-		panelArribaMedioAbajo.add(buscador);
+		panelArribaMedioAbajo.add(new JPanel());
 		
 		JPanel panelBotonBuscar = new JPanel();
 		panelBotonBuscar.setLayout(new GridLayout(1,3));
 		panelBotonBuscar.add(new JPanel());
 		panelBotonBuscar.add(new JPanel());
-		panelBotonBuscar.add(buscar);
+		panelBotonBuscar.add(new JPanel());
 		panelArribaMedioAbajo.add(panelBotonBuscar);
 		panelArribaMedio.add(panelArribaMedioAbajo);
 		
