@@ -13,8 +13,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.List;
@@ -319,8 +322,7 @@ public class VentanaLogin extends JFrame {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
-			public void run() {
-				System.out.println("prueba");
+			public void run() {				
 				new VentanaLogin();
 
 			}

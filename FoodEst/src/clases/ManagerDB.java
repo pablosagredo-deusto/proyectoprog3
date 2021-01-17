@@ -27,7 +27,6 @@ public class ManagerDB {
 	// METODO PARA CONECTAR CON LA BASE DE DATOS
 	public void connect() throws ExceptionDB {
 		try {
-
 			String nombreDB = "jdbc:sqlite:FoodEstDB";
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection(nombreDB);
@@ -376,7 +375,7 @@ public class ManagerDB {
 				menu.setIdRestaurante(rs.getInt("ID_RESTAURANTE"));
 				
 				
-				menus.add(menu); //añadimos el menu a una lista de menus( todavia no tienen sus productos en sus arraylist)
+				menus.add(menu); //anadimos el menu a una lista de menus( todavia no tienen sus productos en sus arraylist)
 			}
 
 			
@@ -387,7 +386,7 @@ public class ManagerDB {
 		
 		List<Producto> todosProductos = getTodosProductos(); //cogemos todos los productos de la base de datos
 		
-		for (Menu menu : menus) { //para cada menu añadido a la lista que vamos a devolver
+		for (Menu menu : menus) { //para cada menu anadido a la lista que vamos a devolver
 			String SQL2="";
 			try (Statement stmt = conn.createStatement()) {
 				SQL2="SELECT ID_PRODUCTO FROM CONTIENE WHERE ID_MENU=" + menu.getId() + ";"; //sacamos los id de productos que tienen guardados
@@ -398,7 +397,7 @@ public class ManagerDB {
 					int idProductoBuscado = rs.getInt("ID_PRODUCTO"); //cogemos el id del producto
 					for (Producto producto : todosProductos) {
 						if (idProductoBuscado == producto.getId()) {
-							productosMenu.add(producto); //añdimos el producto a la lisya del menu
+							productosMenu.add(producto); //andimos el producto a la lisya del menu
 						}
 					}
 					menu.setProductos(productosMenu); //asignamos la lista al menu
@@ -543,7 +542,7 @@ public class ManagerDB {
 	 //OBTENER PEDIDOS
 	 public List<Pedido> getTodosPedidos()  throws ExceptionDB{
 		 
-		//Añadimos todos los pedidos a la lista a devolver  
+		//Anadimos todos los pedidos a la lista a devolver  
 		 List<Pedido> pedidos = new ArrayList<Pedido>();
 		 
 		 List<Usuario> todosUsuarios = getTodosUsuarios();
@@ -588,7 +587,7 @@ public class ManagerDB {
 				throw new ExceptionDB("Error obteniendo los menus", e);
 			}
 			
-			//añadimos los productos que pertenecen al pedido desde la tabla PEDIR
+			//anadimos los productos que pertenecen al pedido desde la tabla PEDIR
 			
 				for (Pedido pedido : pedidos) { 
 					String SQL2="";
@@ -605,7 +604,7 @@ public class ManagerDB {
 							int idProductoBuscado = rs2.getInt("ID_PRODUCTO"); //cogemos el id del producto
 							for (Producto producto : todosProductos) {
 								if (idProductoBuscado == producto.getId()) {
-									productosPedido.add(producto); //añdimos el producto a la lisya del menu
+									productosPedido.add(producto); //andimos el producto a la lisya del menu
 								}
 							}
 							pedido.setProductos(productosPedido); //asignamos la lista al menu
@@ -617,7 +616,7 @@ public class ManagerDB {
 					}
 				}
 			
-			//añadimos los menus que pertenecen al pedido desde la tabla PEDIRMENU
+			//anadimos los menus que pertenecen al pedido desde la tabla PEDIRMENU
 				List<Menu> todosMenus = getTodosMenus();
 				for (Pedido pedido : pedidos) { 
 					String SQL3="";

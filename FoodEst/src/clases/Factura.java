@@ -90,33 +90,7 @@ public class Factura {
 		}
 	}
 
-	public void crearFacturaTxt(Pedido ped) throws Exception {
-
-		productos = ped.getProductos();
-
-		for (Producto producto : productos) {
-			total = +producto.getPrecio();
-			texto = texto + producto.toStringPrecio();
-			System.out.println(texto);
-
-		}
-		String ruta = "C:/Users/Usuario/Desktop";
-		File archivo = new File(ruta);
-		System.out.println("Texto" + texto);
-
-		try {
-			FileWriter fw = new FileWriter(archivo);
-			BufferedWriter bw = new BufferedWriter(fw);
-
-			System.out.println("bw write");
-			bw.write(texto);
-			bw.close();
-			fw.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
+	
 
 	public static void main(String[] args) throws Exception {
 		Factura f = new Factura();

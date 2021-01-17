@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import ventanas.VentanaFinal;
+import ventanas.VentanaPrincipal;
 
 public class Hilo extends Thread {
 	static int limite = 0;
@@ -28,7 +29,7 @@ public class Hilo extends Thread {
 
 	public void run() {
 		try {
-			limite = numeroRandom(13, 15);
+			limite = numeroRandom(16, 18);
 			int x = 0;
 			System.out.println("Tiempo de pedido--> " + limite);
 
@@ -39,10 +40,12 @@ public class Hilo extends Thread {
 					System.out.println("x --> " + x);
 					x++;
 				} else {
-					pane.showMessageDialog(null, "ENTREGADO", "Actualizacion del pedido", JOptionPane.WARNING_MESSAGE);
 					VentanaFinal.iniciaHilo = false;
-					
-					VentanaFinal.pnlCentralIzquierda2.getComponent(0).setVisible(true);
+					Usuario usuario;
+					usuario = VentanaFinal.user;
+					new VentanaPrincipal(usuario);
+					VentanaFinal.iniciaVentana = false;
+
 				}
 			}
 
@@ -55,32 +58,46 @@ public class Hilo extends Thread {
 
 	private void ejecutarHilo(int x) {
 		System.out.println(x + " --- ");
-		int a = numeroRandom(2, 5);
 		switch (x) {
-		case 5:
-			
+		case 3:
+
 			VentanaFinal.pnlCentralDerecha.getComponent(0).setVisible(true);
 			VentanaFinal.pnlCentralDerecha.getComponent(1).setVisible(true);
+			System.out.println("cuenta.. " + VentanaFinal.pnlCentralDerecha.getComponentCount());
+
 			break;
 		case 8:
-			
+
 			VentanaFinal.pnlCentralDerecha.getComponent(2).setVisible(true);
 			VentanaFinal.pnlCentralDerecha.getComponent(3).setVisible(true);
 
 			break;
 		case 10:
-			
+
 			VentanaFinal.pnlCentralDerecha.getComponent(4).setVisible(true);
 			VentanaFinal.pnlCentralDerecha.getComponent(5).setVisible(true);
 			break;
 		case 12:
-			
+
 			VentanaFinal.pnlCentralDerecha.getComponent(6).setVisible(true);
-			
-			break;
-		case 14:
 			VentanaFinal.pnlCentralDerecha.getComponent(7).setVisible(true);
+			
+
+			break;
+
+		case 13:
 			VentanaFinal.pnlCentralDerecha.getComponent(8).setVisible(true);
+			pane.showMessageDialog(null, "ENTREGADO", "Actualizacion del pedido", JOptionPane.WARNING_MESSAGE);
+
+
+			break;
+		case 15:
+			VentanaFinal.pnlCentralDerecha.getComponent(8).setVisible(true);
+			VentanaFinal.pnlCentralIzquierda2.getComponent(0).setVisible(true);
+
+			pane.showMessageDialog(null, "ENTREGADO", "Actualizacion del pedido", JOptionPane.WARNING_MESSAGE);
+
+
 			break;
 		}
 

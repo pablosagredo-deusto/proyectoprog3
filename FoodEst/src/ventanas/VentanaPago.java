@@ -12,10 +12,6 @@ import java.util.List;
 
 import java.io.File;
 
-
-
-
-	
 //problemas imports con libs externas
 import javax.swing.*;
 import java.io.BufferedWriter;
@@ -61,10 +57,9 @@ public class VentanaPago extends JFrame {
 		List<Producto> productosBurgerKing = new ArrayList<Producto>();
 
 		Pizza1 = new Producto();
-		//a�adir datos con sets a este producto
+		// a�adir datos con sets a este producto
 
 		productosBurgerKing.add(Pizza1);
-		//Pedido ped2 = new Pedido(, null, null, EstadoPedido.RECIBIDO, productosBurgerKing, 12, "", false);
 
 		setTitle("Perfil");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -93,22 +88,13 @@ public class VentanaPago extends JFrame {
 
 		pnlCentral.setBackground(Color.WHITE);
 
-		double precio = ped.getPreciototal();
-		String cadena = "";
-		for (Producto producto : ped.getProductos()) {
-			cadena = "\n" + producto.toString();
-		}
 		p = new JLabel();
-		p.setText("TOTAL A PAGAR\n" + "  " + "---" + " " + cadena);
+		p.setText("TOTAL A PAGAR \n" + ped.getPreciototal());
 		p.setFont(new Font("Arial", Font.BOLD, 15));
 
 		p1 = new JLabel();
 		p1.setText("Seleccione su forma de pago --->");
 		p1.setFont(new Font("Arial", Font.BOLD, 15));
-
-		JLabel p2 = new JLabel();
-		p2.setText("Generar factura en txt");
-		p2.setFont(new Font("Arial", Font.BOLD, 15));
 
 		efectivo = new JButton();
 		efectivo.setText("EFECTIVO \n");
@@ -139,21 +125,16 @@ public class VentanaPago extends JFrame {
 		imagenFactura = new ImageIcon(newImg4);
 		factura.setIcon(imagenFactura);
 
-		JRadioButton checkTxt = new JRadioButton(".txt");
 		JRadioButton checkPdf = new JRadioButton(".pdf");
 		ButtonGroup group = new ButtonGroup();
-		group.add(checkTxt);
 		group.add(checkPdf);
 
 		pnlCentralIzq.setLayout(gridLayout2);
 		pnlCentralIzq.add(p);
-		pnlCentralIzq.add(p2);
-		pnlCentralIzq.add(checkTxt);
 		pnlCentralIzq.add(checkPdf);
 		pnlCentralIzq.add(factura);
 		JButton finalizar = new JButton("PAGAR Y FINALIZAR");
 		pnlCentralIzq.add(finalizar);
-		
 
 		pnlCentral.add(pnlCentralIzq);
 		pnlCentral.add(efectivo);
@@ -161,34 +142,12 @@ public class VentanaPago extends JFrame {
 		add(pnlCentral);
 		setVisible(true);
 
-		// texto
-		
-		/*String ruta = "/ruta/filename.txt";
-		String contenido = "pruebaa";
-		File file = new File(ruta);
-		try {
-			if (!file.exists()) {
-				file.createNewFile();
-			}
-			FileWriter fw = new FileWriter(file);
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(contenido);
-			bw.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
-
 		efectivo.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// setVisible(false);
 				ped.setMetodoPago("Efectivo");
-				for (Producto producto : ped.getProductos()) {
-					producto.toString();
-				}
-				
-				//VentanaFinal vent =new VentanaFinal(ped);
 
 			}
 		});
@@ -198,18 +157,15 @@ public class VentanaPago extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ped.setMetodoPago("Tarjeta");
-				//VentanaFinal vent =new VentanaFinal(ped);
-
+				// VentanaFinal vent =new VentanaFinal(ped);
 
 			}
 		});
 		finalizar.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				
-				
 				ManagerDB db = new ManagerDB();
 				try {
 					db.connect();
@@ -218,13 +174,13 @@ public class VentanaPago extends JFrame {
 				} catch (Exception e2) {
 					// TODO: handle exception
 				}
-				
-				
+
+				new VentanaFinal(ped);
+				dispose();
+
 			}
 		});
-		
-		
-		
+
 		factura.addActionListener(new ActionListener() {
 
 			@Override
@@ -234,15 +190,6 @@ public class VentanaPago extends JFrame {
 					System.out.println("pdf");
 					try {
 						fact.crearFacturaPdf(ped);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-
-				} else if (checkTxt.isSelected()) {
-
-					System.out.println("texto");
-					try {
-						fact.crearFacturaTxt(ped);
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -263,7 +210,7 @@ public class VentanaPago extends JFrame {
 				Pedido pd = new Pedido();
 				Usuario us = new Usuario();
 				new VentanaPago(pd, us);
-				
+
 			}
 		});
 	}

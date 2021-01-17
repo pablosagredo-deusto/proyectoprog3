@@ -7,6 +7,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,11 +22,15 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 
 import clases.ExceptionDB;
 import clases.GeneradorContrasena;
+import clases.GestorProperties;
 import clases.ManagerDB;
 import clases.Restaurante;
 import clases.Usuario;
@@ -32,9 +39,13 @@ import clases.Usuario;
 
 //-----PESTAÑA REGISTRO USUARIO--------
 class VentanaRegistroUsuario extends JPanel{
+	Map<String, String> listaDatos;
 	
 
-	public VentanaRegistroUsuario(JFrame ventanaAnterior, JFrame ventanaActual){
+	public VentanaRegistroUsuario(JFrame ventanaAnterior, JFrame ventanaActual) {
+		
+		
+		
 
 
 		
@@ -60,6 +71,7 @@ class VentanaRegistroUsuario extends JPanel{
 		JButton bRegistrar = new JButton("Registrar"); 
 		JButton bCancelar = new JButton("Cancelar"); 
 		JButton bContrasena = new JButton("Generar Contrasena");
+		JButton bDefalult = new JButton("Usuario Invitado");
 
 		 
 		
@@ -88,7 +100,7 @@ class VentanaRegistroUsuario extends JPanel{
 		add(bRegistrar);
 		add(bCancelar);
 
-		add(new JPanel());
+		add(bDefalult);
 		add(bContrasena);
 		
 		
@@ -118,13 +130,58 @@ class VentanaRegistroUsuario extends JPanel{
 				int largo=10;
 				
 				String password=g.generarContrasenha(rand, "", 0, largo);
-				JOptionPane.showMessageDialog(null, "Contraseña generada -- "+password);
+				JOptionPane.showInputDialog(null,"Tu contrase�a generada",password);
 
-				tcontraseña.setText(password);
-				trepetirContraseña.setText(password);
+				tcontrasena.setText(password);
+				trepetirContrasena.setText(password);
 				
 				
 
+			}
+		});
+		
+		
+		bDefalult.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					GestorProperties gestor=new GestorProperties();
+					Properties propiedades = new Properties();
+					try {
+						propiedades.load(new FileReader("config.properties"));
+						listaDatos=gestor.leerTodasLasPropiedades(propiedades);
+						
+						tnombreUsuario.setText(listaDatos.get("usuario"));
+						tnombre.setText(listaDatos.get("nombre"));
+						tapellido.setText(listaDatos.get("apellido"));
+						temail.setText(listaDatos.get("email"));
+						tcontrasena.setText(listaDatos.get("password"));
+						trepetirContrasena.setText(listaDatos.get("password"));
+						
+
+
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+
+					
+					
+					
+					
+					
+					
+					
+				
+				
+				
+
+				
+				
 			}
 		});
 		

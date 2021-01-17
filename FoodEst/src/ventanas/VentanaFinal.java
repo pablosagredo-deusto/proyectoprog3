@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 
 import clases.Hilo;
 import clases.Pedido;
+import clases.Usuario;
 
 public class VentanaFinal extends JFrame implements ActionListener {
 	/**
@@ -44,11 +45,13 @@ public class VentanaFinal extends JFrame implements ActionListener {
 	Image newImg3;
 	public static boolean iniciaHilo = true;
 	public static boolean iniciaVentana = true;
+	public static Usuario user;
 
 	boolean corriendo = false;
 
 	public VentanaFinal(Pedido ped) {
 
+		user = ped.getUsuario();
 		GridLayout gridLayout1 = new GridLayout();
 
 		gridLayout1.setRows(1);
@@ -99,6 +102,7 @@ public class VentanaFinal extends JFrame implements ActionListener {
 		JLabel flecha3 = new JLabel();
 		flecha3.setVisible(false);
 		JLabel mapa1 = new JLabel();
+
 		JLabel gracias = new JLabel();
 
 		ImageIcon imagenFlecha = new ImageIcon("src/imagenes/flechaverde.png");
@@ -157,16 +161,15 @@ public class VentanaFinal extends JFrame implements ActionListener {
 		pnlCentralDerecha.setLayout(b);
 		pnlCentralDerecha.setBackground(Color.WHITE);
 
-		pnlCentralDerecha.add(recibido);
-		pnlCentralDerecha.add(flecha);
-		pnlCentralDerecha.add(preparando);
-		pnlCentralDerecha.add(flecha1);
-		pnlCentralDerecha.add(enviado);
-		pnlCentralDerecha.add(flecha2);
-		pnlCentralDerecha.add(encamino);
-		pnlCentralDerecha.add(flecha3);
-		pnlCentralDerecha.add(entregado);
-
+		pnlCentralDerecha.add(recibido);// 0
+		pnlCentralDerecha.add(flecha);// 1
+		pnlCentralDerecha.add(preparando);// 2
+		pnlCentralDerecha.add(flecha1);// 3
+		pnlCentralDerecha.add(enviado);// 4
+		pnlCentralDerecha.add(flecha2);// 5
+		pnlCentralDerecha.add(encamino);// 6
+		pnlCentralDerecha.add(flecha3);// 7
+		pnlCentralDerecha.add(entregado);// 8
 
 		// anadir central
 		add(pnlCentral);
@@ -185,7 +188,6 @@ public class VentanaFinal extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == botonIniciar) {
-			System.out.println("iniciar pulsado");
 			if (corriendo == false) {
 				iniciaHilo = true;
 				corriendo = true;
@@ -195,7 +197,6 @@ public class VentanaFinal extends JFrame implements ActionListener {
 
 		}
 		if (e.getSource() == botonAcabar) {
-			System.out.println("acabar pulsado");
 			corriendo = false;
 			iniciaHilo = false;
 
@@ -206,12 +207,10 @@ public class VentanaFinal extends JFrame implements ActionListener {
 	// para usar el thread
 	public void iniciarHilo() {
 		if (iniciaHilo == true) {
-			System.out.println("Empieza el hilo");
 			Hilo miHilo = new Hilo();
 			miHilo.start();
 		}
 
 	}
-
 
 }
